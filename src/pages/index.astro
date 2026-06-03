@@ -46,8 +46,8 @@ const totalTech = techStack.length;
           <button data-tab="terminal" class="flex-1 py-2 text-xs font-black tracking-widest uppercase text-white/50 hover:text-white transition-all" onclick="switchLeftTab('terminal')">// TERMINAL</button>
         </div>
         <!-- Tab content -->
-        <div id="tab-profile" class="border border-white/15 border-t-0 bg-carbono-surface sharp-corner">
-          <IdentitySection {...identityData} client:idle />
+        <div id="tab-profile" class="flex-1 border border-white/15 border-t-0 bg-carbono-surface overflow-hidden sharp-corner">
+            <IdentitySection {...identityData} client:idle />
         </div>
         <div id="tab-terminal" class="hidden flex-1 border border-white/15 border-t-0 bg-carbono-surface overflow-hidden sharp-corner">
           <div class="h-full overflow-hidden">

@@ -31,3 +31,4 @@ pnpm-debug.log*
 # AI assistant skills (reinstallable)
 .opencode/
 .vercel/
+.tokensave

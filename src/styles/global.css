@@ -23,12 +23,12 @@
   --border-radius-none: 0px;
   --border-radius-DEFAULT: 0px;
 
-  /* Tamaños de texto responsive con clamp (de 8px en 1080p a 12-18px en 2K+) */
-  --font-size-xs: clamp(0.5rem, 0.3rem + 0.3vw, 0.75rem);     /* 8-12px */
-  --font-size-sm: clamp(0.625rem, 0.425rem + 0.3vw, 0.875rem); /* 10-14px */
-  --font-size-base: clamp(0.75rem, 0.55rem + 0.3vw, 1rem);    /* 12-16px */
-  --font-size-lg: clamp(0.875rem, 0.65rem + 0.35vw, 1.125rem);/* 14-18px */
-  --font-size-xl: clamp(1rem, 0.8rem + 0.35vw, 1.25rem);      /* 16-20px */
+  /* Tamaños de texto fijos — coinciden con el diseño original */
+  --font-size-xs: 0.625rem;   /* 10px — micro labels, versions */
+  --font-size-sm: 0.75rem;    /* 12px — labels, tags, small body */
+  --font-size-base: 0.8125rem;/* 13px — section headers, body */
+  --font-size-lg: 1rem;       /* 16px — headings */
+  --font-size-xl: 1.25rem;    /* 20px — page titles */
 }
 
 html,
