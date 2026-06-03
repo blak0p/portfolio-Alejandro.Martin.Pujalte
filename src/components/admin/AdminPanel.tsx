@@ -44,12 +44,12 @@ function isSessionValid(): boolean {
 
 /* --- Styled Components --- */
 
-const inputClass = "bg-white/5 border border-white/10 px-4 py-2 text-[13px] text-white font-mono w-full focus:outline-none focus:border-cobalt/40 transition-colors duration-100 placeholder:opacity-20 rounded";
+const inputClass = "bg-white/5 border border-white/10 px-4 py-2 text-base text-white font-mono w-full focus:outline-none focus:border-cobalt/40 transition-colors duration-100 placeholder:opacity-20 rounded";
 
 function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-[10px] text-white/40 tracking-[0.2em] uppercase font-black">/ {label}{required && <span className="text-cobalt ml-1">*</span>}</label>
+      <label className="text-xs text-white/70 tracking-[0.2em] uppercase font-black">/ {label}{required && <span className="text-cobalt ml-1">*</span>}</label>
       {children}
     </div>
   );
@@ -58,11 +58,11 @@ function Field({ label, required, children }: { label: string; required?: boolea
 function CheckField({ label, value, onChange }: { label: string; value: boolean; onChange: (v: boolean) => void }) {
   return (
     <label className="flex items-center gap-3 cursor-pointer select-none group">
-      <div className={`w-4 h-4 border ${value ? 'bg-cobalt border-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]' : 'border-white/20 group-hover:border-white/40'} transition-all flex items-center justify-center`}>
-        {value && <span className="text-[10px] text-white">✓</span>}
+      <div className={`w-4 h-4 border ${value ? 'bg-cobalt border-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]' : 'border-white/20 group-hover:border-white/70'} transition-all flex items-center justify-center`}>
+        {value && <span className="text-xs text-white">✓</span>}
       </div>
       <input type="checkbox" checked={value} onChange={e => onChange(e.target.checked)} className="hidden" />
-      <span className="text-[10px] text-white/60 tracking-widest uppercase group-hover:text-white transition-colors">{label}</span>
+      <span className="text-xs text-white/85 tracking-widest uppercase group-hover:text-white transition-colors">{label}</span>
     </label>
   );
 }
@@ -70,7 +70,7 @@ function CheckField({ label, value, onChange }: { label: string; value: boolean;
 function SectionHeader({ title }: { title: string }) {
   return (
     <div className="flex flex-col gap-3 mb-8">
-      <h2 className="text-[15px] text-white font-black tracking-[0.3em] uppercase leading-none">{title}</h2>
+      <h2 className="text-base text-white font-black tracking-[0.3em] uppercase leading-none">{title}</h2>
       <div className="h-px w-full bg-linear-to-r from-cobalt via-white/10 to-transparent" />
     </div>
   );
@@ -125,30 +125,30 @@ function GitHubAuthGate({ onAuth }: { onAuth: () => void }) {
         <div className="absolute -top-24 -right-24 w-48 h-48 bg-cobalt/10 blur-[60px] rounded-full" />
         
         <div className="relative z-10 flex flex-col gap-4">
-          <p className="text-[12px] text-cobalt font-black tracking-[0.5em] uppercase">SYSTEM_ACCESS // LOGIN</p>
+          <p className="text-sm text-cobalt font-black tracking-[0.5em] uppercase">SYSTEM_ACCESS // LOGIN</p>
           <div className="h-px bg-white/10 w-full" />
         </div>
 
         <div className="relative z-10 flex flex-col gap-10">
           <div className="flex flex-col gap-4 text-center">
-            <p className="text-white/60 text-[11px] leading-relaxed tracking-widest uppercase">
+            <p className="text-white/85 text-sm leading-relaxed tracking-widest uppercase">
               Authorization required to access the central core management bridge.
             </p>
-            {error && <p className="text-err text-[10px] font-black tracking-widest uppercase animate-pulse">!! {error}</p>}
+            {error && <p className="text-err text-xs font-black tracking-widest uppercase animate-pulse">!! {error}</p>}
           </div>
 
           <button 
             onClick={login} 
             disabled={loading} 
-            className="w-full py-5 bg-white/5 border border-white/10 text-white text-[11px] font-black uppercase tracking-[0.3em] hover:bg-cobalt hover:border-cobalt transition-all shadow-lg active:scale-[0.98]"
+            className="w-full py-5 bg-white/5 border border-white/10 text-white text-sm font-black uppercase tracking-[0.3em] hover:bg-cobalt hover:border-cobalt transition-all shadow-lg active:scale-[0.98]"
           >
             {loading ? 'SYNCING_UPLINK...' : 'AUTHORIZE_WITH_GITHUB \u2192'}
           </button>
         </div>
 
         <div className="relative z-10 flex justify-between items-center opacity-20">
-          <span className="text-[8px] text-white tracking-widest">v4.2.1 Stable</span>
-          <span className="text-[8px] text-white tracking-widest uppercase">Encrypted Session</span>
+          <span className="text-xs text-white tracking-widest">v4.2.1 Stable</span>
+          <span className="text-xs text-white tracking-widest uppercase">Encrypted Session</span>
         </div>
       </div>
     </div>
@@ -214,41 +214,41 @@ function RepoImportModal({ onClose, onImport, existingSlugs }: { onClose: () => 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-md">
       <div className="w-full max-w-2xl bg-[#1a1a1a] border border-white/10 flex flex-col max-h-[90vh] shadow-2xl rounded-xl">
-        <header className="p-6 sm:p-8 border-b border-white/5 flex justify-between items-center bg-[#121212] rounded-t-xl">
-          <h2 className="text-[14px] text-white font-black tracking-[0.3em] uppercase leading-none">Import_GitHub_Repos</h2>
-          <button onClick={onClose} className="w-10 h-10 flex items-center justify-center text-white/40 hover:text-white transition-colors">✕</button>
+        <header className="p-6 sm:p-8 border-b border-white/15 flex justify-between items-center bg-[#121212] rounded-t-xl">
+          <h2 className="text-base text-white font-black tracking-[0.3em] uppercase leading-none">Import_GitHub_Repos</h2>
+          <button onClick={onClose} className="w-10 h-10 flex items-center justify-center text-white/70 hover:text-white transition-colors">✕</button>
         </header>
         
-        <div className="p-6 sm:p-8 border-b border-white/5">
+        <div className="p-6 sm:p-8 border-b border-white/15">
           <input 
             type="text" 
             placeholder="Filter repositories..." 
             value={filter}
             onChange={e => setFilter(e.target.value)}
-            className="w-full bg-white/5 border border-white/10 p-4 text-[12px] text-white focus:outline-none focus:border-cobalt rounded"
+            className="w-full bg-white/5 border border-white/10 p-4 text-sm text-white focus:outline-none focus:border-cobalt rounded"
           />
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 custom-scrollbar">
           {loading ? (
-            <div className="h-60 flex flex-col gap-4 items-center justify-center text-[10px] tracking-widest text-white/20 uppercase">
+            <div className="h-60 flex flex-col gap-4 items-center justify-center text-xs tracking-widest text-white/20 uppercase">
               <div className="w-8 h-8 border-2 border-cobalt border-t-transparent rounded-full animate-spin" />
               Scanning_Uplink...
             </div>
           ) : filtered.length === 0 ? (
-            <div className="h-60 flex items-center justify-center text-[10px] tracking-widest text-white/20 uppercase">No_Available_Modules</div>
+            <div className="h-60 flex items-center justify-center text-xs tracking-widest text-white/20 uppercase">No_Available_Modules</div>
           ) : (
             <div className="grid grid-cols-1 gap-2">
               {filtered.map(r => (
-                <div key={r.fullName} className="p-4 border border-white/5 bg-white/[0.02] flex items-center justify-between group hover:border-white/10 transition-all rounded-lg">
+                <div key={r.fullName} className="p-4 border border-white/15 bg-white/[0.06] flex items-center justify-between group hover:border-white/10 transition-all rounded-lg">
                   <div className="flex flex-col gap-1 overflow-hidden pr-4">
-                    <span className="text-[12px] font-black text-white truncate">{r.name}</span>
-                    <span className="text-[9px] text-white/40 truncate">{r.fullName}</span>
+                    <span className="text-sm font-black text-white truncate">{r.name}</span>
+                    <span className="text-xs text-white/70 truncate">{r.fullName}</span>
                   </div>
                   <button 
                     onClick={() => handleImport(r)}
                     disabled={importing === r.fullName}
-                    className="px-6 py-2 bg-cobalt text-white text-[9px] font-black uppercase hover:bg-cobalt-light transition-all shrink-0 rounded disabled:opacity-50"
+                    className="px-6 py-2 bg-cobalt text-white text-xs font-black uppercase hover:bg-cobalt-light transition-all shrink-0 rounded disabled:opacity-50"
                   >
                     {importing === r.fullName ? '...' : 'Import'}
                   </button>
@@ -468,20 +468,20 @@ function ProjectsTab({ onLog }: { onLog: (msg: string) => void }) {
       {showImport && <RepoImportModal existingSlugs={existingSlugs} onImport={handleImport} onClose={() => setShowImport(false)} />}
       
       <div className="flex flex-col gap-6">
-        <header className="flex justify-between items-center border-b border-white/5 pb-3">
-          <p className="text-[11px] text-white font-black tracking-widest uppercase">/ MODULE_REPOSITORY</p>
+        <header className="flex justify-between items-center border-b border-white/15 pb-3">
+          <p className="text-sm text-white font-black tracking-widest uppercase">/ MODULE_REPOSITORY</p>
           <div className="flex gap-4 sm:gap-6 items-center">
-            <button onClick={() => setShowImport(true)} className="text-[10px] text-cobalt font-black tracking-widest hover:underline uppercase transition-all">[IMPORT_SELECTIVE]</button>
-            <button onClick={() => { setEditingIdx(null); setForm(emptyProject); }} className="text-[10px] text-white/40 hover:text-white tracking-widest font-black uppercase">[+] NEW</button>
+            <button onClick={() => setShowImport(true)} className="text-xs text-cobalt font-black tracking-widest hover:underline uppercase transition-all">[IMPORT_SELECTIVE]</button>
+            <button onClick={() => { setEditingIdx(null); setForm(emptyProject); }} className="text-xs text-white/70 hover:text-white tracking-widest font-black uppercase">[+] NEW</button>
           </div>
         </header>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
           {projects.map((p, i) => (
-            <button key={i} onClick={() => select(i)} className={`p-4 border text-left transition-all rounded-lg ${editingIdx === i ? 'border-cobalt bg-cobalt/10 text-white shadow-[0_0_20px_rgba(0,85,255,0.15)]' : 'border-white/5 bg-white/[0.03] hover:border-white/20 text-white/60'}`}>
-              <p className="text-[10px] font-black uppercase truncate leading-tight">{p.name}</p>
+            <button key={i} onClick={() => select(i)} className={`p-4 border text-left transition-all rounded-lg ${editingIdx === i ? 'border-cobalt bg-cobalt/10 text-white shadow-[0_0_20px_rgba(0,85,255,0.15)]' : 'border-white/15 bg-white/[0.06] hover:border-white/20 text-white/85'}`}>
+              <p className="text-xs font-black uppercase truncate leading-tight">{p.name}</p>
               <div className="flex justify-between items-center opacity-30 mt-2">
-                <p className="text-[8px] tracking-widest uppercase">ORDER_{p.order}</p>
-                {p.isFavorite && <span className="text-[9px]">★</span>}
+                <p className="text-xs tracking-widest uppercase">ORDER_{p.order}</p>
+                {p.isFavorite && <span className="text-xs">★</span>}
               </div>
             </button>
           ))}
@@ -496,10 +496,10 @@ function ProjectsTab({ onLog }: { onLog: (msg: string) => void }) {
           
           <div className="col-span-1 md:col-span-2 flex flex-col sm:flex-row gap-4">
             <div className="flex-1"><Field label="GITHUB_ENDPOINT"><input value={form.gitUrl} onChange={e => setForm(f => ({ ...f, gitUrl: e.target.value }))} className={inputClass} placeholder="https://github.com/..." /></Field></div>
-            <button onClick={fetchGitHub} disabled={scanLoading} className="sm:self-end px-8 py-3 bg-cobalt text-white text-[10px] font-black tracking-widest hover:bg-cobalt-light uppercase transition-all shadow-[0_0_15px_rgba(0,85,255,0.2)] rounded">{scanLoading ? 'SCANNING...' : 'SYNC_METADATA'}</button>
+            <button onClick={fetchGitHub} disabled={scanLoading} className="sm:self-end px-8 py-3 bg-cobalt text-white text-xs font-black tracking-widest hover:bg-cobalt-light uppercase transition-all shadow-[0_0_15px_rgba(0,85,255,0.2)] rounded">{scanLoading ? 'SCANNING...' : 'SYNC_METADATA'}</button>
           </div>
 
-          <div className="col-span-1 md:col-span-2 flex flex-wrap gap-x-10 gap-y-4 border-y border-white/5 py-8 my-2">
+          <div className="col-span-1 md:col-span-2 flex flex-wrap gap-x-10 gap-y-4 border-y border-white/15 py-8 my-2">
             <CheckField label="DESTACADO" value={form.isHighlighted} onChange={v => setForm(f => ({ ...f, isHighlighted: v }))} />
             <CheckField label="FIJADO" value={form.isFavorite} onChange={v => setForm(f => ({ ...f, isFavorite: v }))} />
             <CheckField label="PRIVADO" value={form.isPrivate} onChange={v => setForm(f => ({ ...f, isPrivate: v }))} />
@@ -513,7 +513,7 @@ function ProjectsTab({ onLog }: { onLog: (msg: string) => void }) {
               <Field label="VISUAL_ASSET [IMG]">
                 <div className="flex gap-2">
                   <input value={form.photo} onChange={e => setForm(f => ({ ...f, photo: e.target.value }))} className={`${inputClass} flex-1`} />
-                  <button onClick={() => photoInputRef.current?.click()} className="px-4 py-1 border border-white/10 text-white/40 text-[10px] hover:text-white uppercase transition-all rounded">↑</button>
+                  <button onClick={() => photoInputRef.current?.click()} className="px-4 py-1 border border-white/10 text-white/70 text-xs hover:text-white uppercase transition-all rounded">↑</button>
                   <input ref={photoInputRef} type="file" className="hidden" onChange={handlePhotoUpload} />
                 </div>
               </Field>
@@ -543,9 +543,9 @@ function ProjectsTab({ onLog }: { onLog: (msg: string) => void }) {
           <Field label="REPO_SLUG"><input value={form.specsRepoSlug} onChange={e => setForm(f => ({ ...f, specsRepoSlug: e.target.value }))} className={inputClass} /></Field>
         </div>
 
-        <div className="mt-12 flex flex-col sm:flex-row items-center gap-6 sm:gap-10 border-t border-white/5 pt-10">
-          <button onClick={save} className="w-full sm:w-auto bg-cobalt text-white text-[11px] font-black tracking-[0.3em] uppercase px-12 py-5 hover:bg-cobalt-light transition-all shadow-[0_0_30px_rgba(0,85,255,0.2)] rounded">COMMIT_CHANGES [CTRL+S]</button>
-          {editingIdx !== null && <button onClick={() => { if(confirm('DECOMMISSION?')) { const n = projects.filter((_, i) => i !== editingIdx); localStorage.setItem('portfolioProjects', JSON.stringify(n)); load(); setEditingIdx(null); } }} className="text-[10px] text-err opacity-50 hover:opacity-100 tracking-widest uppercase transition-colors">DECOMMISSION</button>}
+        <div className="mt-12 flex flex-col sm:flex-row items-center gap-6 sm:gap-10 border-t border-white/15 pt-10">
+          <button onClick={save} className="w-full sm:w-auto bg-cobalt text-white text-sm font-black tracking-[0.3em] uppercase px-12 py-5 hover:bg-cobalt-light transition-all shadow-[0_0_30px_rgba(0,85,255,0.2)] rounded">COMMIT_CHANGES [CTRL+S]</button>
+          {editingIdx !== null && <button onClick={() => { if(confirm('DECOMMISSION?')) { const n = projects.filter((_, i) => i !== editingIdx); localStorage.setItem('portfolioProjects', JSON.stringify(n)); load(); setEditingIdx(null); } }} className="text-xs text-err opacity-50 hover:opacity-100 tracking-widest uppercase transition-colors">DECOMMISSION</button>}
         </div>
       </div>
     </div>
@@ -657,16 +657,16 @@ function TechTab({ onLog }: { onLog: (msg: string) => void }) {
 
   return (
     <div className="flex flex-col gap-10">
-      <header className="flex justify-between items-center border-b border-white/5 pb-3">
-        <p className="text-[11px] text-white font-black tracking-widest uppercase">/ TECH_MATRIX_REGISTRY</p>
-        <button onClick={scanAll} disabled={loading} className="text-[10px] text-cobalt hover:underline uppercase transition-all tracking-widest">{loading ? 'SYNCING...' : '[SYNC_LOCAL]'}</button>
+      <header className="flex justify-between items-center border-b border-white/15 pb-3">
+        <p className="text-sm text-white font-black tracking-widest uppercase">/ TECH_MATRIX_REGISTRY</p>
+        <button onClick={scanAll} disabled={loading} className="text-xs text-cobalt hover:underline uppercase transition-all tracking-widest">{loading ? 'SYNCING...' : '[SYNC_LOCAL]'}</button>
       </header>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {tools.map((t, i) => (
-          <button key={i} onClick={() => { setEditing(i); setForm({ name: t.name, version: t.version, usageLevel: t.usageLevel }); }} className={`p-6 border text-left transition-all rounded-lg ${editing === i ? 'border-cobalt bg-cobalt/10 text-white shadow-lg' : 'border-white/5 bg-white/[0.03] hover:border-white/20 text-white'}`}>
+          <button key={i} onClick={() => { setEditing(i); setForm({ name: t.name, version: t.version, usageLevel: t.usageLevel }); }} className={`p-6 border text-left transition-all rounded-lg ${editing === i ? 'border-cobalt bg-cobalt/10 text-white shadow-lg' : 'border-white/15 bg-white/[0.06] hover:border-white/20 text-white'}`}>
             <div className="flex justify-between items-center mb-4">
-              <p className="text-[12px] font-black uppercase">{t.name}</p>
-              <span className={`text-[11px] font-black ${editing === i ? 'text-white' : 'text-cobalt'}`}>{t.usageLevel}%</span>
+              <p className="text-sm font-black uppercase">{t.name}</p>
+              <span className={`text-sm font-black ${editing === i ? 'text-white' : 'text-cobalt'}`}>{t.usageLevel}%</span>
             </div>
             <div className={`h-1.5 w-full rounded-full ${editing === i ? 'bg-white/20' : 'bg-white/5'}`}><div className={`h-full rounded-full ${editing === i ? 'bg-white' : 'bg-cobalt'} transition-all`} style={{ width: `${t.usageLevel}%` }} /></div>
           </button>
@@ -679,9 +679,9 @@ function TechTab({ onLog }: { onLog: (msg: string) => void }) {
           <Field label="VERSION"><input value={form.version} onChange={e => setForm(f => ({ ...f, version: e.target.value }))} className={inputClass} /></Field>
           <Field label="USAGE_%"><input type="number" value={form.usageLevel} onChange={e => setForm(f => ({ ...f, usageLevel: Number(e.target.value) }))} className={inputClass} /></Field>
         </div>
-        <div className="flex gap-6 border-t border-white/5 pt-8">
-          <button onClick={save} className="px-10 py-3 bg-cobalt text-white text-[10px] font-black uppercase tracking-widest rounded">SAVE_TOOL</button>
-          {editing !== null && <button onClick={() => { const updated = tools.filter((_, i) => i !== editing); setTools(updated); localStorage.setItem('portfolioTechstack', JSON.stringify(updated)); setEditing(null); setForm({ name: '', version: '', usageLevel: 80 }); onLog('DELETED'); }} className="text-err opacity-50 hover:opacity-100 text-[10px] font-black uppercase tracking-widest ml-auto">DELETE</button>}
+        <div className="flex gap-6 border-t border-white/15 pt-8">
+          <button onClick={save} className="px-10 py-3 bg-cobalt text-white text-xs font-black uppercase tracking-widest rounded">SAVE_TOOL</button>
+          {editing !== null && <button onClick={() => { const updated = tools.filter((_, i) => i !== editing); setTools(updated); localStorage.setItem('portfolioTechstack', JSON.stringify(updated)); setEditing(null); setForm({ name: '', version: '', usageLevel: 80 }); onLog('DELETED'); }} className="text-err opacity-50 hover:opacity-100 text-xs font-black uppercase tracking-widest ml-auto">DELETE</button>}
         </div>
       </div>
     </div>
@@ -728,14 +728,14 @@ function AmbitionsTab({ onLog }: { onLog: (msg: string) => void }) {
 
   return (
     <div className="flex flex-col gap-10">
-      <header className="border-b border-white/5 pb-3"><p className="text-[11px] text-white font-black tracking-widest uppercase">/ STRATEGIC_ROADMAP</p></header>
+      <header className="border-b border-white/15 pb-3"><p className="text-sm text-white font-black tracking-widest uppercase">/ STRATEGIC_ROADMAP</p></header>
       <div className="flex flex-col gap-2">
         {items.map((i, idx) => (
-          <button key={idx} onClick={() => { setEditingIdx(idx); setForm({ text: i.text, completed: i.completed }); }} className={`p-5 border text-left transition-all flex items-center gap-6 rounded-lg ${editingIdx === idx ? 'border-cobalt bg-cobalt/10 text-white shadow-lg' : 'border-white/5 bg-white/[0.03] hover:border-white/20 text-white'}`}>
+          <button key={idx} onClick={() => { setEditingIdx(idx); setForm({ text: i.text, completed: i.completed }); }} className={`p-5 border text-left transition-all flex items-center gap-6 rounded-lg ${editingIdx === idx ? 'border-cobalt bg-cobalt/10 text-white shadow-lg' : 'border-white/15 bg-white/[0.06] hover:border-white/20 text-white'}`}>
             <div className={`w-5 h-5 border rounded flex items-center justify-center transition-all ${i.completed ? (editingIdx === idx ? 'bg-white border-white' : 'bg-cobalt border-cobalt') : 'border-white/20'}`}>
-                {i.completed && <span className={`text-[12px] ${editingIdx === idx ? 'text-cobalt' : 'text-white'}`}>✓</span>}
+                {i.completed && <span className={`text-sm ${editingIdx === idx ? 'text-cobalt' : 'text-white'}`}>✓</span>}
             </div>
-            <span className="text-[12px] font-black uppercase tracking-wide flex-1">{i.text}</span>
+            <span className="text-sm font-black uppercase tracking-wide flex-1">{i.text}</span>
           </button>
         ))}
       </div>
@@ -745,9 +745,9 @@ function AmbitionsTab({ onLog }: { onLog: (msg: string) => void }) {
           <div className="flex-1 w-full"><Field label="GOAL_DESCRIPTION"><input value={form.text} onChange={e => setForm(f => ({ ...f, text: e.target.value }))} className={inputClass} /></Field></div>
           <div className="pb-2"><CheckField label="COMPLETED" value={form.completed} onChange={v => setForm(f => ({ ...f, completed: v }))} /></div>
         </div>
-        <div className="flex gap-6 border-t border-white/5 pt-8">
-          <button onClick={save} className="px-10 py-3 bg-cobalt text-white text-[10px] font-black uppercase tracking-widest rounded">SAVE_GOAL</button>
-          {editingIdx !== null && <button onClick={() => { const updated = items.filter((_, i) => i !== editingIdx); setItems(updated); localStorage.setItem('portfolioAmbitions', JSON.stringify(updated)); setEditingIdx(null); setForm({ text: '', completed: false }); onLog('DELETED'); }} className="text-err opacity-50 hover:opacity-100 text-[10px] font-black uppercase tracking-widest ml-auto">DELETE</button>}
+        <div className="flex gap-6 border-t border-white/15 pt-8">
+          <button onClick={save} className="px-10 py-3 bg-cobalt text-white text-xs font-black uppercase tracking-widest rounded">SAVE_GOAL</button>
+          {editingIdx !== null && <button onClick={() => { const updated = items.filter((_, i) => i !== editingIdx); setItems(updated); localStorage.setItem('portfolioAmbitions', JSON.stringify(updated)); setEditingIdx(null); setForm({ text: '', completed: false }); onLog('DELETED'); }} className="text-err opacity-50 hover:opacity-100 text-xs font-black uppercase tracking-widest ml-auto">DELETE</button>}
         </div>
       </div>
     </div>
@@ -808,7 +808,7 @@ function SettingsTab({ onLog }: { onLog: (msg: string) => void }) {
     <div className="flex flex-col gap-10">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <div className="bg-[#1a1a1a] border border-white/10 p-6 sm:p-10 space-y-10 shadow-2xl rounded-xl">
-          <p className="text-[11px] text-white font-black tracking-widest uppercase opacity-40">/ MASTER_CONTROLS</p>
+          <p className="text-sm text-white font-black tracking-widest uppercase opacity-40">/ MASTER_CONTROLS</p>
           <div className="space-y-8">
             <Field label="AVAILABILITY (%)"><input type="range" min={0} max={100} step={0.1} value={settings.availabilityValue} onChange={e => update({ availabilityValue: Number(e.target.value) })} className="w-full accent-cobalt h-1.5 bg-white/5 appearance-none rounded-full" /></Field>
             <Field label="SYSTEM_STATUS"><select value={settings.status} onChange={e => update({ status: e.target.value as any })} className={inputClass}><option value="ONLINE">ONLINE</option><option value="BUSY">BUSY</option><option value="OFFLINE">OFFLINE</option></select></Field>
@@ -816,24 +816,24 @@ function SettingsTab({ onLog }: { onLog: (msg: string) => void }) {
           </div>
         </div>
         <div className="bg-[#1a1a1a] border border-white/10 p-6 sm:p-10 space-y-10 shadow-2xl rounded-xl">
-          <p className="text-[11px] text-white font-black tracking-widest uppercase opacity-40">/ ENGINE_PARAMS</p>
+          <p className="text-sm text-white font-black tracking-widest uppercase opacity-40">/ ENGINE_PARAMS</p>
           <div className="space-y-10">
             <Field label={`DUST_THRESHOLD: ${settings.dustThresholdDays} DAYS`}><input type="range" min={7} max={365} value={settings.dustThresholdDays} onChange={e => update({ dustThresholdDays: Number(e.target.value) })} className="w-full accent-warn h-1.5 bg-white/5 appearance-none rounded-full" /></Field>
             <Field label={`GOLD_REQUIREMENT: ${settings.starsForGold} STARS`}><input type="range" min={0} max={50} value={settings.starsForGold} onChange={e => update({ starsForGold: Number(e.target.value) })} className="w-full accent-bronze h-1.5 bg-white/5 appearance-none rounded-full" /></Field>
           </div>
         </div>
         <div className="bg-[#1a1a1a] border border-white/10 p-6 sm:p-10 space-y-10 shadow-2xl col-span-1 md:col-span-2 rounded-xl">
-          <p className="text-[11px] text-white font-black tracking-widest uppercase opacity-40">/ ASSETS_&_CACHE</p>
+          <p className="text-sm text-white font-black tracking-widest uppercase opacity-40">/ ASSETS_&_CACHE</p>
           <div className="space-y-8">
             <Field label="CV_ENDPOINT">
               <div className="flex flex-col sm:flex-row gap-4 items-center">
-                <input value={settings.cvUrl} readOnly className={`${inputClass} flex-1 text-white/40`} />
+                <input value={settings.cvUrl} readOnly className={`${inputClass} flex-1 text-white/70`} />
                 <input type="file" onChange={uploadCv} className="hidden" id="cv-up" />
-                <label htmlFor="cv-up" className="w-full sm:w-auto px-10 py-3 border border-white/10 bg-white/5 text-white text-[10px] font-black uppercase cursor-pointer hover:bg-white hover:text-black transition-all rounded text-center">{cvLoading ? '...' : 'UPLOAD_PDF'}</label>
+                <label htmlFor="cv-up" className="w-full sm:w-auto px-10 py-3 border border-white/10 bg-white/5 text-white text-xs font-black uppercase cursor-pointer hover:bg-white hover:text-black transition-all rounded text-center">{cvLoading ? '...' : 'UPLOAD_PDF'}</label>
               </div>
             </Field>
-            <div className="pt-6 border-t border-white/5">
-              <button onClick={() => { if(confirm('RESET?')) { localStorage.clear(); window.location.reload(); } }} className="w-full py-4 border border-err/30 text-err text-[10px] font-black uppercase hover:bg-err/5 transition-all rounded tracking-[0.2em]">FACTORY_RESET_CACHE</button>
+            <div className="pt-6 border-t border-white/15">
+              <button onClick={() => { if(confirm('RESET?')) { localStorage.clear(); window.location.reload(); } }} className="w-full py-4 border border-err/30 text-err text-xs font-black uppercase hover:bg-err/5 transition-all rounded tracking-[0.2em]">FACTORY_RESET_CACHE</button>
             </div>
           </div>
         </div>
@@ -889,19 +889,19 @@ function PublishTab({ onLog }: { onLog: (msg: string) => void }) {
   return (
     <div className="flex flex-col gap-12">
       <div className="bg-[#1a1a1a] border border-white/10 p-8 sm:p-12 flex flex-col gap-10 shadow-2xl rounded-xl">
-        <div><p className="text-[13px] text-white font-black tracking-[0.3em] uppercase mb-2">/ DEPLOYMENT_BRIDGE</p><p className="text-[11px] text-white/40 tracking-widest uppercase">Sync local state with production grid.</p></div>
-        <div className="p-6 bg-black/40 border border-white/10 rounded overflow-hidden"><p className="text-[9px] text-white/30 tracking-widest uppercase mb-1">target_uplink:</p><p className="text-[12px] text-cobalt font-black tracking-[0.2em] truncate">{repo}</p></div>
-        <button onClick={publish} disabled={publishing} className="bg-cobalt text-white text-[11px] font-black tracking-[0.4em] py-6 hover:bg-cobalt-light transition-all shadow-[0_0_50px_rgba(0,85,255,0.2)] rounded-lg">{publishing ? 'SYNCHRONIZING...' : 'EXECUTE_PUBLISH_SEQUENCE \u2191'}</button>
+        <div><p className="text-base text-white font-black tracking-[0.3em] uppercase mb-2">/ DEPLOYMENT_BRIDGE</p><p className="text-sm text-white/70 tracking-widest uppercase">Sync local state with production grid.</p></div>
+        <div className="p-6 bg-black/40 border border-white/10 rounded overflow-hidden"><p className="text-xs text-white/70 tracking-widest uppercase mb-1">target_uplink:</p><p className="text-sm text-cobalt font-black tracking-[0.2em] truncate">{repo}</p></div>
+        <button onClick={publish} disabled={publishing} className="bg-cobalt text-white text-sm font-black tracking-[0.4em] py-6 hover:bg-cobalt-light transition-all shadow-[0_0_50px_rgba(0,85,255,0.2)] rounded-lg">{publishing ? 'SYNCHRONIZING...' : 'EXECUTE_PUBLISH_SEQUENCE \u2191'}</button>
       </div>
       <div className="space-y-6">
-        <p className="text-[10px] text-white/40 tracking-widest font-black uppercase">/ BUILD_HISTORY</p>
-        <div className="border border-white/10 bg-[#1a1a1a] divide-y divide-white/5 shadow-2xl rounded-xl overflow-hidden">
+        <p className="text-xs text-white/70 tracking-widest font-black uppercase">/ BUILD_HISTORY</p>
+        <div className="border border-white/10 bg-[#1a1a1a] divide-y divide-white/10 shadow-2xl rounded-xl overflow-hidden">
           {builds.length === 0 ? (
-            <div className="p-8 text-center text-[10px] text-white/20 uppercase tracking-widest">No history recorded</div>
+            <div className="p-8 text-center text-xs text-white/20 uppercase tracking-widest">No history recorded</div>
           ) : builds.map(b => (
             <div key={b.buildNumber} className="px-8 py-5 flex items-center justify-between group hover:bg-white/5 transition-colors">
-              <div className="flex items-center gap-6"><span className="text-cobalt font-black">#{b.buildNumber}</span><span className="text-[10px] text-white tracking-widest uppercase font-bold">{b.status}</span><span className="text-[10px] text-white/30 font-mono">{b.timestamp}</span></div>
-              <span className="text-[9px] text-white/20 tracking-widest italic opacity-0 group-hover:opacity-100 transition-opacity hidden sm:inline">[{b.files.join(', ')}]</span>
+              <div className="flex items-center gap-6"><span className="text-cobalt font-black">#{b.buildNumber}</span><span className="text-xs text-white tracking-widest uppercase font-bold">{b.status}</span><span className="text-xs text-white/70 font-mono">{b.timestamp}</span></div>
+              <span className="text-xs text-white/20 tracking-widest italic opacity-0 group-hover:opacity-100 transition-opacity hidden sm:inline">[{b.files.join(', ')}]</span>
             </div>
           ))}
         </div>
@@ -974,8 +974,8 @@ function DataTab({ onLog }: { onLog: (msg: string) => void }) {
 
   return (
     <div className="flex flex-col gap-10">
-      <header className="flex justify-between items-center border-b border-white/5 pb-3">
-        <p className="text-[11px] text-white font-black tracking-widest uppercase">/ RAW_DATA_EDITOR</p>
+      <header className="flex justify-between items-center border-b border-white/15 pb-3">
+        <p className="text-sm text-white font-black tracking-widest uppercase">/ RAW_DATA_EDITOR</p>
       </header>
       
       <div className="flex flex-wrap gap-2">
@@ -983,10 +983,10 @@ function DataTab({ onLog }: { onLog: (msg: string) => void }) {
           <button 
             key={f.key}
             onClick={() => setSelectedFile(f.key)}
-            className={`px-4 py-2 text-[10px] font-black uppercase tracking-widest transition-all rounded ${
+            className={`px-4 py-2 text-xs font-black uppercase tracking-widest transition-all rounded ${
               selectedFile === f.key 
                 ? 'bg-cobalt text-white' 
-                : 'border border-white/10 text-white/40 hover:text-white hover:border-white/30'
+                : 'border border-white/10 text-white/70 hover:text-white hover:border-white/70'
             }`}
           >
             {f.label}
@@ -996,8 +996,8 @@ function DataTab({ onLog }: { onLog: (msg: string) => void }) {
 
       <div className="bg-[#1a1a1a] border border-white/10 p-6 shadow-2xl rounded-xl">
         <div className="flex justify-between items-center mb-4">
-          <p className="text-[10px] text-white/40 tracking-widest uppercase">{DATA_FILES.find(f => f.key === selectedFile)?.path}</p>
-          <p className={`text-[10px] font-black uppercase tracking-widest ${
+          <p className="text-xs text-white/70 tracking-widest uppercase">{DATA_FILES.find(f => f.key === selectedFile)?.path}</p>
+          <p className={`text-xs font-black uppercase tracking-widest ${
             saveStatus === 'saved' ? 'text-green-500' : 
             saveStatus === 'error' ? 'text-err' : 
             saveStatus === 'saving' ? 'text-cobalt animate-pulse' : 'text-white/20'
@@ -1016,27 +1016,27 @@ function DataTab({ onLog }: { onLog: (msg: string) => void }) {
           <textarea
             value={rawData}
             onChange={e => { setRawData(e.target.value); setSaveStatus('idle'); }}
-            className="w-full h-96 bg-black/40 border border-white/10 p-4 text-[11px] text-white font-mono focus:outline-none focus:border-cobalt/50 rounded resize-none"
+            className="w-full h-96 bg-black/40 border border-white/10 p-4 text-sm text-white font-mono focus:outline-none focus:border-cobalt/50 rounded resize-none"
             spellCheck={false}
           />
         )}
         
-        <div className="flex gap-4 mt-4 pt-4 border-t border-white/5">
-          <button onClick={save} disabled={saveStatus === 'saving' || loading} className="px-8 py-3 bg-cobalt text-white text-[10px] font-black uppercase tracking-widest hover:bg-cobalt-light transition-all rounded">
+        <div className="flex gap-4 mt-4 pt-4 border-t border-white/15">
+          <button onClick={save} disabled={saveStatus === 'saving' || loading} className="px-8 py-3 bg-cobalt text-white text-xs font-black uppercase tracking-widest hover:bg-cobalt-light transition-all rounded">
             SAVE_TO_MEMORY
           </button>
-          <button onClick={() => loadFile(selectedFile)} disabled={loading} className="px-6 py-3 border border-white/10 text-white/40 text-[10px] font-black uppercase hover:text-white tracking-widest transition-all rounded">
+          <button onClick={() => loadFile(selectedFile)} disabled={loading} className="px-6 py-3 border border-white/10 text-white/70 text-xs font-black uppercase hover:text-white tracking-widest transition-all rounded">
             RELOAD
           </button>
-          <button onClick={() => { try { setRawData(JSON.stringify(JSON.parse(rawData), null, 2)); onLog('FORMATTED'); } catch(e) { onLog('FORMAT_ERROR'); }}} className="px-6 py-3 border border-white/10 text-white/40 text-[10px] font-black uppercase hover:text-white tracking-widest transition-all rounded">
+          <button onClick={() => { try { setRawData(JSON.stringify(JSON.parse(rawData), null, 2)); onLog('FORMATTED'); } catch(e) { onLog('FORMAT_ERROR'); }}} className="px-6 py-3 border border-white/10 text-white/70 text-xs font-black uppercase hover:text-white tracking-widest transition-all rounded">
             FORMAT
           </button>
         </div>
       </div>
       
       <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded">
-        <p className="text-[10px] text-amber-500 tracking-widest uppercase font-black">⚠ EDITS ARE SAVED TO MEMORY</p>
-        <p className="text-[9px] text-white/40 mt-1">Use PUBLISH tab to push to production.</p>
+        <p className="text-xs text-amber-500 tracking-widest uppercase font-black">⚠ EDITS ARE SAVED TO MEMORY</p>
+        <p className="text-xs text-white/70 mt-1">Use PUBLISH tab to push to production.</p>
       </div>
     </div>
   );
@@ -1072,7 +1072,7 @@ export default function AdminPanel() {
       
       {/* MOBILE HEADER */}
       <header className="lg:hidden h-16 bg-[#121212] border-b border-white/10 px-6 flex items-center justify-between sticky top-0 z-50 backdrop-blur-xl">
-        <p className="text-[14px] font-black tracking-[0.2em] uppercase">Core_Admin</p>
+        <p className="text-base font-black tracking-[0.2em] uppercase">Core_Admin</p>
         <button 
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
           className="w-10 h-10 flex items-center justify-center bg-white/5 rounded-lg border border-white/10 active:scale-95 transition-all"
@@ -1083,14 +1083,14 @@ export default function AdminPanel() {
 
       {/* SIDEBAR NAVIGATION */}
       <aside className={`
-        fixed lg:relative inset-y-0 left-0 w-80 bg-[#121212] border-r border-white/5 flex flex-col shrink-0 z-[60] transition-transform duration-300 shadow-2xl
+        fixed lg:relative inset-y-0 left-0 w-80 bg-[#121212] border-r border-white/15 flex flex-col shrink-0 z-[60] transition-transform duration-300 shadow-2xl
         ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
-        <div className="hidden lg:flex p-12 border-b border-white/5 flex flex-col gap-2">
-          <p className="text-[16px] text-white font-black tracking-[0.4em] uppercase leading-none">Core_Admin</p>
+        <div className="hidden lg:flex p-12 border-b border-white/15 flex flex-col gap-2">
+          <p className="text-lg text-white font-black tracking-[0.4em] uppercase leading-none">Core_Admin</p>
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 bg-cobalt rounded-full animate-pulse shadow-[0_0_10px_rgba(0,85,255,0.8)]" />
-            <p className="text-[9px] text-cobalt tracking-widest uppercase font-black">Active_Session</p>
+            <p className="text-xs text-cobalt tracking-widest uppercase font-black">Active_Session</p>
           </div>
         </div>
 
@@ -1099,23 +1099,23 @@ export default function AdminPanel() {
             <button 
               key={t.id} 
               onClick={() => { setTab(t.id); addLog(`NAV_TO: ${t.id.toUpperCase()}`); setMobileMenuOpen(false); }} 
-              className={`text-left px-8 py-5 text-[11px] font-black tracking-[0.3em] uppercase transition-all duration-200 border-l-2 flex items-center gap-4 rounded-r-lg ${tab === t.id ? 'bg-cobalt/10 text-cobalt border-l-cobalt shadow-[inset_0_0_20px_rgba(0,85,255,0.05)]' : 'border-l-transparent text-white/20 hover:text-white/40 hover:bg-white/2'}`}
+              className={`text-left px-8 py-5 text-sm font-black tracking-[0.3em] uppercase transition-all duration-200 border-l-2 flex items-center gap-4 rounded-r-lg ${tab === t.id ? 'bg-cobalt/10 text-cobalt border-l-cobalt shadow-[inset_0_0_20px_rgba(0,85,255,0.05)]' : 'border-l-transparent text-white/20 hover:text-white/70 hover:bg-white/2'}`}
             >
               <span className="opacity-40">{t.icon}</span> {t.label}
             </button>
           ))}
         </nav>
         
-        <div className="p-8 border-t border-white/5 flex flex-col gap-3 bg-[#0d0d0d]/40">
+        <div className="p-8 border-t border-white/15 flex flex-col gap-3 bg-[#0d0d0d]/40">
           <button 
             onClick={() => window.location.href = '/'}
-            className="w-full py-4 border border-white/10 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all flex items-center justify-center gap-3 rounded"
+            className="w-full py-4 border border-white/10 text-xs font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all flex items-center justify-center gap-3 rounded"
           >
             <span>←</span> EXIT_TO_SITE
           </button>
           <button 
             onClick={() => { sessionStorage.removeItem(SESSION_KEY); window.location.reload(); }} 
-            className="py-2 text-[9px] text-err/40 hover:text-err tracking-widest uppercase transition-all text-center font-bold"
+            className="py-2 text-xs text-err/40 hover:text-err tracking-widest uppercase transition-all text-center font-bold"
           >
             ✕ TERMINATE_SESSION
           </button>
@@ -1140,16 +1140,16 @@ export default function AdminPanel() {
       </main>
 
       {/* SESSION HISTORY (DESKTOP ONLY) */}
-      <aside className="hidden xl:flex w-80 border-l border-white/5 bg-[#121212] flex flex-col shrink-0 shadow-2xl overflow-hidden">
-        <div className="p-10 border-b border-white/5 bg-[#121212]">
-          <p className="text-[10px] text-white/40 tracking-widest font-black uppercase leading-none">/ SESSION_HISTORY</p>
+      <aside className="hidden xl:flex w-80 border-l border-white/15 bg-[#121212] flex flex-col shrink-0 shadow-2xl overflow-hidden">
+        <div className="p-10 border-b border-white/15 bg-[#121212]">
+          <p className="text-xs text-white/70 tracking-widest font-black uppercase leading-none">/ SESSION_HISTORY</p>
         </div>
-        <div className="flex-1 p-8 flex flex-col gap-1 overflow-y-auto text-[10px] opacity-20 hover:opacity-100 transition-opacity custom-scrollbar">
-          {logs.map((l, i) => <p key={i} className={`py-1 border-b border-white/[0.03] ${i === 0 ? 'text-cobalt font-black' : 'text-white/40'}`}> {l}</p>)}
+        <div className="flex-1 p-8 flex flex-col gap-1 overflow-y-auto text-xs opacity-20 hover:opacity-100 transition-opacity custom-scrollbar">
+          {logs.map((l, i) => <p key={i} className={`py-1 border-b border-white/[0.03] ${i === 0 ? 'text-cobalt font-black' : 'text-white/70'}`}> {l}</p>)}
         </div>
-        <div className="p-10 bg-[#121212] border-t border-white/5 flex flex-col gap-4">
-          <div className="flex flex-col gap-1"><span className="text-[9px] text-white/20 uppercase tracking-widest font-black italic">operator:</span><p className="text-[11px] text-white font-black uppercase truncate">admin@gest_core</p></div>
-          <div className="flex flex-col gap-1"><span className="text-[9px] text-white/20 uppercase tracking-widest font-black italic">status:</span><p className="text-[11px] text-green-500/80 font-black uppercase">ENCRYPTED</p></div>
+        <div className="p-10 bg-[#121212] border-t border-white/15 flex flex-col gap-4">
+          <div className="flex flex-col gap-1"><span className="text-xs text-white/20 uppercase tracking-widest font-black italic">operator:</span><p className="text-sm text-white font-black uppercase truncate">admin@gest_core</p></div>
+          <div className="flex flex-col gap-1"><span className="text-xs text-white/20 uppercase tracking-widest font-black italic">status:</span><p className="text-sm text-green-500/80 font-black uppercase">ENCRYPTED</p></div>
         </div>
       </aside>
 
