@@ -23,14 +23,12 @@
   --border-radius-none: 0px;
   --border-radius-DEFAULT: 0px;
 
-  /* Tama\u00f1os de texto est\u00e1ndar */
-  --font-size-ui-label: 10px;
-  --font-size-ui-value: 11px;
-  --font-size-ui-header: 13px;
-}
-
-* {
-  border-radius: 0 !important;
+  /* Tama\u00f1os de texto est\u00e1ndar (5-step rem scale) */
+  --font-size-ui-xs: 0.75rem;
+  --font-size-ui-sm: 0.875rem;
+  --font-size-ui-base: 1rem;
+  --font-size-ui-lg: 1.125rem;
+  --font-size-ui-xl: 1.25rem;
 }
 
 html,
@@ -38,9 +36,13 @@ body {
   font-family: 'IBM Plex Mono', monospace;
   background-color: #0d0d0d;
   color: #ffffff;
-  font-size: 18px; /* Subimos la base para que todo escale */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Sharp corner utility — opt-in replacement for global border-radius:0 */
+.sharp-corner {
+  border-radius: 0 !important;
 }
 
 /* Industrial Panel Style */
