@@ -1,5 +1,11 @@
 [
   {
+    "sha": "840e079a4f1a0387d82779f220021f5800aef008",
+    "message": "fix: restrict auto-refresh and cron sync to public projects",
+    "author": "blak0p",
+    "date": "2026-06-03"
+  },
+  {
     "sha": "bcb9e21b7776d683e7dc42d0e07507b0fcd82762",
     "message": "fix(profile): restore natural layout, remove flex stretch",
     "author": "blak0p",
