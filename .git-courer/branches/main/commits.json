@@ -1,5 +1,29 @@
 [
   {
+    "sha": "3ad0bdb16f5b4326f99ec46e3fc0f4084e7a0c50",
+    "message": "fix: update title and description to Backend Developer",
+    "author": "blak0p",
+    "date": "2026-06-03"
+  },
+  {
+    "sha": "825892f7c9f922c1a029835bc7194297030d0884",
+    "message": "feat: manual tech stack curation, remove auto-derive",
+    "author": "blak0p",
+    "date": "2026-06-03"
+  },
+  {
+    "sha": "986a39e3a45330148d1d096a60d4110fc597a5e5",
+    "message": "data: full update projects and roadmap",
+    "author": "Alejandro",
+    "date": "2026-06-03"
+  },
+  {
+    "sha": "8868422bcf7617eb7335775dccfdd7f7b033112e",
+    "message": "data: full update projects and roadmap",
+    "author": "Alejandro",
+    "date": "2026-06-03"
+  },
+  {
     "sha": "840e079a4f1a0387d82779f220021f5800aef008",
     "message": "fix: restrict auto-refresh and cron sync to public projects",
     "author": "blak0p",

@@ -1,43 +1,44 @@
-# Astro Starter Kit: Minimal
+# Alejandro Martín — Portfolio
 
-```sh
-pnpm create astro@latest -- --template minimal
-```
+**I'm 18. This is what I can build.**
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+This is not a template. This is not a generic Bootstrap resume. This is an industrial-grade, custom-built portfolio that reflects how I think: structural, honest, and allergic to fluff.
 
-## 🚀 Project Structure
+---
 
-Inside of your Astro project, you'll see the following folders and files:
+## What makes it different
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+### Terminal aesthetic, not templates
+The entire UI is built around a terminal/industrial theme — scanlines, CRT boot animations, glitch effects, monospace everything. It looks like a control panel because that's the vibe I wanted. A recruiter will open it and know immediately this is not another "creative" portfolio on ThemeForest.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+### Real-time terminal console
+An embedded xterm console with live logs. It's not a gif. It's not a screenshot. It actually runs. This is where I stream project milestones, system events, and activity. It shows the portfolio is alive.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+### Smart project ranking
+Projects auto-rank by stars + manual boosts. Stale repos get flagged with "dust" indicators. Recruiters see what matters most first, not a flat list. Private repos show as CLASSIFIED with NDA notice — transparent about what I can't show.
 
-Any static assets, like images, can be placed in the `public/` directory.
+### Admin panel (invisible to you)
+There's a full admin backend with GitHub OAuth. I manage projects, tech stack, roadmap, and settings from there. Changes deploy to production from the panel itself. You won't see it, but the fact that it exists means the content stays fresh without touching code.
 
-## 🧞 Commands
+### Everything is data-driven
+Projects, tech stack, ambitions, settings — all JSON. The UI is a rendering layer. I can update everything from the admin panel or directly in the data files. No hardcoded HTML pages.
 
-All commands are run from the root of the project, from a terminal:
+---
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+## Quick facts
 
-## 👀 Want to learn more?
+| | |
+|---|---|
+| Age | 18 |
+| Focus | Backend, infrastructure, dev tooling |
+| Main project | [git-courer](https://github.com/blak0p/git-courer) — MCP server for Git (29 ★) |
+| Philosophy | Solve real problems. Ask why before how. |
+| Looking for | Junior/entry backend role — remote or Madrid |
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Live
+
+[alejandro-m-p.com](https://www.alejandro-m-p.com)
+
+## Contact
+
+martinpujaltea@gmail.com
