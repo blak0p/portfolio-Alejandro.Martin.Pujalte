@@ -183,7 +183,7 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
     case 'help': {
       const isFull = args.includes('-a');
       const publicCmds = ['ls', 'cd', 'cat', 'pwd', 'tree', 'wget', 'scan', 'status', 'whoami', 'neofetch', 'clear', 'exit'];
-      const secretCmds = ['sudo', 'approve', 'hire-me', 'matrix', 'glitch', 'rm', 'regen module', 'top', 'coffee', 'ssh', 'stars'];
+      const secretCmds = ['sudo', 'approve', 'hire-me', 'matrix', 'glitch', 'rm', 'rm -rf', 'regen module', 'top', 'coffee', 'ssh', 'stars'];
       
       if (isFull) {
         const lines = [

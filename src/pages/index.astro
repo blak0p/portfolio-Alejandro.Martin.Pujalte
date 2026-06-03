@@ -28,7 +28,7 @@ const totalTech = techStack.length;
 ---
 
 <BaseLayout 
-  title={`${identityData.name.replace('\n', ' ')} \u2014 Systems Engineer`} 
+  title={`${identityData.name.replace('\n', ' ')} \u2014 Backend Developer`} 
   description={identityData.bio}
   handle={identityData.handle}
   status={identityData.status}
@@ -92,8 +92,8 @@ const totalTech = techStack.length;
                 </div>
                 <div class="h-0.5 w-full bg-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]"></div>
               </div>
-              <div class="text-xs text-text-faint tracking-widest uppercase opacity-60 mb-2">// from 5 featured repos (avg)</div>
-              <TechMatrix tools={techStack} projects={projects} client:idle />
+              <div class="text-xs text-text-faint tracking-widest uppercase opacity-60 mb-2">// curated from admin panel</div>
+              <TechMatrix tools={techStack} client:idle />
             </div>
           </section>
 

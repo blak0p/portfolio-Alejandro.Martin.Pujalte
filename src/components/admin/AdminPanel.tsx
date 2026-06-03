@@ -558,7 +558,6 @@ function TechTab({ onLog }: { onLog: (msg: string) => void }) {
   const [tools, setTools] = useState<TechTool[]>([]);
   const [editing, setEditing] = useState<number | null>(null);
   const [form, setForm] = useState({ name: '', version: '', usageLevel: 80 });
-  const [loading, setLoading] = useState(false);
 
   const load = useCallback(async () => {
     // localStorage first
@@ -586,67 +585,6 @@ function TechTab({ onLog }: { onLog: (msg: string) => void }) {
     }
   }
 
-  async function scanAll() {
-    // Read from localStorage first, then fallback to data
-    let projectsLocal: Project[] = [];
-    
-    const stored = localStorage.getItem('portfolioProjects');
-    if (stored) {
-      projectsLocal = JSON.parse(stored);
-    } else {
-      try {
-        const res = await fetch('/data/projects.json');
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data)) projectsLocal = data;
-        }
-      } catch (e) {}
-    }
-    
-    if (projectsLocal.length === 0) {
-      onLog('NO_PROJECTS_FOUND');
-      return;
-    }
-    
-    // Tomar los PRIMEROS 5 proyectos (orden de la lista)
-    const top5 = projectsLocal.slice(0, 5);
-    
-    // Calcular media solo de esos 5
-    const totals: Record<string, { sum: number; count: number }> = {};
-    for (const p of top5) {
-      const stackData = p.stackWithUsage || p.specs?.stackWithUsage;
-      if (stackData && stackData.length > 0) {
-        for (const s of stackData) {
-          const clean = s.name?.toString().toUpperCase().trim();
-          if (clean) {
-            totals[clean] = totals[clean] || { sum: 0, count: 0 };
-            totals[clean].sum += s.usageLevel || 0;
-            totals[clean].count += 1;
-          }
-        }
-      } else {
-        const stack = p.stack || [];
-        for (const item of stack) {
-          const clean = item.toString().toUpperCase().trim();
-          if (clean) {
-            totals[clean] = totals[clean] || { sum: 0, count: 0 };
-            totals[clean].count += 1;
-          }
-        }
-      }
-    }
-    
-    const sorted = Object.entries(totals)
-      .map(([n, v]) => ({ name: n.toUpperCase(), usageLevel: Math.round(v.sum / v.count) }))
-      .sort((a, b) => b.usageLevel - a.usageLevel);
-    
-    const derived: TechTool[] = sorted.map(s => ({ name: s.name, version: '', usageLevel: s.usageLevel }));
-    
-    setTools(derived); 
-    localStorage.setItem('portfolioTechstack', JSON.stringify(derived));
-    onLog(`SCAN_COMPLETE: ${sorted.length} TECHNOLOGIES (TOP 5)`);
-  }
-
   function save() {
     if (!form.name) return;
     const tool: TechTool = { ...form, name: form.name.toUpperCase() };
@@ -657,9 +595,8 @@ function TechTab({ onLog }: { onLog: (msg: string) => void }) {
 
   return (
     <div className="flex flex-col gap-10">
-      <header className="flex justify-between items-center border-b border-white/15 pb-3">
+      <header className="flex items-center border-b border-white/15 pb-3">
         <p className="text-sm text-white font-black tracking-widest uppercase">/ TECH_MATRIX_REGISTRY</p>
-        <button onClick={scanAll} disabled={loading} className="text-xs text-cobalt hover:underline uppercase transition-all tracking-widest">{loading ? 'SYNCING...' : '[SYNC_LOCAL]'}</button>
       </header>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {tools.map((t, i) => (
