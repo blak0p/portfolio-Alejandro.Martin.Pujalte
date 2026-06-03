@@ -145,11 +145,11 @@ export default function Roadmap({ ambitions: initial }: RoadmapProps) {
   const removeGoal = (id: string) => setItems(prev => prev.filter(a => a.id !== id));
 
   return (
-    <div className="border border-white/10 bg-carbono-surface p-4 island-load h-full overflow-y-auto">
+    <div className="border border-white/15 bg-carbono-surface p-4 island-load h-full overflow-y-auto">
       {items.length === 0 && (
         <div className="text-center py-8">
-          <p className="text-[14px] text-text-faint tracking-widest">NO_ROADMAP_ITEMS</p>
-          <p className="text-[12px] text-cobalt/60 mt-2">Add goals from admin panel</p>
+          <p className="text-base text-text-faint tracking-widest">NO_ROADMAP_ITEMS</p>
+          <p className="text-sm text-cobalt/60 mt-2">Add goals from admin panel</p>
         </div>
       )}
       {items.length > 0 && (
@@ -158,21 +158,21 @@ export default function Roadmap({ ambitions: initial }: RoadmapProps) {
             const sectionItems = items.filter(a => a.section === section);
             const { label, timeframe } = sectionMeta[section];
             return (
-              <div key={section} className="border border-white/10 bg-carbono p-4 flex flex-col gap-3">
-                <div className="flex justify-between items-end border-b border-white/10 pb-2">
+              <div key={section} className="border border-white/15 bg-carbono p-4 flex flex-col gap-3">
+                <div className="flex justify-between items-end border-b border-white/15 pb-2">
                   {(label || timeframe) ? (
                     <>
-                      <p className="text-[14px] text-cobalt tracking-widest font-bold">{label}</p>
-                      <p className="text-[11px] text-text-faint tracking-widest italic">{timeframe}</p>
+                      <p className="text-base text-cobalt tracking-widest font-bold">{label}</p>
+                      <p className="text-sm text-text-faint tracking-widest italic">{timeframe}</p>
                     </>
                   ) : (
-                    <p className="text-[14px] text-cobalt tracking-widest font-bold">{section.toUpperCase()}</p>
+                    <p className="text-base text-cobalt tracking-widest font-bold">{section.toUpperCase()}</p>
                   )}
                 </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
                 {sectionItems.length === 0 && (
-                  <p className="text-[14px] text-text-faint tracking-widest">NO_GOALS_REGISTERED</p>
+                  <p className="text-base text-text-faint tracking-widest">NO_GOALS_REGISTERED</p>
                 )}
                 {sectionItems.map(a => (
                   <div key={a.id} className="flex items-start gap-1 group">
@@ -186,7 +186,7 @@ export default function Roadmap({ ambitions: initial }: RoadmapProps) {
                     {isAdmin && (
                       <button
                         onClick={() => removeGoal(a.id)}
-                        className="text-[14px] text-err/50 hover:text-err transition-colors shrink-0 mt-0.5 opacity-0 group-hover:opacity-100"
+                        className="text-base text-err/50 hover:text-err transition-colors shrink-0 mt-0.5 opacity-0 group-hover:opacity-100"
                       >×</button>
                     )}
                   </div>
@@ -205,17 +205,17 @@ export default function Roadmap({ ambitions: initial }: RoadmapProps) {
                         if (e.key === 'Escape') { setAdding(null); setNewText(''); }
                       }}
                       placeholder="New goal..."
-                      className="bg-carbono-surface border border-white/20 px-2 py-1 text-[14px] text-white font-mono w-full focus:outline-none focus:border-cobalt"
+                      className="bg-carbono-surface border border-white/30 px-2 py-1 text-base text-white font-mono w-full focus:outline-none focus:border-cobalt"
                     />
                     <div className="flex gap-1">
-                      <button onClick={() => addGoal(section)} className="flex-1 bg-cobalt text-white text-[14px] tracking-widest py-1 hover:bg-cobalt-light transition-colors">ADD</button>
-                      <button onClick={() => { setAdding(null); setNewText(''); }} className="text-[14px] text-text-faint px-2 hover:text-white">CANCEL</button>
+                      <button onClick={() => addGoal(section)} className="flex-1 bg-cobalt text-white text-base tracking-widest py-1 hover:bg-cobalt-light transition-colors">ADD</button>
+                      <button onClick={() => { setAdding(null); setNewText(''); }} className="text-base text-text-faint px-2 hover:text-white">CANCEL</button>
                     </div>
                   </div>
                 ) : (
                   <button
                     onClick={() => { setAdding(section); setNewText(''); }}
-                    className="text-[14px] text-text-faint hover:text-cobalt tracking-widest uppercase transition-colors mt-1 text-left"
+                    className="text-base text-text-faint hover:text-cobalt tracking-widest uppercase transition-colors mt-1 text-left"
                   >
                     + ADD_GOAL
                   </button>

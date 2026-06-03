@@ -24,14 +24,14 @@ export default function AllProjectsModal({ projects, onClose }: AllProjectsModal
           className="bg-carbono-surface border border-white/15 w-full max-w-5xl mx-auto flex flex-col max-h-full"
           onClick={e => e.stopPropagation()}
         >
-          <div className="flex items-center justify-between border-b border-white/10 px-5 py-3 shrink-0">
+          <div className="flex items-center justify-between border-b border-white/15 px-5 py-3 shrink-0">
             <div className="flex items-center gap-3">
               <span className="text-xs font-bold text-white tracking-widest">ALL_PROJECTS</span>
-              <span className="text-[10px] text-text-faint tracking-widest">({sorted.length} deployed)</span>
+              <span className="text-xs text-text-faint tracking-widest">({sorted.length} deployed)</span>
             </div>
             <button
               onClick={onClose}
-              className="text-[10px] text-text-faint hover:text-white tracking-widest border border-white/15 px-2 py-1 hover:border-white/40 transition-colors"
+              className="text-xs text-text-faint hover:text-white tracking-widest border border-white/15 px-2 py-1 hover:border-white/40 transition-colors"
             >
               [ESC]
             </button>

@@ -41,7 +41,7 @@ export default function FavoritesSection() {
           <h3 className="text-xs font-bold text-bronze tracking-widest uppercase">
             PINNED_DEPLOYMENTS
           </h3>
-          <span className="text-[10px] text-bronze/50 tracking-widest">[{favorites.length}]</span>
+          <span className="text-xs text-bronze/70 tracking-widest">[{favorites.length}]</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
           {favorites.map(p => (

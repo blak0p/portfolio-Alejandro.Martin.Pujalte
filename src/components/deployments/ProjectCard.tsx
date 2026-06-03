@@ -37,7 +37,7 @@ function getEntropyStyle(pushedAt: string | undefined, thresholdDays: number): R
 const statusStyle: Record<string, string> = {
   IN_PROGRESS: 'text-warn border-warn/50 bg-warn/10',
   COMPLETED:   'text-cobalt border-cobalt/50 bg-cobalt/10',
-  PAUSED:      'text-white/40 border-white/20 bg-white/5',
+  PAUSED:      'text-white/70 border-white/30 bg-white/5',
   ARCHIVED:    'text-err/60 border-err/30 bg-err/5',
 };
 
@@ -72,7 +72,7 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
         className={`relative aspect-square cursor-pointer group overflow-hidden border transition-all duration-150
           ${isGold
             ? 'border-bronze crt-flicker'
-            : 'border-white/10 hover:border-white/40'
+            : 'border-white/15 hover:border-white/40'
           }`}
         style={{
           boxShadow: isGold ? '0 0 24px rgba(184,115,51,0.2)' : undefined,
@@ -106,7 +106,7 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
           />
         ) : (
           <div className="absolute inset-0 bg-carbono-mid flex items-center justify-center">
-            <span className="text-[10px] text-text-faint tracking-widest">NO_PREVIEW</span>
+            <span className="text-xs text-text-faint tracking-widest">NO_PREVIEW</span>
           </div>
         )}
 
@@ -119,9 +119,9 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
         {project.isPrivate && (
           <div className="absolute inset-0 redacted-stripes flex flex-col items-center justify-center gap-1.5">
             <div className="border-2 border-err/70 px-2.5 py-0.5 bg-carbono/80" style={{ transform: 'rotate(-6deg)' }}>
-              <span className="text-err text-[9px] font-bold tracking-[0.3em] uppercase">CLASSIFIED</span>
+              <span className="text-err text-xs font-bold tracking-[0.3em] uppercase">CLASSIFIED</span>
             </div>
-            <span className="text-[8px] text-white/40 tracking-widest">Private · NDA</span>
+            <span className="text-xs text-white/70 tracking-widest">Private · NDA</span>
           </div>
         )}
 
@@ -129,17 +129,17 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
 
         <div className="absolute top-2 left-2 hidden @[180px]:flex gap-1.5">
           {status && statusStyle[status] && (
-            <span className={`text-[10px] font-bold tracking-widest uppercase border px-2 py-1 leading-none backdrop-blur-sm ${statusStyle[status]}`}>
+            <span className={`text-xs font-bold tracking-widest uppercase border px-2 py-1 leading-none backdrop-blur-sm ${statusStyle[status]}`}>
               {status.replace('_', ' ')}
             </span>
           )}
           {project.isFavorite && (
-            <span className={`text-[10px] font-bold tracking-widest uppercase border px-2 py-1 leading-none text-bronze border-bronze/50 bg-bronze/20 backdrop-blur-sm`}>
+            <span className={`text-xs font-bold tracking-widest uppercase border px-2 py-1 leading-none text-bronze border-bronze/50 bg-bronze/20 backdrop-blur-sm`}>
               PINNED
             </span>
           )}
           {dustLabel && (
-            <span className="text-[9px] font-bold tracking-widest uppercase border px-2 py-1 leading-none text-white/35 border-white/15 bg-black/50 backdrop-blur-sm">
+            <span className="text-xs font-bold tracking-widest uppercase border px-2 py-1 leading-none text-white/70 border-white/15 bg-black/50 backdrop-blur-sm">
               {dustLabel}
             </span>
           )}
@@ -153,17 +153,17 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
         )}
 
         <div className="absolute bottom-0 left-0 right-0 px-3 pb-3 pt-6">
-          <p className="text-[14px] font-bold tracking-widest uppercase leading-tight text-white drop-shadow-md truncate">
+          <p className="text-base font-bold tracking-widest uppercase leading-tight text-white drop-shadow-md truncate">
             {project.name}
           </p>
           <div className="hidden @[250px]:flex flex-wrap gap-1.5 mt-2">
             {[...new Set(project.stack)].slice(0, 3).map(tech => (
-              <span key={tech} className="text-[10px] border px-2 py-1 tracking-widest uppercase backdrop-blur-sm border-white/25 text-white/70 bg-black/40">
+              <span key={tech} className="text-xs border px-2 py-1 tracking-widest uppercase backdrop-blur-sm border-white/15 text-white/70 bg-black/40">
                 {tech}
               </span>
             ))}
             {project.stack.length > 3 && (
-              <span className="text-[10px] text-white/60 py-1">+{project.stack.length - 3}</span>
+              <span className="text-xs text-white/70 py-1">+{project.stack.length - 3}</span>
             )}
           </div>
         </div>

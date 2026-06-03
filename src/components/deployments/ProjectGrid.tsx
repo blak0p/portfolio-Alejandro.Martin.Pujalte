@@ -83,7 +83,7 @@ export default function ProjectGrid({ projects: initialProjects = [], syncWithSt
         {remaining > 0 && !expanded && (
           <button
             onClick={() => setShowAll(true)}
-            className="self-end text-[11px] text-cobalt hover:text-white tracking-widest uppercase border border-cobalt/40 hover:border-cobalt hover:bg-cobalt/10 px-4 py-1.5 transition-colors duration-150 cursor-pointer"
+            className="self-end text-sm text-cobalt hover:text-white tracking-widest uppercase border border-cobalt/40 hover:border-cobalt hover:bg-cobalt/10 px-4 py-1.5 transition-colors duration-150 cursor-pointer"
           >
             [+] EXPAND_MODULES ({remaining})
           </button>
@@ -92,7 +92,7 @@ export default function ProjectGrid({ projects: initialProjects = [], syncWithSt
         {expanded && remaining > 0 && (
           <button
             onClick={() => setShowAll(true)}
-            className="self-end text-[11px] text-text-faint hover:text-cobalt tracking-widest uppercase border border-white/10 hover:border-cobalt/40 px-4 py-1.5 transition-colors duration-100 cursor-pointer"
+            className="self-end text-sm text-text-faint hover:text-cobalt tracking-widest uppercase border border-white/15 hover:border-cobalt/40 px-4 py-1.5 transition-colors duration-100 cursor-pointer"
           >
             ALL_PROJECTS ({projects.length}) →
           </button>

@@ -45,7 +45,7 @@ const VERSION_MAP: Record<string, string> = {
 const STATUS_STYLE: Record<string, string> = {
   IN_PROGRESS: 'text-warn border-warn/40 bg-warn/5',
   COMPLETED:   'text-cobalt border-cobalt/40 bg-cobalt/5',
-  PAUSED:      'text-white/40 border-white/20 bg-white/[0.03]',
+  PAUSED:      'text-white/70 border-white/30 bg-white/[0.06]',
   ARCHIVED:    'text-err/60 border-err/30 bg-err/5',
 };
 
@@ -164,20 +164,20 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           onClick={e => e.stopPropagation()}
         >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/10 px-5 py-3 shrink-0 gap-3">
+        <div className="flex items-center justify-between border-b border-white/15 px-5 py-3 shrink-0 gap-3">
           <div className="flex items-center gap-2 min-w-0 flex-wrap">
             <span className="text-lg font-bold text-white uppercase tracking-wider truncate">{project.name}</span>
           </div>
           <button
             onClick={onClose}
-            className="text-[10px] text-text-faint hover:text-white tracking-widest border border-white/15 px-2 py-1 hover:border-white/40 transition-colors duration-100 shrink-0"
+            className="text-xs text-text-faint hover:text-white tracking-widest border border-white/15 px-2 py-1 hover:border-white/40 transition-colors duration-100 shrink-0"
           >
             [ESC]
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-white/10 shrink-0 flex-wrap">
+        <div className="flex border-b border-white/15 shrink-0 flex-wrap">
           <button onClick={() => setTab('overview')} className={`px-5 py-2 text-xs tracking-widest uppercase transition-colors duration-100 border-b-2 ${tab === 'overview' ? 'border-cobalt text-white' : 'border-transparent text-text-faint hover:text-white'}`}>OVERVIEW</button>
           {hasRepo && (
             <button onClick={() => setTab('readme')} className={`px-5 py-2 text-xs tracking-widest uppercase transition-colors duration-100 border-b-2 ${tab === 'readme' ? 'border-cobalt text-white' : 'border-transparent text-text-faint hover:text-white'}`}>README</button>
@@ -195,13 +195,13 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           {tab === 'overview' && (
             <div className="p-5 flex flex-col gap-8">
               <div>
-                <p className="text-[10px] text-cobalt tracking-widest uppercase mb-3">// DESCRIPTION</p>
+                <p className="text-xs text-cobalt tracking-widest uppercase mb-3">// DESCRIPTION</p>
                 <p className="text-sm text-white leading-relaxed font-medium">
                   {project.description || 'No description available.'}
                 </p>
               </div>
               <div>
-                <p className="text-[10px] text-cobalt tracking-widest uppercase mb-3">// BUSINESS_IMPACT</p>
+                <p className="text-xs text-cobalt tracking-widest uppercase mb-3">// BUSINESS_IMPACT</p>
                 <p className="text-sm text-white leading-relaxed font-medium">
                   {project.businessImpact || 'No impact data defined.'}
                 </p>
@@ -214,7 +214,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             <>
               {/* Breadcrumb for inline file navigation */}
               {(fileStack.length > 0) && (
-                <div className="flex items-center gap-1 px-5 pt-3 pb-0 text-[10px] tracking-widest flex-wrap">
+                <div className="flex items-center gap-1 px-5 pt-3 pb-0 text-xs tracking-widest flex-wrap">
                   <button
                     onClick={() => setFileStack([])}
                     className="text-cobalt hover:text-cobalt-light transition-colors"
@@ -266,19 +266,19 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           {tab === 'stack' && (
             <div className="p-5 flex flex-col gap-6">
               {status && STATUS_STYLE[status] && (
-                <span className={`self-start text-[11px] font-bold tracking-widest uppercase border px-3 py-1.5 ${STATUS_STYLE[status]}`}>
+                <span className={`self-start text-sm font-bold tracking-widest uppercase border px-3 py-1.5 ${STATUS_STYLE[status]}`}>
                   {status.replace('_', ' ')}
                 </span>
               )}
               <div className="flex flex-col gap-3">
-                <p className="text-[10px] text-cobalt tracking-widest uppercase">// Technologies used</p>
+                <p className="text-xs text-cobalt tracking-widest uppercase">// Technologies used</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {[...new Set(project.stack)].map(tech => (
                     <div key={tech} className="border border-white/15 bg-carbono px-4 py-3 flex flex-col gap-1">
                       <span className="text-sm font-bold text-white tracking-widest uppercase">{tech}</span>
                       {VERSION_MAP[tech]
-                        ? <span className="text-[11px] text-cobalt tracking-widest">{VERSION_MAP[tech]}</span>
-                        : <span className="text-[11px] text-text-faint tracking-widest">—</span>
+                        ? <span className="text-sm text-cobalt tracking-widest">{VERSION_MAP[tech]}</span>
+                        : <span className="text-sm text-text-faint tracking-widest">—</span>
                       }
                     </div>
                   ))}
@@ -289,7 +289,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               </div>
               {project.specs?.language && (
                 <div className="flex flex-col gap-2">
-                  <p className="text-[10px] text-cobalt tracking-widest uppercase">// Primary language</p>
+                  <p className="text-xs text-cobalt tracking-widest uppercase">// Primary language</p>
                   <span className="text-sm font-bold text-white tracking-widest uppercase">{String(project.specs.language)}</span>
                 </div>
               )}
@@ -311,25 +311,25 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   <span className="text-err text-xs">⊘</span>
                   <div>
                     <p className="text-xs text-err font-bold tracking-widest uppercase">Private client project</p>
-                    <p className="text-[11px] text-text-faint mt-0.5">This project was built under NDA. Repository, source code and full specs are not publicly available.</p>
+                    <p className="text-sm text-white/70 mt-0.5">This project was built under NDA. Repository, source code and full specs are not publicly available.</p>
                   </div>
                 </div>
               )}
               <div>
-                <p className="text-[10px] text-cobalt tracking-widest uppercase mb-2">// Architecture</p>
+                <p className="text-xs text-cobalt tracking-widest uppercase mb-2">// Architecture</p>
                 <p className="text-xs text-text-muted leading-relaxed">{project.architecture || 'N/A'}</p>
               </div>
               <div>
-                <p className="text-[10px] text-cobalt tracking-widest uppercase mb-2">// Init Sequence</p>
-                <pre className="bg-carbono-low border border-white/10 p-3 text-xs text-text-primary leading-relaxed overflow-x-auto">{project.initSequence || 'N/A'}</pre>
+                <p className="text-xs text-cobalt tracking-widest uppercase mb-2">// Init Sequence</p>
+                <pre className="bg-carbono-low border border-white/15 p-3 text-xs text-text-primary leading-relaxed overflow-x-auto">{project.initSequence || 'N/A'}</pre>
               </div>
               {specsEntries.length > 0 && (
                 <div>
-                  <p className="text-[10px] text-cobalt tracking-widest uppercase mb-2">// Technical Specs</p>
-                  <div className="border border-white/10">
+                  <p className="text-xs text-cobalt tracking-widest uppercase mb-2">// Technical Specs</p>
+                  <div className="border border-white/15">
                     {specsEntries.map(([key, value]) => (
                       <div key={key} className="flex border-b border-white/5 last:border-b-0">
-                        <span className="text-[10px] text-text-faint tracking-widest uppercase px-3 py-2 border-r border-white/10 w-28 shrink-0">{key}</span>
+                        <span className="text-xs text-white/70 tracking-widest uppercase px-3 py-2 border-r border-white/15 w-28 shrink-0">{key}</span>
                         <span className="text-xs text-text-primary px-3 py-2">{Array.isArray(value) ? value.join(', ') : String(value)}</span>
                       </div>
                     ))}
@@ -342,12 +342,12 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
         {/* Footer */}
         {project.specs?.repo && (
-          <div className="border-t border-white/10 px-5 py-2 shrink-0">
+          <div className="border-t border-white/15 px-5 py-2 shrink-0">
             <a
               href={`https://${project.specs.repo}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[10px] text-cobalt tracking-widest hover:text-cobalt-light transition-colors"
+              className="text-xs text-cobalt tracking-widest hover:text-cobalt-light transition-colors"
             >
               → {String(project.specs.repo)}
             </a>
