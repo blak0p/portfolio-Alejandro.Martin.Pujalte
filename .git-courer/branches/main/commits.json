@@ -1,9 +1,21 @@
 [
   {
-    "sha": "95b1f96f804c887dc576d7142fa6b09a942e473e",
+    "sha": "5cdb5202534132b09439d6c9d522c63bdb10125d",
+    "message": "fix: support Basic Auth for cron job authentication",
+    "author": "blak0p",
+    "date": "2026-06-03"
+  },
+  {
+    "sha": "e96a047e2ead4fd51d3b898f8717e2a575dab389",
     "message": "fix: update identity metadata and refine sync error handling",
     "author": "Alejandro-M-P",
     "date": "2026-06-03"
+  },
+  {
+    "sha": "d00f296de0ba0eab7d4e6e871b8078c9cf2e7b93",
+    "message": "data: full update projects and roadmap",
+    "author": "Alejandro",
+    "date": "2026-04-29"
   },
   {
     "sha": "e5d903eb02ae656f18f6578b7e0095517e797fb8",

@@ -8,6 +8,9 @@ export const prerender = false;
 const GITHUB_USER = import.meta.env.GITHUB_USER;
 const GITHUB_REPO = import.meta.env.GITHUB_REPO;
 
+// Support both "owner/repo" slug and plain repo name
+const repoSlug = GITHUB_REPO?.includes('/') ? GITHUB_REPO : `${GITHUB_USER}/${GITHUB_REPO}`;
+
 // Cron job: updates all project metadata via GraphQL
 // Hourly: just activity logs
 // Daily at 00:00 UTC: full repo update + commit to GitHub → Vercel rebuild
@@ -100,7 +103,7 @@ export const GET: APIRoute = async ({ request }) => {
       const encoded = Buffer.from(content).toString('base64');
       
       // Get current SHA
-      const getRes = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/public/data/projects.json`, {
+      const getRes = await fetch(`https://api.github.com/repos/${repoSlug}/contents/public/data/projects.json`, {
         headers: authHeaders()
       });
       
@@ -125,7 +128,7 @@ export const GET: APIRoute = async ({ request }) => {
       const timestamp = new Date().toISOString().split('T')[0];
       const message = `data: daily sync ${updatedCount} projects [${timestamp}]`;
       
-      const commitRes = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/public/data/projects.json`, {
+      const commitRes = await fetch(`https://api.github.com/repos/${repoSlug}/contents/public/data/projects.json`, {
         method: 'PUT',
         headers: {
           ...authHeaders(),
