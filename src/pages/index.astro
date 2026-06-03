@@ -36,12 +36,12 @@ const totalTech = techStack.length;
   <div class="w-full h-[calc(100vh-48px)] p-2 md:p-3 overflow-hidden flex flex-col gap-2 md:gap-3 boot-up">
     
     <!-- DESKTOP: 2-column layout -->
-    <div class="hidden lg:grid lg:grid-cols-[minmax(380px,440px)_1fr] flex-1 min-h-0 gap-3">
+    <div class="hidden lg:grid lg:grid-cols-[clamp(280px,22vw,380px)_1fr] flex-1 min-h-0 gap-3 sharp-corner">
       
       <!-- LEFT: Identity + Console -->
       <aside class="flex flex-col gap-3 min-h-0">
         <IdentitySection {...identityData} client:idle />
-        <div data-terminal-shell class="flex-1 min-h-[480px] border border-white/10 bg-carbono-surface overflow-hidden">
+        <div data-terminal-shell class="flex-1 min-h-[480px] border border-white/15 bg-carbono-surface overflow-hidden">
           <div class="h-full overflow-hidden">
             <CoreConsole 
               logs={logs} 
@@ -60,11 +60,11 @@ const totalTech = techStack.length;
       <main class="flex flex-col gap-3 min-h-0">
         
         <!-- PROJECTS (arriba) -->
-        <section class="border border-white/10 bg-carbono-surface p-3 overflow-hidden" style="flex: 1.2">
+        <section class="border border-white/15 bg-carbono-surface p-3 overflow-hidden" style="flex: 1.2">
           <div class="h-full overflow-y-auto">
             <div class="mb-3 shrink-0">
               <div class="flex items-center justify-between pb-2">
-                <span class="text-[13px] font-bold text-white tracking-widest">// PROJECTS</span>
+                <span class="text-sm font-bold text-white tracking-widest">// PROJECTS</span>
               </div>
               <div class="h-0.5 w-full bg-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]"></div>
             </div>
@@ -76,25 +76,25 @@ const totalTech = techStack.length;
         <div class="grid grid-cols-3 gap-3 min-h-0" style="flex: 2">
 
           <!-- TechStack -->
-          <section class="border border-white/10 bg-carbono-surface p-3 overflow-hidden">
+          <section class="border border-white/15 bg-carbono-surface p-3 overflow-hidden">
             <div class="h-full overflow-y-auto">
               <div class="mb-2">
                 <div class="flex items-center justify-between pb-2">
-                  <span class="text-[13px] font-bold text-white tracking-widest">// TECH_STACK_RECENT</span>
+                  <span class="text-sm font-bold text-white tracking-widest">// TECH_STACK_RECENT</span>
                 </div>
                 <div class="h-0.5 w-full bg-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]"></div>
               </div>
-              <div class="text-[10px] text-text-faint tracking-widest uppercase opacity-60 mb-2">// from 5 featured repos (avg)</div>
+              <div class="text-xs text-text-faint tracking-widest uppercase opacity-60 mb-2">// from 5 featured repos (avg)</div>
               <TechMatrix tools={techStack} projects={projects} client:idle />
             </div>
           </section>
 
           <!-- Roadmap -->
-          <section class="border border-white/10 bg-carbono-surface p-3 overflow-hidden col-span-2">
+          <section class="border border-white/15 bg-carbono-surface p-3 overflow-hidden col-span-2">
             <div class="h-full overflow-y-auto">
               <div class="mb-2">
                 <div class="flex items-center justify-between pb-2">
-                  <span class="text-[13px] font-bold text-white tracking-widest">// ROADMAP</span>
+                  <span class="text-sm font-bold text-white tracking-widest">// ROADMAP</span>
                 </div>
                 <div class="h-0.5 w-full bg-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]"></div>
               </div>
