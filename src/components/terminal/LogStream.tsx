@@ -81,16 +81,16 @@ function eventToEntry(e: Record<string, unknown>, index: number): LogEntry | nul
 }
 
 function getUsername(): string {
-  if (!isBrowser) return 'Alejandro-M-P';
+  if (!isBrowser) return 'blak0p';
   try {
     const projects = parseStoredProjects(localStorage.getItem('portfolioProjects'));
-    if (!projects.length) return 'Alejandro-M-P';
+    if (!projects.length) return 'blak0p';
     for (const p of projects) {
       const slug = p.specs?.repoSlug as string | undefined;
       if (slug?.includes('/')) return slug.split('/')[0];
     }
   } catch {}
-  return 'Alejandro-M-P';
+  return 'blak0p';
 }
 
 async function refreshProjectsFromGitHub(): Promise<void> {

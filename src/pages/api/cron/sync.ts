@@ -6,17 +6,29 @@ import { authHeaders } from '../../../lib/github-server';
 export const prerender = false;
 
 const GITHUB_USER = import.meta.env.GITHUB_USER;
-const GITHUB_REPO = import.meta.env.PUBLIC_GITHUB_REPO;
+const GITHUB_REPO = import.meta.env.GITHUB_REPO;
 
 // Cron job: updates all project metadata via GraphQL
 // Hourly: just activity logs
 // Daily at 00:00 UTC: full repo update + commit to GitHub → Vercel rebuild
 
 export const GET: APIRoute = async ({ request }) => {
-  // Verify cron secret
+  // Guard: required env vars
+  if (!GITHUB_REPO || !GITHUB_USER) {
+    const missing = !GITHUB_REPO ? 'GITHUB_REPO' : 'GITHUB_USER';
+    return new Response(JSON.stringify({ success: false, error: `Missing env var: ${missing}` }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
+  // Verify cron secret (required in PROD; cron-job.org must send Bearer token)
   const authHeader = request.headers.get('authorization');
   if (import.meta.env.PROD && authHeader !== `Bearer ${import.meta.env.CRON_SECRET}`) {
-    // return new Response('Unauthorized', { status: 401 });
+    return new Response(JSON.stringify({ success: false, error: 'Unauthorized' }), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
   // Check query params for force mode
@@ -40,6 +52,7 @@ export const GET: APIRoute = async ({ request }) => {
 
   try {
     const projects = projectsData as any[];
+    const errors: string[] = [];
     
     // Update each project
     for (const p of projects) {
@@ -61,8 +74,10 @@ export const GET: APIRoute = async ({ request }) => {
         }
         
         console.log(`[CRON] Synced ${slug}: ${details.specsStars} stars`);
-      } catch (e) {
-        console.error(`[CRON] Failed ${slug}:`, e);
+      } catch (e: any) {
+        const msg = `Failed ${slug}: ${e.message}`;
+        console.error(`[CRON] ${msg}`);
+        errors.push(msg);
       }
     }
 
@@ -75,8 +90,22 @@ export const GET: APIRoute = async ({ request }) => {
       const getRes = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/public/data/projects.json`, {
         headers: authHeaders()
       });
-      const current = await getRes.json();
-      const sha = current?.sha;
+      
+      let sha: string | undefined;
+      if (getRes.ok) {
+        const current = await getRes.json();
+        sha = current?.sha;
+      } else if (getRes.status === 404) {
+        // File doesn't exist yet — first commit, no SHA needed
+        console.warn('[CRON] projects.json not found on remote, will create new file');
+      } else {
+        const errText = await getRes.text();
+        return new Response(JSON.stringify({ 
+          success: false, 
+          error: `SHA fetch failed: ${getRes.status}`,
+          details: errText
+        }), { status: 502, headers: { 'Content-Type': 'application/json' } });
+      }
       
       // Commit with dynamic message
       const updatedCount = projects.length;
@@ -96,9 +125,28 @@ export const GET: APIRoute = async ({ request }) => {
         })
       });
       
-      if (commitRes.ok) {
-        console.log('[CRON] Committed to GitHub → rebuild will trigger');
+      if (!commitRes.ok) {
+        const errText = await commitRes.text();
+        return new Response(JSON.stringify({ 
+          success: false, 
+          error: `Commit failed: GitHub returned ${commitRes.status}`,
+          details: errText
+        }), { status: 502, headers: { 'Content-Type': 'application/json' } });
       }
+      
+      console.log('[CRON] Committed to GitHub → rebuild will trigger');
+    }
+
+    // Determine status code: 207 for partial failures, 200 for full success
+    const statusCode = errors.length > 0 && errors.length < projects.length ? 207 : 200;
+    const allFailed = errors.length > 0 && errors.length === projects.filter((p: any) => p.specs?.repoSlug).length;
+    
+    if (allFailed) {
+      return new Response(JSON.stringify({ 
+        success: false, 
+        error: 'All projects failed to sync',
+        errors 
+      }), { status: 502, headers: { 'Content-Type': 'application/json' } });
     }
 
     return new Response(JSON.stringify({ 
@@ -106,10 +154,14 @@ export const GET: APIRoute = async ({ request }) => {
       update: isDailyUpdate ? 'full' : 'logs',
       hour: currentHour,
       count: projects.length,
-      timestamp: new Date().toISOString()
-    }), { status: 200 });
+      timestamp: new Date().toISOString(),
+      ...(errors.length > 0 ? { partialFailures: errors } : {})
+    }), { status: statusCode, headers: { 'Content-Type': 'application/json' } });
     
   } catch (error: any) {
-    return new Response(JSON.stringify({ success: false, error: error.message }), { status: 500 });
+    return new Response(JSON.stringify({ success: false, error: error.message }), { 
+      status: 502, 
+      headers: { 'Content-Type': 'application/json' } 
+    });
   }
 };

@@ -1,5 +1,6 @@
 export interface ProjectSpecStackUsage {
   name: string;
+  color?: string;
   usageLevel: number;
 }
 
@@ -8,6 +9,7 @@ export interface Project {
   name: string;
   photo: string;
   stack: string[];
+  stackWithUsage?: ProjectSpecStackUsage[];
   architecture: string;
   initSequence: string;
   description?: string;

@@ -104,10 +104,10 @@ export async function getRepoDetails(repoSlug: string) {
   const r = json.data?.repository;
   if (!r) throw new Error('Repository not found');
 
-  // Decode README si existe
+  // README from GraphQL Blob.text is already decoded UTF-8 — no base64 decoding needed
   let readme = '';
   if (r.object?.text) {
-    readme = decodeBase64(r.object.text);
+    readme = r.object.text;
   }
 
   // Calcular percentages desde los sizes de languages

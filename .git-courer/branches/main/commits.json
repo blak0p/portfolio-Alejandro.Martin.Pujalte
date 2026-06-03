@@ -1,0 +1,302 @@
+[
+  {
+    "sha": "e5d903eb02ae656f18f6578b7e0095517e797fb8",
+    "message": "fix: use first 5 projects by list order (not ranking)",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "9418c9d7078edf4684c7c34915b20ddb00d135e9",
+    "message": "data: full update projects and roadmap + techstack",
+    "author": "Alejandro",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "607289cba8f8f67476d902b8c58cdf3c5b83db00",
+    "message": "fix: sync local calculates media from top 5 projects only",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "f49ce8ba023d4edb94e4b1868831367ee05d216c",
+    "message": "feat: import fetches full stackWithUsage from GitHub",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "31d8be428db0fbecf4d69ea6f62dfbe5c6fe079b",
+    "message": "feat: calculate tech usage as average from project bytes",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "6e5041c51483454efc019ed4dfea1bbbed836d30",
+    "message": "data: full update projects and roadmap + techstack",
+    "author": "Alejandro",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "5f4a044c2fc19f175427e1236908b1f3f73ee004",
+    "message": "data: full update projects and roadmap + techstack",
+    "author": "Alejandro",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "59301a7d0b8210a5281932ec229a172f3b838bf0",
+    "message": "feat: add isPrivate detection and private-readmes support",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "f5103e153bf42db9a3876e3b2af8a1616e7e39f7",
+    "message": "fix(admin): delete now saves to localStorage",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "b8d85ca910afa630d2c8abcec3de27eef925df14",
+    "message": "fix(admin): rename scan button to sync",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "41d1bcc2d6f4b74fcb1198a14cc0b718545cc0c1",
+    "message": "fix(admin): scan from local/data instead of GitHub",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "616538cc7bf37e89f260618ddb6316de2fe4b1ac",
+    "message": "data: add techstack example",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "b332b6fde43d32be2936555ef6198351d97e1c51",
+    "message": "fix(admin): remove experience reference",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "f959d344443c3b36739bfe7c4df2ddcc56b6ee07",
+    "message": "feat(cron): dynamic commit message",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "768d62a78cde2713fc57dd063602aebf536cd02c",
+    "message": "fix(cron): fix undefined variable",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "e956b67e261aa80e70b8ffceafcff8b265058511",
+    "message": "feat(cron): support force/schedule query params",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "2634b6dfd09f464b36ebe73f3d5876b8d4b00742",
+    "message": "feat(admin): dynamic commit messages based on changed data",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "0514028d2132aba43d82713ff1deb956b0b2d81c",
+    "message": "perf(github-api): use GraphQL for single API call per repo instead of 3",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "fdaaeae7e28ac81310195dd3b2f61c0d913cc397",
+    "message": "fix(admin): all tabs load localStorage-first then JSON fallback",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "c4056eda3cdc8b64a59cdf4445d98460bb709684",
+    "message": "fix(adminpanel): load JSON-first + add raw data editor + remove experience.json",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "8ad021b89c91b2b7848faa14c7683c787c65b09c",
+    "message": "fix: admin loads projects from localStorage with JSON fallback",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-23"
+  },
+  {
+    "sha": "37b724911c803f1f1b265318a32a9872b11a3ecd",
+    "message": "data: update portfolio content [build #undefined]",
+    "author": "Alejandro",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "9e696a809f2cb93bae48f331e306eafee8595c77",
+    "message": "data: update portfolio content [build #undefined]",
+    "author": "Alejandro",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "5f3b3119c401f310ddfeea8a837c68b8ff007af5",
+    "message": "feat(admin): ensure github auth is primary, fix mobile UI scaling and unify empty states",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "cf5d64392750bd75f8347090f8ca4cf7f6c189cc",
+    "message": "feat(admin): restore github oauth and implement responsive mobile layout",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "a4f6813c74c9b6f7de4d4e69f051073212253d92",
+    "message": "feat(admin): implement selective github import, fix ts types and refine industrial theme",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "2b4bf54d99c59bbd23ed3934659aa5731518fd61",
+    "message": "fix: restore full admin logic and optimize mobile visibility proportions",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "b868075a0f9ab0a5eb72397689aac4836f99dc92",
+    "message": "style: final pixel-perfect adjustments for identity typography",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "2314ecf84ba9663837a6d097fcf1ec31f24fe765",
+    "message": "feat: redesign identity section and optimize masonry layout for better space distribution",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "f23347d709536e0fbfd5674f709624bae6fccca5",
+    "message": "feat: balanced 50/50 sidebar split between identity and terminal",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "ee8cff414f2821aa4d8c3d7b1feaec24007e6255",
+    "message": "feat: drastically reduce terminal size and maximize identity photo area for 2K/4K",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "e6355a5e062434784e4a1e046e9603cb9abfc33a",
+    "message": "fix: resolve pretext SSR error and minimize terminal size on high-res screens",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "67c640fa2ec1f3bea115dbcab64318b8b79dc651",
+    "message": "feat: implement real responsive masonry with pretext-driven proportional scaling",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "64b79f8117110225499dc16788d854a59b1178d6",
+    "message": "feat: implement proportional dashboard layout with dynamic sidebar sizing for 2K/1080p",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "f055ba190ad6cc6597b43228dc302e9773cad35e",
+    "message": "feat: complete dynamic masonry-style layout for 1080p and 2K screens",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "ca1221412db6464c2f5c6311e1f2ea7aa1f14135",
+    "message": "feat: implement height-aware responsive identity layout for dynamic dashboard",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "19ec9d162dbf17fffc779ed0741b9dc702827d4b",
+    "message": "fix: optimize vertical responsiveness for 1080p by forcing compact identity layout",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "92adc062c1bd5be9fca5f2aaf9221b6bcf10213c",
+    "message": "feat: complete vertical and horizontal dashboard adaptation for 1080p/2k screens",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "5bfff1d3cd47460efaef4fda86f53f5a34b35d98",
+    "message": "fix: pin identity section to top and allow logs to take remaining space with scroll",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "0553d28adbbf56791b97a604698783a8ab67ba7e",
+    "message": "fix: optimize masonry for vertical adaptation on 1080p and 2k screens",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "7b0a8c07eb441c3aec842cd9f3d5721564c0e7df",
+    "message": "feat: optimize admin panel with social preview support and responsive masonry layout",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "da2b9d975c8ce82966dc82f05ffa86cb28b919e7",
+    "message": "fix: actualizar dominio de producción y corregir redirección de OAuth",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "6cef5460500a51f9b917c3872ef8250435d131f4",
+    "message": "cambiar site",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "60179611c02a8370978896eb45b3569347428c21",
+    "message": "feat: polish portfolio for production launch",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "f4dd3b59a376924107bc039b8de290bb27de9c6d",
+    "message": "fix: use dynamic redirect URI based on request origin",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "469e0f88f4b7952301b82bcabab1a25fd1060a26",
+    "message": "fix: redirect directly to OAuth endpoint",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "5b8a1e3fcec12482517421235ebad4da789ce3c7",
+    "message": "fix: update oauth endpoint URL in admin panel",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "7291869f4d23c3a5ab734bea6c283a855f2b4e96",
+    "message": "fix: rename oauth endpoint to match GitHub callback",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "d764fb22beef5f123f42e96086ec86280b6d8133",
+    "message": "fix: remove cron (hobby plan)",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  },
+  {
+    "sha": "f27ea8ee0d049cc4e5edf14e284105576656c93b",
+    "message": "fix: daily cron for hobby plan",
+    "author": "Alejandro-M-P",
+    "date": "2026-04-22"
+  }
+]
