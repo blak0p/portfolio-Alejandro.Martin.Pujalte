@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { getRepoDetails } from '../../../lib/github-server';
 import projectsData from '../../../../public/data/projects.json';
 import { authHeaders } from '../../../lib/github-server';
+import { getAutoRefreshProjects } from '../../../lib/projectRanking';
 
 export const prerender = false;
 
@@ -70,8 +71,9 @@ export const GET: APIRoute = async ({ request }) => {
     const projects = projectsData as any[];
     const errors: string[] = [];
     
-    // Update each project
-    for (const p of projects) {
+    // Update each project (limit to top N public projects with repoSlug)
+    const autoRefreshTargets = getAutoRefreshProjects(projects).filter(p => p.specs?.repoSlug && !p.isPrivate);
+    for (const p of autoRefreshTargets) {
       const slug = p.specs?.repoSlug;
       if (!slug) continue;
       

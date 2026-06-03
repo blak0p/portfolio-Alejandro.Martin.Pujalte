@@ -1,5 +1,59 @@
 [
   {
+    "sha": "bcb9e21b7776d683e7dc42d0e07507b0fcd82762",
+    "message": "fix(profile): restore natural layout, remove flex stretch",
+    "author": "blak0p",
+    "date": "2026-06-03"
+  },
+  {
+    "sha": "96d897c3dd8e34d6d205935bcf3492b1a637835e",
+    "message": "feat(home): pestañas PROFILE / TERMINAL en columna izquierda",
+    "author": "blak0p",
+    "date": "2026-06-03"
+  },
+  {
+    "sha": "c84ceac72d6b25fa56cbcc4e1b5c72a6a185b329",
+    "message": "fix(css): wire up @theme font-size with clamp() for responsive scaling",
+    "author": "blak0p",
+    "date": "2026-06-03"
+  },
+  {
+    "sha": "5a362cd8b060ba3cddb0c25c6afac416353ed5d6",
+    "message": "feat(ui): rem type scale for remaining UI components",
+    "author": "blak0p",
+    "date": "2026-06-03"
+  },
+  {
+    "sha": "da10907613b96d9db5e4fa2c976db5f81d5cf5a6",
+    "message": "feat(projects): rem type scale for deployment and roadmap sections",
+    "author": "blak0p",
+    "date": "2026-06-03"
+  },
+  {
+    "sha": "26ae2548a5271c96de7560d249f00ab6e7ca0c13",
+    "message": "feat(core): rem type scale for identity, techstack, and terminal",
+    "author": "blak0p",
+    "date": "2026-06-03"
+  },
+  {
+    "sha": "290234d0275c21f251738386ecfb5901e1d99f1a",
+    "message": "feat(admin): rem type scale, WCAG AA contrast, responsive sidebar",
+    "author": "blak0p",
+    "date": "2026-06-03"
+  },
+  {
+    "sha": "c910eb61171fcbb5e0074fc791fe194d7ff745a1",
+    "message": "feat(home): responsive grid with clamp(), sharp-corner layout",
+    "author": "blak0p",
+    "date": "2026-06-03"
+  },
+  {
+    "sha": "7221bcd7250975707d1ff90b3597914176fddba1",
+    "message": "feat(css): rem type scale, body font reset, border-radius scoping",
+    "author": "blak0p",
+    "date": "2026-06-03"
+  },
+  {
     "sha": "fbcba8c5f8495d79b2f67f1ae72f845b2dbb3529",
     "message": "data: daily sync 2 projects [2026-06-03]",
     "author": "Alejandro",

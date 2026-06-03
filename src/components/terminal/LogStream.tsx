@@ -100,7 +100,7 @@ async function refreshProjectsFromGitHub(): Promise<void> {
 
   try {
     const projects = parseStoredProjects(localStorage.getItem('portfolioProjects'));
-    const refreshTargets = getAutoRefreshProjects(projects).filter(p => p.specs?.repoSlug);
+    const refreshTargets = getAutoRefreshProjects(projects).filter(p => p.specs?.repoSlug && !p.isPrivate);
     if (refreshTargets.length === 0) return;
 
     const refreshSlugs = new Set(
