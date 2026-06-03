@@ -38,10 +38,18 @@ const totalTech = techStack.length;
     <!-- DESKTOP: 2-column layout -->
     <div class="hidden lg:grid lg:grid-cols-[clamp(280px,22vw,380px)_1fr] flex-1 min-h-0 gap-3 sharp-corner">
       
-      <!-- LEFT: Identity + Console -->
-      <aside class="flex flex-col gap-3 min-h-0">
-        <IdentitySection {...identityData} client:idle />
-        <div data-terminal-shell class="flex-1 min-h-[480px] border border-white/15 bg-carbono-surface overflow-hidden">
+      <!-- LEFT: Identity + Console (con pestañas) -->
+      <aside class="flex flex-col gap-0 min-h-0">
+        <!-- Tab bar -->
+        <div class="flex border border-white/15 border-b-0 bg-carbono-surface sharp-corner" id="left-tabs">
+          <button data-tab="profile" class="flex-1 py-2 text-xs font-black tracking-widest uppercase border-r border-white/10 bg-cobalt text-white transition-all" onclick="switchLeftTab('profile')">// PROFILE</button>
+          <button data-tab="terminal" class="flex-1 py-2 text-xs font-black tracking-widest uppercase text-white/50 hover:text-white transition-all" onclick="switchLeftTab('terminal')">// TERMINAL</button>
+        </div>
+        <!-- Tab content -->
+        <div id="tab-profile" class="border border-white/15 border-t-0 bg-carbono-surface sharp-corner">
+          <IdentitySection {...identityData} client:idle />
+        </div>
+        <div id="tab-terminal" class="hidden flex-1 border border-white/15 border-t-0 bg-carbono-surface overflow-hidden sharp-corner">
           <div class="h-full overflow-hidden">
             <CoreConsole 
               logs={logs} 
@@ -122,3 +130,21 @@ const totalTech = techStack.length;
 
   </div>
 </BaseLayout>
+
+<script>
+  function switchLeftTab(tab) {
+    document.querySelectorAll('#left-tabs button').forEach(b => {
+      b.classList.remove('bg-cobalt', 'text-white');
+      b.classList.add('text-white/50');
+      if (b.dataset.tab === tab) {
+        b.classList.add('bg-cobalt', 'text-white');
+        b.classList.remove('text-white/50');
+      }
+    });
+    document.getElementById('tab-profile').classList.toggle('hidden', tab !== 'profile');
+    document.getElementById('tab-terminal').classList.toggle('hidden', tab !== 'terminal');
+  }
+  document.querySelectorAll('#left-tabs button').forEach(b => {
+    b.addEventListener('click', () => switchLeftTab(b.dataset.tab));
+  });
+</script>
