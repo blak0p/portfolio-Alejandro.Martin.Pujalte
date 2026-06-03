@@ -22,13 +22,26 @@ export const GET: APIRoute = async ({ request }) => {
     });
   }
 
-  // Verify cron secret (required in PROD; cron-job.org must send Bearer token)
+  // Verify cron secret (required in PROD)
+  // Supports: Bearer token header or Basic Auth (username:password = any:CRON_SECRET)
+  // Basic Auth is for cron-job.org which sends username/password fields
   const authHeader = request.headers.get('authorization');
-  if (import.meta.env.PROD && authHeader !== `Bearer ${import.meta.env.CRON_SECRET}`) {
-    return new Response(JSON.stringify({ success: false, error: 'Unauthorized' }), {
-      status: 401,
-      headers: { 'Content-Type': 'application/json' }
-    });
+  const CRON_SECRET = import.meta.env.CRON_SECRET;
+  if (import.meta.env.PROD && CRON_SECRET) {
+    let authenticated = false;
+    if (authHeader?.startsWith('Bearer ') && authHeader === `Bearer ${CRON_SECRET}`) {
+      authenticated = true;
+    } else if (authHeader?.startsWith('Basic ')) {
+      const decoded = Buffer.from(authHeader.slice(6), 'base64').toString();
+      const password = decoded.includes(':') ? decoded.split(':')[1] : decoded;
+      authenticated = password === CRON_SECRET;
+    }
+    if (!authenticated) {
+      return new Response(JSON.stringify({ success: false, error: 'Unauthorized' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
   }
 
   // Check query params for force mode

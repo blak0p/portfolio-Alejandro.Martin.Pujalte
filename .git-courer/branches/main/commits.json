@@ -1,5 +1,11 @@
 [
   {
+    "sha": "95b1f96f804c887dc576d7142fa6b09a942e473e",
+    "message": "fix: update identity metadata and refine sync error handling",
+    "author": "Alejandro-M-P",
+    "date": "2026-06-03"
+  },
+  {
     "sha": "e5d903eb02ae656f18f6578b7e0095517e797fb8",
     "message": "fix: use first 5 projects by list order (not ranking)",
     "author": "Alejandro-M-P",
