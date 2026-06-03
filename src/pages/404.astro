@@ -7,7 +7,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="flex flex-col items-center gap-6 text-center max-w-md">
 
       <div class="border border-err/30 bg-err/5 px-6 py-3">
-        <span class="text-err text-[10px] font-bold tracking-[0.3em] uppercase">SIGNAL_LOST</span>
+        <span class="text-err text-xs font-bold tracking-[0.3em] uppercase">SIGNAL_LOST</span>
       </div>
 
       <div class="flex flex-col gap-2">
@@ -15,7 +15,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p class="text-xs text-text-faint tracking-widest uppercase">The requested resource does not exist in this core.</p>
       </div>
 
-      <pre class="text-left text-[11px] text-text-faint leading-relaxed border border-white/10 bg-carbono-surface px-5 py-4 w-full"><span class="text-err">ERR</span>  {new URL(Astro.request.url).pathname}
+      <pre class="text-left text-sm text-text-faint leading-relaxed border border-white/10 bg-carbono-surface px-5 py-4 w-full"><span class="text-err">ERR</span>  {new URL(Astro.request.url).pathname}
 <span class="text-warn">→</span>   File not found or not yet deployed.
 <span class="text-cobalt">hint:</span> If you uploaded a CV, wait ~30s for Vercel to redeploy.</pre>
 

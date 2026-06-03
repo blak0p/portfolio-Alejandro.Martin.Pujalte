@@ -33,7 +33,7 @@ export default function ExperienceModal({ exp, onClose }: Props) {
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-start justify-between border-b border-white/10 px-5 py-4 shrink-0 gap-3">
+        <div className="flex items-start justify-between border-b border-white/15 px-5 py-4 shrink-0 gap-3">
           <div className="flex items-center gap-4 min-w-0">
             {exp.logoUrl && (
               <img
@@ -48,23 +48,23 @@ export default function ExperienceModal({ exp, onClose }: Props) {
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-base font-bold text-white uppercase tracking-wide">{exp.company}</span>
                 {exp.current && (
-                  <span className="text-[9px] font-bold tracking-widest uppercase border border-cobalt/40 text-cobalt px-1.5 py-0.5 bg-cobalt/5 shrink-0">CURRENT</span>
+                  <span className="text-xs font-bold tracking-widest uppercase border border-cobalt/40 text-cobalt px-1.5 py-0.5 bg-cobalt/5 shrink-0">CURRENT</span>
                 )}
               </div>
               <span className="text-xs text-cobalt tracking-widest uppercase">{exp.role}</span>
-              <span className="block text-[11px] text-text-faint tracking-widest mt-0.5">{exp.period}</span>
+              <span className="block text-sm text-text-faint tracking-widest mt-0.5">{exp.period}</span>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-[10px] text-text-faint hover:text-white tracking-widest border border-white/15 px-2 py-1 hover:border-white/40 transition-colors duration-100 shrink-0"
+            className="text-xs text-text-faint hover:text-white tracking-widest border border-white/15 px-2 py-1 hover:border-white/40 transition-colors duration-100 shrink-0"
           >
             [ESC]
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="flex border-b border-white/10 shrink-0">
+        <div className="flex border-b border-white/15 shrink-0">
           <button
             onClick={() => setTab('overview')}
             className={`px-5 py-2 text-xs tracking-widest uppercase transition-colors duration-100 border-b-2 ${tab === 'overview' ? 'border-cobalt text-white' : 'border-transparent text-text-faint hover:text-white'}`}
@@ -92,18 +92,18 @@ export default function ExperienceModal({ exp, onClose }: Props) {
           {tab === 'overview' && (
             <div className="p-5 flex flex-col gap-5">
               <div>
-                <p className="text-[10px] text-cobalt tracking-widest uppercase mb-2">// Role</p>
+                <p className="text-xs text-cobalt tracking-widest uppercase mb-2">// Role</p>
                 <p className="text-sm font-bold text-white uppercase tracking-widest">{exp.role}</p>
               </div>
               {exp.description && (
                 <div>
-                  <p className="text-[10px] text-cobalt tracking-widest uppercase mb-2">// What I did</p>
+                  <p className="text-xs text-cobalt tracking-widest uppercase mb-2">// What I did</p>
                   <p className="text-xs text-text-muted leading-relaxed">{exp.description}</p>
                 </div>
               )}
               {exp.url && (
                 <div>
-                  <p className="text-[10px] text-cobalt tracking-widest uppercase mb-2">// Company</p>
+                  <p className="text-xs text-cobalt tracking-widest uppercase mb-2">// Company</p>
                   <a
                     href={exp.url}
                     target="_blank"
@@ -119,7 +119,7 @@ export default function ExperienceModal({ exp, onClose }: Props) {
 
           {tab === 'stack' && (
             <div className="p-5 flex flex-col gap-4">
-              <p className="text-[10px] text-cobalt tracking-widest uppercase">// Technologies used</p>
+              <p className="text-xs text-cobalt tracking-widest uppercase">// Technologies used</p>
               {exp.tech.length > 0 ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {exp.tech.map(t => (
@@ -136,7 +136,7 @@ export default function ExperienceModal({ exp, onClose }: Props) {
 
           {tab === 'impact' && hasImpact && (
             <div className="p-5 flex flex-col gap-4">
-              <p className="text-[10px] text-cobalt tracking-widest uppercase">// Impact & results</p>
+              <p className="text-xs text-cobalt tracking-widest uppercase">// Impact & results</p>
               <blockquote className="border-l-2 border-cobalt pl-4 text-sm text-text-muted leading-relaxed">
                 {exp.impact}
               </blockquote>
