@@ -320,10 +320,10 @@ export default function LogStream({ logs, logLimit = 10, hideHeader = false }: L
   }, [combined.length]);
 
   return (
-    <div className={`${hideHeader ? '' : 'border border-white/10 bg-carbono-surface'} w-full flex flex-col h-full overflow-hidden terminal-scanlines`}>
-      {!hideHeader && (
-        <div
-          className="border-b border-white/10 px-4 py-3 flex items-center gap-3 bg-carbono cursor-pointer hover:bg-carbono/20"
+<div className={`${hideHeader ? '' : 'border border-white/15 bg-carbono-surface'} w-full flex flex-col h-full overflow-hidden terminal-scanlines`}>
+        {!hideHeader && (
+          <div
+            className="border-b border-white/15 px-4 py-3 flex items-center gap-3 bg-carbono cursor-pointer hover:bg-carbono/20"
           onClick={() => window.dispatchEvent(new CustomEvent('openTerminal'))}
         >
           <span className="text-xs text-text-faint tracking-widest uppercase">TERMINAL &gt;_</span>
@@ -333,18 +333,18 @@ export default function LogStream({ logs, logLimit = 10, hideHeader = false }: L
             <div className="w-2 h-2 bg-cobalt/60" />
           </div>
           {fetching
-            ? <span className="text-[10px] text-warn tracking-widest animate-pulse">● FETCHING</span>
-            : <span className="text-[10px] text-cobalt tracking-widest">● LIVE</span>
+            ? <span className="text-xs text-warn tracking-widest animate-pulse">● FETCHING</span>
+            : <span className="text-xs text-cobalt tracking-widest">● LIVE</span>
           }
         </div>
       )}
 
       <div className="px-4 py-1.5 border-b border-white/5 bg-carbono-low flex justify-between items-center relative z-20">
         <div className="flex items-center gap-3">
-          <span className="text-[12px] text-text-faint tracking-widest uppercase">
+          <span className="text-sm text-text-faint tracking-widest uppercase">
             // GH_UPLINK
           </span>
-          <span className="text-[12px] text-white/30 tracking-widest font-mono">
+          <span className="text-sm text-white/70 tracking-widest font-mono">
             [ SYNC: {nextSyncIn !== null ? formatTime(nextSyncIn) : '--:--'} ]
           </span>
         </div>
@@ -353,7 +353,7 @@ export default function LogStream({ logs, logLimit = 10, hideHeader = false }: L
             <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${fetching ? 'bg-warn' : 'bg-cobalt'} opacity-75`}></span>
             <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${fetching ? 'bg-warn' : 'bg-cobalt'}`}></span>
           </span>
-          <span className={`text-[12px] ${fetching ? 'text-warn' : 'text-cobalt'} tracking-widest`}>
+          <span className={`text-sm ${fetching ? 'text-warn' : 'text-cobalt'} tracking-widest`}>
             {fetching ? 'SYNCING...' : 'ESTABLISHED'}
           </span>
         </div>
@@ -376,8 +376,8 @@ export default function LogStream({ logs, logLimit = 10, hideHeader = false }: L
             return (
               <div key={entry.id} className={`text-xs leading-relaxed px-2 py-1 ${levelBg[entry.level]} crt-flicker`}>
                 <div className="flex items-center gap-2 mb-0.5">
-                  <span className="text-text-faint tabular-nums text-[10px] shrink-0">{entry.timestamp}</span>
-                  <span className={`font-bold text-[10px] shrink-0 ${colorClass}`}>
+                  <span className="text-text-faint tabular-nums text-xs shrink-0">{entry.timestamp}</span>
+                  <span className={`font-bold text-xs shrink-0 ${colorClass}`}>
                     [{entry.level}]
                   </span>
                 </div>
@@ -395,7 +395,7 @@ export default function LogStream({ logs, logLimit = 10, hideHeader = false }: L
           <span className="text-white/40 animate-pulse">█</span>
         </div>
         <div className="opacity-40">
-          <p className="text-[10px] text-text-faint tracking-widest leading-relaxed uppercase">
+          <p className="text-xs text-text-faint tracking-widest leading-relaxed uppercase">
             // [SYSTEM_HINT]: This panel tracks live GitHub commits and infrastructure updates.
           </p>
         </div>

@@ -745,19 +745,19 @@ export default function CoreConsole({
   }, [mode, exitTerminal, projects, settings, identity, techStack, currentPath]);
 
   return (
-    <div ref={containerRef} className="border border-white/10 bg-carbono-surface w-full flex flex-col h-full overflow-hidden island-load">
+    <div ref={containerRef} className="border border-white/15 bg-carbono-surface w-full flex flex-col h-full overflow-hidden island-load">
       {!(mode === 'logs' && hideLogsHeader) && (
-        <div className={`border-b border-white/10 px-4 py-3 flex items-center gap-3 bg-carbono shrink-0 group ${mode === 'logs' ? 'cursor-pointer hover:bg-carbono/20' : ''}`} onClick={mode === 'logs' ? enterTerminal : undefined}>
+        <div className={`border-b border-white/15 px-4 py-3 flex items-center gap-3 bg-carbono shrink-0 group ${mode === 'logs' ? 'cursor-pointer hover:bg-carbono/20' : ''}`} onClick={mode === 'logs' ? enterTerminal : undefined}>
           <div className="flex items-center gap-3">
             <span className="text-xs text-text-faint tracking-widest uppercase">{mode === 'logs' ? 'SYSTEM LOGS' : 'CORE OPERATING SYSTEM'}</span>
             {mode === 'logs' && (
-              <span className="text-[9px] text-white/40 tracking-widest uppercase opacity-40 group-hover:opacity-100 transition-opacity">
+              <span className="text-xs text-white/70 tracking-widest uppercase opacity-40 group-hover:opacity-100 transition-opacity">
                 [ {'>'}_ BOOT_CONSOLE ]
               </span>
             )}
           </div>
           <div className="flex gap-1.5 ml-auto"><div className="w-2 h-2 bg-err/60" /><div className="w-2 h-2 bg-warn/60" /><div className="w-2 h-2 bg-cobalt/60" /></div>
-          {mode === 'logs' ? <span className="text-[10px] text-cobalt tracking-widest">● LIVE</span> : <button onClick={exitTerminal} className="text-[10px] text-text-faint hover:text-err tracking-widest transition-colors">✕ SHUTDOWN</button>}
+          {mode === 'logs' ? <span className="text-xs text-cobalt tracking-widest">● LIVE</span> : <button onClick={exitTerminal} className="text-xs text-text-faint hover:text-err tracking-widest transition-colors">✕ SHUTDOWN</button>}
         </div>
       )}
       <div className={`flex-1 min-h-0 flex flex-col overflow-hidden ${phase === 'crt-off' ? 'crt-off' : ''} ${phase === 'crt-boot' ? 'crt-boot' : ''}`}>

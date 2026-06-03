@@ -125,8 +125,8 @@ export default function TechMatrix({ tools: _initialTools = [], projects: initia
 
   if (tools.length === 0) {
     return (
-      <div className="border border-white/10 bg-carbono-surface p-8 text-center island-fade">
-        <span className="text-[14px] text-text-faint tracking-widest">NO_TOOLS_REGISTERED</span>
+      <div className="border border-white/15 bg-carbono-surface p-8 text-center island-fade">
+        <span className="text-base text-text-faint tracking-widest">NO_TOOLS_REGISTERED</span>
       </div>
     );
   }
@@ -134,20 +134,20 @@ export default function TechMatrix({ tools: _initialTools = [], projects: initia
   return (
     <>
       <div className={`flex flex-col gap-4 island-load h-full @container transition-all duration-500 ${isGlowing ? 'ring-2 ring-cobalt shadow-[0_0_20px_rgba(0,85,255,0.3)]' : ''}`}>
-        <div className="flex items-center justify-between text-[10px] text-text-faint tracking-widest uppercase opacity-60 mb-1">
+        <div className="flex items-center justify-between text-xs text-text-faint tracking-widest uppercase opacity-60 mb-1">
           <span className="text-cobalt font-bold">● dynamic</span>
         </div>
         <div className="grid grid-cols-1 @[500px]:grid-cols-2 gap-3">
           {tools.map((tool) => (
-            <div key={tool.name} className="border border-white/10 bg-carbono p-3 flex flex-col gap-2 hover:border-cobalt/40 transition-colors">
+            <div key={tool.name} className="border border-white/15 bg-carbono p-3 flex flex-col gap-2 hover:border-cobalt/40 transition-colors">
               <div className="flex justify-between items-center">
-                <span className="text-[13px] font-bold text-white tracking-widest uppercase">{tool.name}</span>
-                <span className="text-[10px] text-cobalt tracking-widest font-mono">[ {tool.usageLevel}% ]</span>
+                <span className="text-base font-bold text-white tracking-widest uppercase">{tool.name}</span>
+                <span className="text-xs text-cobalt tracking-widest font-mono">[ {tool.usageLevel}% ]</span>
               </div>
               <div className="flex flex-col gap-1.5">
                 <ProgressBar value={tool.usageLevel} segments={12} />
                 <div className="flex justify-between items-center">
-                  <span className="text-[9px] text-text-faint tracking-widest italic">{tool.version || '—'}</span>
+                  <span className="text-xs text-text-faint tracking-widest italic">{tool.version || '—'}</span>
                 </div>
               </div>
             </div>
@@ -157,7 +157,7 @@ export default function TechMatrix({ tools: _initialTools = [], projects: initia
         {toolsAll.length > tools.length && (
           <button
             onClick={() => setShowAll(true)}
-            className="self-end text-[11px] text-cobalt hover:text-white tracking-widest uppercase border border-cobalt/40 hover:border-cobalt hover:bg-cobalt/10 px-4 py-1.5 transition-colors duration-150 cursor-pointer"
+            className="self-end text-sm text-cobalt hover:text-white tracking-widest uppercase border border-cobalt/40 hover:border-cobalt hover:bg-cobalt/10 px-4 py-1.5 transition-colors duration-150 cursor-pointer"
           >
             [+] ALL_TECH ({toolsAll.length})
           </button>

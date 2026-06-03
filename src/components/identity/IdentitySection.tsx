@@ -69,25 +69,25 @@ export default function IdentitySection({ name, handle, bio, quote, status, avai
             onError={() => setImgError(true)}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-[10px] text-white/20 uppercase tracking-widest">NO_SIGNAL</div>
+          <div className="w-full h-full flex items-center justify-center text-xs text-white/20 uppercase tracking-widest">NO_SIGNAL</div>
         )}
         <div className="absolute inset-0 bg-linear-to-t from-[#0a0c10] via-transparent to-transparent pointer-events-none" />
         
         <div className="absolute bottom-0 left-0 w-full p-5 flex flex-col">
-          <Pill variant="cobalt" className="text-[8px] font-black mb-2 bg-cobalt text-white w-fit">{status}</Pill>
-          <h1 className="text-[18px] sm:text-[20px] font-black tracking-tight text-white leading-none">
+          <Pill variant="cobalt" className="text-xs font-black mb-2 bg-cobalt text-white w-fit">{status}</Pill>
+          <h1 className="text-lg sm:text-xl font-black tracking-tight text-white leading-none">
             {name.replace('\n', ' ')}
           </h1>
           <div className="flex items-center gap-2 mt-1">
-            <span className="text-[10px] text-cobalt tracking-[0.3em] uppercase font-black opacity-80">{handle}</span>
-            {age !== null && <span className="text-[10px] font-black text-white/30">{age}y</span>}
+            <span className="text-sm text-cobalt tracking-[0.3em] uppercase font-black opacity-80">{handle}</span>
+            {age !== null && <span className="text-sm font-black text-white/70">{age}y</span>}
           </div>
         </div>
       </div>
 
       {/* BIO Y ACCIONES VERTICALES */}
       <div className="p-5 flex flex-col gap-6">
-        <p className="text-[12px] text-text-muted leading-relaxed font-medium italic opacity-70 pl-3 border-l border-white/10">
+        <p className="text-sm text-text-muted leading-relaxed font-medium italic opacity-70 pl-3 border-l border-white/15">
           {bio}
         </p>
 
@@ -101,24 +101,24 @@ export default function IdentitySection({ name, handle, bio, quote, status, avai
               <div className="flex flex-col gap-1.5">
                 <button
                   onClick={() => forceDownload(cvUrl, 'Alejandro-CV.pdf')}
-                  className="w-full bg-cobalt text-white text-[10px] font-black tracking-[0.2em] uppercase px-4 py-3 hover:bg-blue-500 transition-all duration-150 active:scale-[0.98] shadow-lg border border-white/10"
+                  className="w-full bg-cobalt text-white text-sm font-black tracking-[0.2em] uppercase px-4 py-3 hover:bg-blue-500 transition-all duration-150 active:scale-[0.98] shadow-lg border border-white/15"
                 >
                   ↓ DOWNLOAD CV (EN)
                 </button>
-                <p className="text-[9px] text-white/20 tracking-widest uppercase text-center font-bold">
+                <p className="text-xs text-white/50 tracking-widest uppercase text-center font-bold">
                   // CV — Work experience and history
                 </p>
               </div>
             )}
 
             {linkedinUrl && (
-              <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="w-full bg-white/5 border border-white/10 text-white/60 text-center text-[10px] font-black tracking-[0.2em] uppercase px-4 py-3 hover:bg-[#0077B5] hover:text-white transition-all duration-150 active:scale-[0.98]">
+              <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="w-full bg-white/5 border border-white/15 text-white/70 text-center text-sm font-black tracking-[0.2em] uppercase px-4 py-3 hover:bg-[#0077B5] hover:text-white transition-all duration-150 active:scale-[0.98]">
                 LINKEDIN
               </a>
             )}
 
             {links.map(link => (
-              <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="w-full border border-white/10 bg-white/[0.02] text-white/40 text-center text-[10px] font-black tracking-[0.2em] uppercase px-4 py-3 hover:bg-white/10 hover:text-white transition-all duration-150 active:scale-[0.98]">
+              <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="w-full border border-white/15 bg-white/[0.06] text-white/70 text-center text-sm font-black tracking-[0.2em] uppercase px-4 py-3 hover:bg-white/10 hover:text-white transition-all duration-150 active:scale-[0.98]">
                 {link.label}
               </a>
             ))}
