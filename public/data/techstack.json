@@ -1,12 +1,1 @@
-[
-  { "name": "GO", "version": "1.24", "usageLevel": 90 },
-  { "name": "GIT", "version": "", "usageLevel": 85 },
-  { "name": "TYPESCRIPT", "version": "5.8", "usageLevel": 80 },
-  { "name": "ASTRO", "version": "5", "usageLevel": 70 },
-  { "name": "REACT", "version": "19", "usageLevel": 65 },
-  { "name": "TAILWIND CSS", "version": "4", "usageLevel": 60 },
-  { "name": "NODE.JS", "version": "22", "usageLevel": 60 },
-  { "name": "SHELL", "version": "", "usageLevel": 50 },
-  { "name": "PYTHON", "version": "3", "usageLevel": 40 },
-  { "name": "JAVA", "version": "21", "usageLevel": 20 }
-]
+[{"name":"GO","version":"1.24","usageLevel":90},{"name":"GIT","version":"","usageLevel":85},{"name":"TYPESCRIPT","version":"5.8","usageLevel":80},{"name":"REACT","version":"19","usageLevel":65},{"name":"TAILWIND CSS","version":"4","usageLevel":60},{"name":"NODE.JS","version":"22","usageLevel":60},{"name":"SHELL","version":"","usageLevel":50},{"name":"JAVA","version":"21","usageLevel":20}]
