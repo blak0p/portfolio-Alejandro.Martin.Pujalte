@@ -1,11 +1,1 @@
-[
-  { "id": "short-1", "section": "short", "text": "Land first backend role — solve real problems, not toy projects", "completed": false },
-  { "id": "short-2", "section": "short", "text": "Ship git-courer to a mature v3.0 with real adoption", "completed": false },
-  { "id": "short-3", "section": "short", "text": "Finish and deploy hitro.es for my uncle", "completed": false },
-  { "id": "mid-1", "section": "mid", "text": "Design and build a complex system from scratch — language is irrelevant", "completed": false },
-  { "id": "mid-2", "section": "mid", "text": "Solve hard architectural problems that actually matter", "completed": false },
-  { "id": "mid-3", "section": "mid", "text": "Build a SaaS/product from zero to paying users", "completed": false },
-  { "id": "long-1", "section": "long", "text": "Contribute to major open-source or industry projects", "completed": false },
-  { "id": "long-2", "section": "long", "text": "Work abroad as a backend engineer", "completed": false },
-  { "id": "long-3", "section": "long", "text": "Be recognised for the quality of my solutions, not the language I use", "completed": false }
-]
+[{"id":"short-1","section":"short","text":"Land first backend role — solve real problems, not toy projects","completed":false},{"id":"short-2","section":"short","text":"Ship git-courer to a mature v3.0 with real adoption","completed":false},{"id":"short-3","section":"short","text":"Finish and deploy hitro.es for my uncle","completed":false},{"id":"mid-1","section":"mid","text":"Design and build a complex system from scratch — language is irrelevant","completed":false},{"id":"mid-2","section":"mid","text":"Solve hard architectural problems that actually matter","completed":false},{"id":"mid-3","section":"mid","text":"Build a SaaS/product from zero to paying users","completed":false},{"id":"long-1","section":"long","text":"Contribute to major open-source or industry projects","completed":false},{"id":"long-2","section":"long","text":"Work abroad as a backend engineer","completed":false},{"id":"long-3","section":"long","text":"Be recognised for the quality of my solutions, not the language I use","completed":false}]
