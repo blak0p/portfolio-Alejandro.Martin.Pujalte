@@ -178,14 +178,14 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
         {/* Tabs */}
         <div className="flex border-b border-white/15 shrink-0 flex-wrap">
-          <button onClick={() => setTab('overview')} className={`px-5 py-2 text-xs tracking-widest uppercase transition-colors duration-100 border-b-2 ${tab === 'overview' ? 'border-cobalt text-white' : 'border-transparent text-text-faint hover:text-white'}`}>OVERVIEW</button>
+          <button onClick={() => setTab('overview')} className={`px-5 py-2 text-xs tracking-widest uppercase transition-colors duration-100 border-b-2 ${tab === 'overview' ? 'border-cobalt text-white' : 'border-transparent text-text-faint hover:text-white'}`}>VISIÓN GENERAL</button>
           {hasRepo && (
             <button onClick={() => setTab('readme')} className={`px-5 py-2 text-xs tracking-widest uppercase transition-colors duration-100 border-b-2 ${tab === 'readme' ? 'border-cobalt text-white' : 'border-transparent text-text-faint hover:text-white'}`}>README</button>
           )}
           <button onClick={() => setTab('stack')} className={`px-5 py-2 text-xs tracking-widest uppercase transition-colors duration-100 border-b-2 ${tab === 'stack' ? 'border-cobalt text-white' : 'border-transparent text-text-faint hover:text-white'}`}>STACK</button>
-          <button onClick={() => setTab('specs')} className={`px-5 py-2 text-xs tracking-widest uppercase transition-colors duration-100 border-b-2 ${tab === 'specs' ? 'border-cobalt text-white' : 'border-transparent text-text-faint hover:text-white'}`}>SPECS</button>
+          <button onClick={() => setTab('specs')} className={`px-5 py-2 text-xs tracking-widest uppercase transition-colors duration-100 border-b-2 ${tab === 'specs' ? 'border-cobalt text-white' : 'border-transparent text-text-faint hover:text-white'}`}>ESPECIFICACIONES</button>
           {hasVideo && (
-            <button onClick={() => setTab('media')} className={`px-5 py-2 text-xs tracking-widest uppercase transition-colors duration-100 border-b-2 ${tab === 'media' ? 'border-cobalt text-white' : 'border-transparent text-text-faint hover:text-white'}`}>▶ MEDIA</button>
+            <button onClick={() => setTab('media')} className={`px-5 py-2 text-xs tracking-widest uppercase transition-colors duration-100 border-b-2 ${tab === 'media' ? 'border-cobalt text-white' : 'border-transparent text-text-faint hover:text-white'}`}>▶ MULTIMEDIA</button>
           )}
         </div>
 
@@ -195,15 +195,15 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           {tab === 'overview' && (
             <div className="p-5 flex flex-col gap-8">
               <div>
-                <p className="text-xs text-cobalt tracking-widest uppercase mb-3">// DESCRIPTION</p>
+                <p className="text-xs text-cobalt tracking-widest uppercase mb-3">// DESCRIPCIÓN</p>
                 <p className="text-sm text-white leading-relaxed font-medium">
-                  {project.description || 'No description available.'}
+                  {project.description || 'No hay descripción disponible.'}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-cobalt tracking-widest uppercase mb-3">// BUSINESS_IMPACT</p>
+                <p className="text-xs text-cobalt tracking-widest uppercase mb-3">// IMPACTO_DE_NEGOCIO</p>
                 <p className="text-sm text-white leading-relaxed font-medium">
-                  {project.businessImpact || 'No impact data defined.'}
+                  {project.businessImpact || 'No hay datos de impacto definidos.'}
                 </p>
               </div>
             </div>
@@ -240,14 +240,14 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     onClick={() => setFileStack(prev => prev.slice(0, -1))}
                     className="ml-auto text-text-faint/60 hover:text-white transition-colors"
                   >
-                    ← back
+                    ← volver
                   </button>
                 </div>
               )}
 
               {loading && (
                 <div className="flex items-center justify-center h-32 text-xs text-text-faint tracking-widest animate-pulse">
-                  FETCHING...
+                  CARGANDO...
                 </div>
               )}
               {!loading && (readme || currentFile) && (
@@ -271,7 +271,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 </span>
               )}
               <div className="flex flex-col gap-3">
-                <p className="text-xs text-cobalt tracking-widest uppercase">// Technologies used</p>
+                <p className="text-xs text-cobalt tracking-widest uppercase">// Tecnologías utilizadas</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {[...new Set(project.stack)].map(tech => (
                     <div key={tech} className="border border-white/15 bg-carbono px-4 py-3 flex flex-col gap-1">
@@ -283,13 +283,13 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     </div>
                   ))}
                   {project.stack.length === 0 && (
-                    <span className="text-xs text-text-faint tracking-widest col-span-3">NO_STACK_DEFINED</span>
+                    <span className="text-xs text-text-faint tracking-widest col-span-3">SIN_STACK_DEFINIDO</span>
                   )}
                 </div>
               </div>
               {project.specs?.language && (
                 <div className="flex flex-col gap-2">
-                  <p className="text-xs text-cobalt tracking-widest uppercase">// Primary language</p>
+                  <p className="text-xs text-cobalt tracking-widest uppercase">// Lenguaje principal</p>
                   <span className="text-sm font-bold text-white tracking-widest uppercase">{String(project.specs.language)}</span>
                 </div>
               )}
@@ -310,22 +310,22 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 <div className="border border-err/20 bg-err/5 px-4 py-3 flex items-start gap-3">
                   <span className="text-err text-xs">⊘</span>
                   <div>
-                    <p className="text-xs text-err font-bold tracking-widest uppercase">Private client project</p>
-                    <p className="text-sm text-white/70 mt-0.5">This project was built under NDA. Repository, source code and full specs are not publicly available.</p>
+                    <p className="text-xs text-err font-bold tracking-widest uppercase">Proyecto privado de cliente</p>
+                    <p className="text-sm text-white/70 mt-0.5">Este proyecto fue construido bajo NDA. El repositorio, código fuente y especificaciones completas no están disponibles públicamente.</p>
                   </div>
                 </div>
               )}
               <div>
-                <p className="text-xs text-cobalt tracking-widest uppercase mb-2">// Architecture</p>
+                <p className="text-xs text-cobalt tracking-widest uppercase mb-2">// Arquitectura</p>
                 <p className="text-xs text-text-muted leading-relaxed">{project.architecture || 'N/A'}</p>
               </div>
               <div>
-                <p className="text-xs text-cobalt tracking-widest uppercase mb-2">// Init Sequence</p>
+                <p className="text-xs text-cobalt tracking-widest uppercase mb-2">// Secuencia de inicio</p>
                 <pre className="bg-carbono-low border border-white/15 p-3 text-xs text-text-primary leading-relaxed overflow-x-auto">{project.initSequence || 'N/A'}</pre>
               </div>
               {specsEntries.length > 0 && (
                 <div>
-                  <p className="text-xs text-cobalt tracking-widest uppercase mb-2">// Technical Specs</p>
+                  <p className="text-xs text-cobalt tracking-widest uppercase mb-2">// Especificaciones técnicas</p>
                   <div className="border border-white/15">
                     {specsEntries.map(([key, value]) => (
                       <div key={key} className="flex border-b border-white/5 last:border-b-0">

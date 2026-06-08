@@ -148,8 +148,8 @@ export default function Roadmap({ ambitions: initial }: RoadmapProps) {
     <div className="border border-white/15 bg-carbono-surface p-4 island-load h-full overflow-y-auto">
       {items.length === 0 && (
         <div className="text-center py-8">
-          <p className="text-base text-text-faint tracking-widest">NO_ROADMAP_ITEMS</p>
-          <p className="text-sm text-cobalt/60 mt-2">Add goals from admin panel</p>
+          <p className="text-base text-text-faint tracking-widest">SIN_ITEMS_EN_HOJA_DE_RUTA</p>
+          <p className="text-sm text-cobalt/60 mt-2">Añade metas desde el panel de admin</p>
         </div>
       )}
       {items.length > 0 && (
@@ -172,7 +172,7 @@ export default function Roadmap({ ambitions: initial }: RoadmapProps) {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
                 {sectionItems.length === 0 && (
-                  <p className="text-base text-text-faint tracking-widest">NO_GOALS_REGISTERED</p>
+                  <p className="text-base text-text-faint tracking-widest">SIN_METAS_REGISTRADAS</p>
                 )}
                 {sectionItems.map(a => (
                   <div key={a.id} className="flex items-start gap-1 group">
@@ -204,12 +204,12 @@ export default function Roadmap({ ambitions: initial }: RoadmapProps) {
                         if (e.key === 'Enter') addGoal(section);
                         if (e.key === 'Escape') { setAdding(null); setNewText(''); }
                       }}
-                      placeholder="New goal..."
+                      placeholder="Nueva meta..."
                       className="bg-carbono-surface border border-white/30 px-2 py-1 text-base text-white font-mono w-full focus:outline-none focus:border-cobalt"
                     />
                     <div className="flex gap-1">
-                      <button onClick={() => addGoal(section)} className="flex-1 bg-cobalt text-white text-base tracking-widest py-1 hover:bg-cobalt-light transition-colors">ADD</button>
-                      <button onClick={() => { setAdding(null); setNewText(''); }} className="text-base text-text-faint px-2 hover:text-white">CANCEL</button>
+                      <button onClick={() => addGoal(section)} className="flex-1 bg-cobalt text-white text-base tracking-widest py-1 hover:bg-cobalt-light transition-colors">AÑADIR</button>
+                      <button onClick={() => { setAdding(null); setNewText(''); }} className="text-base text-text-faint px-2 hover:text-white">CANCELAR</button>
                     </div>
                   </div>
                 ) : (
@@ -217,7 +217,7 @@ export default function Roadmap({ ambitions: initial }: RoadmapProps) {
                     onClick={() => { setAdding(section); setNewText(''); }}
                     className="text-base text-text-faint hover:text-cobalt tracking-widest uppercase transition-colors mt-1 text-left"
                   >
-                    + ADD_GOAL
+                    + AÑADIR_META
                   </button>
                 )
               )}

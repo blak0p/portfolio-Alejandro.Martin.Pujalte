@@ -28,7 +28,7 @@ const totalTech = techStack.length;
 ---
 
 <BaseLayout 
-  title={`${identityData.name.replace('\n', ' ')} \u2014 Backend Developer`} 
+  title={`${identityData.name.replace('\n', ' ')} \u2014 Desarrollador Backend`} 
   description={identityData.bio}
   handle={identityData.handle}
   status={identityData.status}
@@ -42,7 +42,7 @@ const totalTech = techStack.length;
       <aside class="flex flex-col gap-0 min-h-0">
         <!-- Tab bar -->
         <div class="flex border border-white/15 border-b-0 bg-carbono-surface sharp-corner" id="left-tabs">
-          <button data-tab="profile" class="flex-1 py-2 text-xs font-black tracking-widest uppercase border-r border-white/10 bg-cobalt text-white transition-all" onclick="switchLeftTab('profile')">// PROFILE</button>
+          <button data-tab="profile" class="flex-1 py-2 text-xs font-black tracking-widest uppercase border-r border-white/10 bg-cobalt text-white transition-all" onclick="switchLeftTab('profile')">// PERFIL</button>
           <button data-tab="terminal" class="flex-1 py-2 text-xs font-black tracking-widest uppercase text-white/50 hover:text-white transition-all" onclick="switchLeftTab('terminal')">// TERMINAL</button>
         </div>
         <!-- Tab content -->
@@ -72,7 +72,7 @@ const totalTech = techStack.length;
           <div class="h-full overflow-y-auto">
             <div class="mb-3 shrink-0">
               <div class="flex items-center justify-between pb-2">
-                <span class="text-sm font-bold text-white tracking-widest">// PROJECTS</span>
+                <span class="text-sm font-bold text-white tracking-widest">// PROYECTOS</span>
               </div>
               <div class="h-0.5 w-full bg-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]"></div>
             </div>
@@ -88,11 +88,11 @@ const totalTech = techStack.length;
             <div class="h-full overflow-y-auto">
               <div class="mb-2">
                 <div class="flex items-center justify-between pb-2">
-                  <span class="text-sm font-bold text-white tracking-widest">// TECH_STACK_RECENT</span>
+                  <span class="text-sm font-bold text-white tracking-widest">// TECH_STACK_RECIENTE</span>
                 </div>
                 <div class="h-0.5 w-full bg-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]"></div>
               </div>
-              <div class="text-xs text-text-faint tracking-widest uppercase opacity-60 mb-2">// curated from admin panel</div>
+              <div class="text-xs text-text-faint tracking-widest uppercase opacity-60 mb-2">// curado desde panel admin</div>
               <TechMatrix tools={techStack} client:idle />
             </div>
           </section>
@@ -102,7 +102,7 @@ const totalTech = techStack.length;
             <div class="h-full overflow-y-auto">
               <div class="mb-2">
                 <div class="flex items-center justify-between pb-2">
-                  <span class="text-sm font-bold text-white tracking-widest">// ROADMAP</span>
+                  <span class="text-sm font-bold text-white tracking-widest">// HOJA DE RUTA</span>
                 </div>
                 <div class="h-0.5 w-full bg-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]"></div>
               </div>

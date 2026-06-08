@@ -26,8 +26,8 @@ export default function AllProjectsModal({ projects, onClose }: AllProjectsModal
         >
           <div className="flex items-center justify-between border-b border-white/15 px-5 py-3 shrink-0">
             <div className="flex items-center gap-3">
-              <span className="text-xs font-bold text-white tracking-widest">ALL_PROJECTS</span>
-              <span className="text-xs text-text-faint tracking-widest">({sorted.length} deployed)</span>
+              <span className="text-xs font-bold text-white tracking-widest">TODOS_LOS_PROYECTOS</span>
+              <span className="text-xs text-text-faint tracking-widest">({sorted.length} desplegados)</span>
             </div>
             <button
               onClick={onClose}

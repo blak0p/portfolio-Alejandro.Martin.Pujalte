@@ -75,7 +75,7 @@ export default function ProjectGrid({ projects: initialProjects = [], syncWithSt
           ))}
           {projects.length === 0 && (
             <div className="col-span-5 py-8 text-center text-xs text-text-faint tracking-widest">
-              NO_PROJECTS
+              SIN_PROYECTOS
             </div>
           )}
         </div>
@@ -85,7 +85,7 @@ export default function ProjectGrid({ projects: initialProjects = [], syncWithSt
             onClick={() => setShowAll(true)}
             className="self-end text-sm text-cobalt hover:text-white tracking-widest uppercase border border-cobalt/40 hover:border-cobalt hover:bg-cobalt/10 px-4 py-1.5 transition-colors duration-150 cursor-pointer"
           >
-            [+] EXPAND_MODULES ({remaining})
+            [+] EXPANDIR_MÓDULOS ({remaining})
           </button>
         )}
 
@@ -94,7 +94,7 @@ export default function ProjectGrid({ projects: initialProjects = [], syncWithSt
             onClick={() => setShowAll(true)}
             className="self-end text-sm text-text-faint hover:text-cobalt tracking-widest uppercase border border-white/15 hover:border-cobalt/40 px-4 py-1.5 transition-colors duration-100 cursor-pointer"
           >
-            ALL_PROJECTS ({projects.length}) →
+            TODOS_LOS_PROYECTOS ({projects.length}) →
           </button>
         )}
       </div>

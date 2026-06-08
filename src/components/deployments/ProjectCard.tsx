@@ -20,9 +20,9 @@ function getDustLabel(pushedAt: string | undefined, thresholdDays: number): stri
   if (!pushedAt) return null;
   const days = (Date.now() - new Date(pushedAt).getTime()) / 86_400_000;
   if (days < thresholdDays) return null;
-  if (days < thresholdDays * 2) return 'STABLE';
+  if (days < thresholdDays * 2) return 'ESTABLE';
   if (days < thresholdDays * 3) return 'LEGACY';
-  return 'ARCHIVED';
+  return 'ARCHIVADO';
 }
 
 function getEntropyStyle(pushedAt: string | undefined, thresholdDays: number): React.CSSProperties {
@@ -106,7 +106,7 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
           />
         ) : (
           <div className="absolute inset-0 bg-carbono-mid flex items-center justify-center">
-            <span className="text-xs text-text-faint tracking-widest">NO_PREVIEW</span>
+            <span className="text-xs text-text-faint tracking-widest">SIN_PREVIEW</span>
           </div>
         )}
 
@@ -119,9 +119,9 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
         {project.isPrivate && (
           <div className="absolute inset-0 redacted-stripes flex flex-col items-center justify-center gap-1.5">
             <div className="border-2 border-err/70 px-2.5 py-0.5 bg-carbono/80" style={{ transform: 'rotate(-6deg)' }}>
-              <span className="text-err text-xs font-bold tracking-[0.3em] uppercase">CLASSIFIED</span>
+              <span className="text-err text-xs font-bold tracking-[0.3em] uppercase">CLASIFICADO</span>
             </div>
-            <span className="text-xs text-white/70 tracking-widest">Private · NDA</span>
+            <span className="text-xs text-white/70 tracking-widest">Privado · NDA</span>
           </div>
         )}
 
@@ -135,7 +135,7 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
           )}
           {project.isFavorite && (
             <span className={`text-xs font-bold tracking-widest uppercase border px-2 py-1 leading-none text-bronze border-bronze/50 bg-bronze/20 backdrop-blur-sm`}>
-              PINNED
+              DESTACADO
             </span>
           )}
           {dustLabel && (

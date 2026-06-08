@@ -10,8 +10,8 @@ interface Props {
 }
 
 const {
-  title = 'ALEJANDRO.MARTIN.PUJALTE \u2014 Backend Developer',
-  description = 'Backend Developer building high-availability infrastructure, local AI tooling, and structurally honest architectures.',
+  title = 'ALEJANDRO.MARTIN.PUJALTE \u2014 Desarrollador Backend',
+  description = 'Desarrollador Backend construyendo infraestructura de alta disponibilidad, herramientas de IA local y arquitecturas estructuralmente honestas.',
   handle = 'ALEJANDRO.MP',
   status = 'ONLINE',
 } = Astro.props;
@@ -20,7 +20,7 @@ const ogImage = '/profile.jpg';
 const siteUrl = Astro.site ?? 'https://alejandro-mp.dev';
 ---
 
-<html lang="en">
+<html lang="es">
   <head>
     <ClientRouter />
     <meta charset="utf-8" />
@@ -51,11 +51,11 @@ const siteUrl = Astro.site ?? 'https://alejandro-mp.dev';
 
         <!-- Desktop links -->
         <div class="hidden md:flex items-center gap-5 text-xs text-text-muted tracking-widest uppercase">
-          <a href="#deployments" class="hover:text-cobalt transition-colors duration-100">Projects</a>
+          <a href="#deployments" class="hover:text-cobalt transition-colors duration-100">Proyectos</a>
           <span class="text-white/20">|</span>
-          <a href="#tech" class="hover:text-cobalt transition-colors duration-100">Tech</a>
+          <a href="#tech" class="hover:text-cobalt transition-colors duration-100">Tecnologías</a>
           <span class="text-white/20">|</span>
-          <a href="#ambitions" class="hover:text-cobalt transition-colors duration-100">Ambitions</a>
+          <a href="#ambitions" class="hover:text-cobalt transition-colors duration-100">Metas</a>
         </div>
 
         <div class="flex items-center gap-3">
@@ -70,7 +70,7 @@ const siteUrl = Astro.site ?? 'https://alejandro-mp.dev';
           <button
             id="hamburger"
             class="md:hidden flex flex-col gap-1.5 p-1 text-text-faint hover:text-white transition-colors"
-            aria-label="Menu"
+            aria-label="Menú"
           >
             <span class="block w-5 h-px bg-current transition-all duration-200" id="bar1"></span>
             <span class="block w-5 h-px bg-current transition-all duration-200" id="bar2"></span>
@@ -87,11 +87,11 @@ const siteUrl = Astro.site ?? 'https://alejandro-mp.dev';
       class="fixed top-12 left-0 right-0 z-40 md:hidden border-b border-white/15 bg-carbono/95 backdrop-blur-md hidden"
     >
       <div class="flex flex-col px-6 py-4 gap-4">
-        <a href="#deployments" class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Projects</a>
-        <a href="#tech" class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Tech</a>
-        <a href="#ambitions" class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Ambitions</a>
+        <a href="#deployments" class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Proyectos</a>
+        <a href="#tech" class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Tecnologías</a>
+        <a href="#ambitions" class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Metas</a>
         <div class="border-t border-white/15 pt-3">
-          <a href="/admin" class="text-xs text-text-faint tracking-widest hover:text-white transition-colors">ADMIN PANEL →</a>
+          <a href="/admin" class="text-xs text-text-faint tracking-widest hover:text-white transition-colors">PANEL ADMIN →</a>
         </div>
       </div>
     </div>

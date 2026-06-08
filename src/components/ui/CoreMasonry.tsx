@@ -74,11 +74,11 @@ export default function CoreMasonry({ items }: CoreMasonryProps) {
         ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
       `}>
         <div className="h-full flex flex-col p-8 gap-8 overflow-y-auto">
-          <span className="text-xs text-cobalt font-black tracking-[0.4em] uppercase">// SYSTEM_TELEMETRY</span>
+          <span className="text-xs text-cobalt font-black tracking-[0.4em] uppercase">// TELEMETRÍA_DEL_SISTEMA</span>
           <div className="flex-1 bg-white/[0.06] border border-white/5 rounded-3xl p-6 overflow-y-auto custom-scrollbar font-mono text-sm opacity-70 text-blue-100/60 leading-relaxed">
             {findItem('logs')}
           </div>
-          <button onClick={() => setMobileMenuOpen(false)} className="w-full py-5 bg-white/5 border border-white/15 text-sm font-black uppercase text-white rounded-2xl">Close Terminal</button>
+          <button onClick={() => setMobileMenuOpen(false)} className="w-full py-5 bg-white/5 border border-white/15 text-sm font-black uppercase text-white rounded-2xl">Cerrar Terminal</button>
         </div>
       </aside>
 
@@ -97,7 +97,7 @@ export default function CoreMasonry({ items }: CoreMasonryProps) {
           <div className="hidden lg:flex flex-col border border-white/20 bg-[#121212] backdrop-blur-md lg:h-[700px] shrink-0 rounded-[2.5rem] overflow-hidden shadow-2xl">
             <div className="flex-1 p-8 flex flex-col h-full overflow-hidden">
               <div className="flex items-center justify-between mb-4 border-b border-white/15 pb-3">
-                <span className="text-xs text-cobalt font-black tracking-[0.3em] uppercase">Core_System_Output</span>
+                <span className="text-xs text-cobalt font-black tracking-[0.3em] uppercase">Salida_del_Sistema_Core</span>
                 <div className="flex gap-2">
                    <div className="w-2 h-2 rounded-full bg-cobalt animate-pulse" />
                    <div className="w-2 h-2 rounded-full bg-white/10" />
@@ -115,7 +115,7 @@ export default function CoreMasonry({ items }: CoreMasonryProps) {
           
           {/* CAJA PROYECTOS */}
           <ContentBox layoutId="projects" className="flex-[2.5] p-8 md:p-12">
-            <SectionHeader title="// DEPLOYED_MODULES" comment="Live_Production_Buffer" />
+            <SectionHeader title="// MÓDULOS_DESPLEGADOS" comment="Buffer_de_Producción_en_Vivo" />
             <div className="flex-1 lg:overflow-y-auto custom-scrollbar min-h-[400px] lg:min-h-0">
               {findItem('projects')}
             </div>
@@ -125,14 +125,14 @@ export default function CoreMasonry({ items }: CoreMasonryProps) {
           <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 shrink-0">
             
             <ContentBox layoutId="tech" className="p-8 sm:p-10 h-full">
-              <SectionHeader title="// TECH_ENVIRONMENT" comment="Registry_v4.2_Stable" />
+              <SectionHeader title="// ENTORNO_TECNOLÓGICO" comment="Registro_v4.2_Estable" />
               <div className="flex-1 lg:overflow-y-auto custom-scrollbar min-h-[250px] lg:min-h-0">
                 {findItem('tech')}
               </div>
             </ContentBox>
 
             <ContentBox layoutId="roadmap" className="p-8 sm:p-10 h-full">
-              <SectionHeader title="// STRATEGIC_ROADMAP" comment="Strategic_Evolution_Plan_2026" />
+              <SectionHeader title="// HOJA_DE_RUTA_ESTRATÉGICA" comment="Plan_Evolución_Estratégica_2026" />
               <div className="flex-1 lg:overflow-y-auto custom-scrollbar min-h-[250px] lg:min-h-0">
                 {findItem('roadmap')}
               </div>

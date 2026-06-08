@@ -29,7 +29,7 @@ const VFS_BASE: any = {
           'env.local': { type: 'file', content: 'STATION_NAME=Core-01\nOPERATOR=AlejandroMP\nSESSION_TYPE=RECRUITER_SYNC\nSTATUS=ONLINE' }
         }
       },
-      'README.md': { type: 'file', content: '# CORE SYSTEM ACCESS\n\nYou are now inside my development environment. This is a shared space for us to explore my work.\nUse "help" to see available protocols.\nFeel free to navigate using "cd" and "ls".' }
+      'README.md': { type: 'file', content: '# ACCESO AL SISTEMA CORE\n\nEstás dentro de mi entorno de desarrollo. Este es un espacio compartido para explorar mi trabajo.\nUsa "help" para ver los protocolos disponibles.\nPuedes navegar usando "cd" y "ls".' }
     }
   }
 };
@@ -187,7 +187,7 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
       
       if (isFull) {
         const lines = [
-          `${C.bold}${C.magenta}// CLASSIFIED_PROTOCOLS${C.reset}`,
+          `${C.bold}${C.magenta}// PROTOCOLOS_CLASIFICADOS${C.reset}`,
           o('─────────────────────────────────────────────'),
         ];
         let row = '';
@@ -197,27 +197,27 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
         });
         if (row) lines.push(row);
         lines.push(o('─────────────────────────────────────────────'));
-        lines.push(`${C.magenta}●${C.reset} ${o('— Restricted access. Use at your own risk.')}`);
+        lines.push(`${C.magenta}●${C.reset} ${o('— Acceso restringido. Úsalo bajo tu propio riesgo.')}`);
         return lines;
       }
 
       return [
-        `${C.bold}${C.white}// CORE_SYSTEM_PROTOCOLS${C.reset}`,
+        `${C.bold}${C.white}// PROTOCOLOS_DEL_SISTEMA_CORE${C.reset}`,
         o('─────────────────────────────────────────────'),
-        `${g('ls'.padEnd(12))} ${o('— list files/directories (ls <path>)')}`,
-        `${g('cd'.padEnd(12))} ${o('— change directory (cd <path>)')}`,
-        `${g('cat'.padEnd(12))} ${o('— read file (cat <path>)')}`,
-        `${g('pwd'.padEnd(12))} ${o('— print active working context')}`,
-        `${g('tree'.padEnd(12))} ${o('— display system structure')}`,
-        `${g('wget cv'.padEnd(12))} ${o('— download my resume')}`,
-        `${g('scan'.padEnd(12))} ${o('— integrity & module scan')}`,
-        `${g('status'.padEnd(12))} ${o('— check system health')}`,
-        `${g('whoami'.padEnd(12))} ${o('— session info')}`,
-        `${g('neofetch'.padEnd(12))} ${o('— display system information')}`,
-        `${g('clear'.padEnd(12))} ${o('— clear terminal')}`,
-        `${g('exit'.padEnd(12))} ${o('— close console')}`,
+        `${g('ls'.padEnd(12))} ${o('— listar archivos/directorios (ls <ruta>)')}`,
+        `${g('cd'.padEnd(12))} ${o('— cambiar directorio (cd <ruta>)')}`,
+        `${g('cat'.padEnd(12))} ${o('— leer archivo (cat <ruta>)')}`,
+        `${g('pwd'.padEnd(12))} ${o('— mostrar contexto de trabajo activo')}`,
+        `${g('tree'.padEnd(12))} ${o('— mostrar estructura del sistema')}`,
+        `${g('wget cv'.padEnd(12))} ${o('— descargar mi currículum')}`,
+        `${g('scan'.padEnd(12))} ${o('— escanear integridad y módulos')}`,
+        `${g('status'.padEnd(12))} ${o('— verificar estado del sistema')}`,
+        `${g('whoami'.padEnd(12))} ${o('— información de sesión')}`,
+        `${g('neofetch'.padEnd(12))} ${o('— mostrar información del sistema')}`,
+        `${g('clear'.padEnd(12))} ${o('— limpiar terminal')}`,
+        `${g('exit'.padEnd(12))} ${o('— cerrar consola')}`,
         o('─────────────────────────────────────────────'),
-        w('// HINT: Use "help -a" for full protocol list.')
+        w('// PISTA: Usa "help -a" para la lista completa de protocolos.')
       ];
     }
 
@@ -225,7 +225,7 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
       dispatchSystemEvent('ls-scan');
       const target = args[0] || '.';
       const resolved = resolvePath(currentPath, target);
-      if (!resolved || resolved.node.type !== 'dir') return [e(`ls: cannot access '${target}': No such directory`)];
+      if (!resolved || resolved.node.type !== 'dir') return [e(`ls: no se puede acceder a '${target}': No existe el directorio`)];
       
       const items = Object.keys(resolved.node.children);
       const lines: string[] = [];
@@ -241,11 +241,11 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
       const path = currentPath.length === 0 ? '/' : `/${currentPath.join('/')}`;
       const scope = currentPath.length === 0 ? 'ROOT_ACCESS' : currentPath[currentPath.length - 1].toUpperCase();
       return [
-        `${C.bold}${C.white}// WORKING_CONTEXT${C.reset}`,
+        `${C.bold}${C.white}// CONTEXTO_DE_TRABAJO${C.reset}`,
         o('─────────────────────────────────────────────'),
-        `${g('PATH'.padEnd(12))} ${path}`,
-        `${g('SCOPE'.padEnd(12))} ${scope}`,
-        `${g('SESSION'.padEnd(12))} RECRUITER_SYNC`,
+        `${g('RUTA'.padEnd(12))} ${path}`,
+        `${g('ALCANCE'.padEnd(12))} ${scope}`,
+        `${g('SESIÓN'.padEnd(12))} RECRUITER_SYNC`,
       ];
     }
 
@@ -257,7 +257,7 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
         dispatchSystemEvent('cd-nav', { path: resolved.path });
         return [];
       }
-      return [e(`cd: no such directory: ${target}`)];
+      return [e(`cd: no existe el directorio: ${target}`)];
     }
 
     case 'tree': {
@@ -281,7 +281,7 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
 
     case 'cat': {
       const target = args[0];
-      if (!target) return [e('Usage: cat <path>')];
+      if (!target) return [e('Uso: cat <ruta>')];
       const resolved = resolvePath(currentPath, target);
       if (resolved && resolved.node.type === 'file') {
         const file = resolved.node;
@@ -304,7 +304,7 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
         
         return file.content.split('\n');
       }
-      return [e(`cat: ${target}: No such file`)];
+      return [e(`cat: ${target}: No existe el archivo`)];
     }
 
     case 'wget': {
@@ -324,20 +324,20 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
           })
           .catch(() => window.open(cvUrl, '_blank'));
           
-        return [o(`Connecting to core storage...`), b(`[STREAM] ${BAR}`), g(`✓ Download initiated. Check your browser.`)];
+        return [o(`Conectando al almacenamiento core...`), b(`[STREAM] ${BAR}`), g(`✓ Descarga iniciada. Revisa tu navegador.`)];
       }
-      return [e(`wget: Not found.`)];
+      return [e(`wget: No encontrado.`)];
     }
 
     case 'scan': {
       dispatchSystemEvent('deep-scan');
       window.dispatchEvent(new CustomEvent('portfolioTerminalScan'));
       return [
-        g(`[RUNNING] NETWORK_SCAN...`),
-        o(`Checking VFS integrity: [OK]`),
-        o(`Pinging modules: Identity [OK], Projects [OK], Tech [OK]`),
-        w(`Load Time: ${performance.now().toFixed(2)}ms`),
-        g(`✓ System status: OPTIMIZED`)
+        g(`[EJECUTANDO] ESCANEO_DE_RED...`),
+        o(`Verificando integridad VFS: [OK]`),
+        o(`Ping a módulos: Identidad [OK], Proyectos [OK], Tecnología [OK]`),
+        w(`Tiempo de carga: ${performance.now().toFixed(2)}ms`),
+        g(`✓ Estado del sistema: OPTIMIZADO`)
       ];
     }
 
@@ -346,27 +346,27 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
         return [e('Usage: regen module')];
       }
       revealModules();
-      return [g('[RECOVERY] MODULE_STACK_RESTORED')];
+      return [g('[RECUPERACIÓN] PILA_DE_MÓDULOS_RESTAURADA')];
     }
 
     case 'glitch': {
       document.body.classList.toggle('hdr-glitch');
       const active = document.body.classList.contains('hdr-glitch');
-      return [active ? w('[WARNING] SYSTEM_INSTABILITY_DETECTED') : g('[SUCCESS] System stability restored.')];
+      return [active ? w('[ADVERTENCIA] INESTABILIDAD_DEL_SISTEMA_DETECTADA') : g('[ÉXITO] Estabilidad del sistema restaurada.')];
     }
 
     case 'rm': {
       if (args.includes('-rf') && (args.includes('/') || args.includes('/*'))) {
         return '__PURGE__';
       }
-      return [e('Usage: rm <module-id> or rm -rf /')];
+      return [e('Uso: rm <id-módulo> o rm -rf /')];
     }
 
     case 'sudo': {
       if (args[0] === 'rm' && args.includes('-rf') && (args.includes('/') || args.includes('/*'))) {
         return '__PURGE__';
       }
-      return [w('[SECURITY] Nice try. But you already have GUEST_ROOT access. We trust our recruiters.')];
+      return [w('[SEGURIDAD] Buen intento. Pero ya tienes acceso GUEST_ROOT. Confiamos en nuestros reclutadores.')];
     }
 
     case 'approve': {
@@ -375,17 +375,17 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
         window.location.href = `mailto:${email}?subject=Core System Approval - AlejandroMP&body=Hi Alejandro, I have reviewed your Core System and I would like to move forward with your application.`;
       }, 2000);
       return [
-        g('[PIPELINE] Candidate approved.'),
-        o('Initiating onboarding sequence...'),
-        w('→ Redirection to contact link initiated.')
+        g('[PROCESO] Candidato aprobado.'),
+        o('Iniciando secuencia de onboarding...'),
+        w('→ Redirección al enlace de contacto iniciada.')
       ];
     }
 
     case 'status': return [
-      b(`[SYSTEM_CHECK] Verifying core health...`), 
-      g(`✓ UPTIME: ${settings.availabilityValue || 100}%`), 
-      g(`✓ DATA: ${projects.length} PROJECTS SYNCED`), 
-      o(`Status: System is nominal and awaiting your review.`)
+      b(`[VERIFICACIÓN] Comprobando salud del sistema...`),
+      g(`✓ ACTIVO: ${settings.availabilityValue || 100}%`),
+      g(`✓ DATOS: ${projects.length} PROYECTOS SINCRONIZADOS`),
+      o(`Estado: Sistema nominal esperando tu revisión.`)
     ];
 
     case 'whoami': {
@@ -393,10 +393,10 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
       dispatchSystemEvent('whoami');
       return [
         g(`{`),
-        g(`  "session": "RECRUITER_INVITEE",`),
-        g(`  "host": "${name}",`),
-        g(`  "access_level": "GUEST_ROOT",`),
-        g(`  "message": "Welcome to my core. You are part of the system now."`),
+        g(`  "sesión": "INVITADO_RECLUTADOR",`),
+        g(`  "anfitrión": "${name}",`),
+        g(`  "nivel_acceso": "GUEST_ROOT",`),
+        g(`  "mensaje": "Bienvenido a mi core. Ahora eres parte del sistema."`),
         g(`}`)
       ];
     }
@@ -404,7 +404,7 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
     case 'matrix': { 
       document.body.classList.add('hdr-glitch'); 
       setTimeout(() => document.body.classList.remove('hdr-glitch'), 2000); 
-      return [w('Initializing visual glitch...'), g('01010101 10101010 01100110')]; 
+      return [w('Inicializando glitch visual...'), g('01010101 10101010 01100110')]; 
     }
 
     case 'clear': return ['__CLEAR__'];
@@ -432,7 +432,7 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
         o(`    Shell:   Core-sh 4.2`), 
         o(`    Browser: ${browser}`), 
         o(`    Editor:  LazyVim`), 
-        w('    Status:  Open for new challenges'), 
+        w('    Estado:  Abierto a nuevos desafíos'), 
         ''
       ];
     }
@@ -440,29 +440,29 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
     case 'top': {
       const mem = (performance as any).memory ? `${Math.round((performance as any).memory.usedJSHeapSize / 1048576)}MB` : "N/A";
       return [
-        o('Tasks: 12 running, 248 ideas pending'), 
-        w(`Memory: ${mem} coffee-powered`), 
-        '', 
-        o('PID    COMMAND        CPU%    MEM'), 
-        o('─────────────────────────────────'), 
-        w('1337   coffee_daemon  42.0    128M'), 
-        o('2048   side_projects  15.2    512M'), 
+        o('Tareas: 12 ejecutándose, 248 ideas pendientes'),
+        w(`Memoria: ${mem} coffee-powered`),
+        '',
+        o('PID    COMANDO        CPU%    MEM'),
+        o('─────────────────────────────────'),
+        w('1337   demonio_café   42.0    128M'),
+        o('2048   proyectos_secundarios  15.2    512M'),
         e('4096   impostor_syn   0.0     0.0M (Disabled)'),
-        o('8192   recruiter_eye  100.0   64M')
+        o('8192   ojo_reclutador 100.0   64M')
       ];
     }
 
-    case 'coffee': return [o('☕ COFFEE STATUS:'), g('  Level: CRITICAL'), o('Brewing more specialized knowledge for our meet...')];
+    case 'coffee': return [o('☕ ESTADO DEL CAFÉ:'), g('  Nivel: CRÍTICO'), o('Preparando más conocimiento especializado para nuestro encuentro...')];
     
     case 'ssh': return [
-      o(`Connecting to recruiter bridge...`), 
-      w(`RSA: AlejandroMP/RecruiterLink`), 
-      g(`→ Access granted. Handshake complete. Welcome, partner.`)
+      o(`Conectando al puente de reclutador...`),
+      w(`RSA: AlejandroMP/EnlaceReclutador`),
+      g(`→ Acceso concedido. Handshake completado. Bienvenido, socio.`)
     ];
 
     case 'stars': {
       let total = 0; projects.forEach(p => total += parseInt(String(p.specs?.stars || '0')));
-      return [g(`[STATS] Total Project Impact (GitHub Stars): ${total}`)];
+      return [g(`[ESTADÍSTICAS] Impacto Total de Proyectos (Estrellas GitHub): ${total}`)];
     }
 
     case 'hire-me': {
@@ -472,15 +472,15 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
         setTimeout(() => (contactBtn as HTMLElement).classList.remove('ring-4', 'ring-cobalt', 'animate-pulse'), 5000);
       }
       return [
-        g('Initializing hire sequence...'), 
-        o(BAR), 
-        g('✓ Background check cleared'), 
-        w(`→ Direct Line: ${settings.contactEmail || identity?.contactEmail || 'martinpujaltea@gmail.com'}`),
-        g('Ready to join your team. Contact module highlighted.')
+        g('Inicializando secuencia de contratación...'),
+        o(BAR),
+        g('✓ Verificación de antecedentes superada'),
+        w(`→ Línea directa: ${settings.contactEmail || identity?.contactEmail || 'martinpujaltea@gmail.com'}`),
+        g('Listo para unirse a tu equipo. Módulo de contacto resaltado.')
       ];
     }
 
-    default: return [e(`${cmd}: command not found`)];
+    default: return [e(`${cmd}: comando no encontrado`)];
   }
 }
 
@@ -545,11 +545,11 @@ export default function CoreConsole({
       if (disposed || !xtermContainer.current) return;
       const term = new Terminal({ cursorBlink: true, cursorStyle: 'underline', fontFamily: '"IBM Plex Mono", monospace', fontSize: 12, theme: { background: '#000000', foreground: '#cccccc', cursor: '#ffffff', red: '#ff4444', green: '#00ff41', yellow: '#ffb000', blue: '#0055ff' } });
       const fit = new FitAddon(); term.loadAddon(fit); term.open(xtermContainer.current); termRef.current = term;
-      term.writeln(`\x1b[1m\x1b[97mCORE OS v4.2.0 — ADMIN_CONSOLE\x1b[0m`);
+      term.writeln(`\x1b[1m\x1b[97mCORE OS v4.2.0 — CONSOLA_ADMIN\x1b[0m`);
       term.writeln(`\x1b[90m─────────────────────────────────────────────\x1b[0m`);
-      term.writeln(`\x1b[32m[AUTH] Recruiter session detected.\x1b[0m`);
-      term.writeln(`\x1b[36m[SYNC] Establishing shared environment... OK\x1b[0m`);
-      term.writeln(`\x1b[33m// Type 'help' to start our technical review.\x1b[0m`);
+      term.writeln(`\x1b[32m[AUTH] Sesión de reclutador detectada.\x1b[0m`);
+      term.writeln(`\x1b[36m[SYNC] Estableciendo entorno compartido... OK\x1b[0m`);
+      term.writeln(`\x1b[33m// Escribe 'help' para empezar nuestra revisión técnica.\x1b[0m`);
       term.writeln(``);
       term.write(`\x1b[36madmin@core:/$\x1b[0m `);
       setTimeout(() => { if (!disposed) { fit.fit(); term.focus(); } }, 650);
@@ -620,19 +620,19 @@ export default function CoreConsole({
             const bootLines = [
               { t: 'CORE_BIOS v8.4 (C) 2026', s: null },
               { t: 'CPU: Intel(R) Core(TM) i9- coffee_powered', s: null },
-              { t: 'Memory Check: 64GB [OK]', s: null },
-              { t: 'Detecting storage devices...', s: null },
-              { t: 'Booting from NVMe0... [OK]', s: null },
-              { t: 'Loading Core Kernel 6.8.0...', s: null },
-              { t: 'Mounting root filesystem...', s: null },
-              { t: 'Recovering from unexpected shutdown...', s: null },
-              { t: 'System Restore in progress [##########] 100%', s: null },
-              { t: '>>> Restoring Identity Module...', s: identityEl },
-              { t: '>>> Mounting Project Grid...', s: projectsEl },
-              { t: '>>> Initializing Tech Matrix...', s: tech },
-              { t: '>>> Syncing Roadmap data...', s: roadmap },
-              { t: 'Re-establishing Uplink...', s: null },
-              { t: 'Welcome back, Recruiter.' }
+              { t: 'Verificación de memoria: 64GB [OK]', s: null },
+              { t: 'Detectando dispositivos de almacenamiento...', s: null },
+              { t: 'Arrancando desde NVMe0... [OK]', s: null },
+              { t: 'Cargando Kernel Core 6.8.0...', s: null },
+              { t: 'Montando sistema de archivos raíz...', s: null },
+              { t: 'Recuperando de apagado inesperado...', s: null },
+              { t: 'Restauración del sistema en progreso [##########] 100%', s: null },
+              { t: '>>> Restaurando Módulo de Identidad...', s: identityEl },
+              { t: '>>> Montando Grid de Proyectos...', s: projectsEl },
+              { t: '>>> Inicializando Matriz Tecnológica...', s: tech },
+              { t: '>>> Sincronizando datos de Hoja de Ruta...', s: roadmap },
+              { t: 'Restableciendo enlace ascendente...', s: null },
+              { t: 'Bienvenido de nuevo, Reclutador.' }
             ];
             
             for (const line of bootLines) {
@@ -651,7 +651,7 @@ export default function CoreConsole({
             }
             document.body.style.backgroundColor = ''; 
             await new Promise(r => setTimeout(r, 1000));
-            term.writeln(`\x1b[1m\x1b[92m[SUCCESS] SYSTEM_RESTORE_COMPLETE\x1b[0m`);
+            term.writeln(`\x1b[1m\x1b[92m[ÉXITO] RESTAURACIÓN_DEL_SISTEMA_COMPLETA\x1b[0m`);
             
           } else if (result[0] === '__CLEAR__') { 
             for (let i = 0; i < 20; i++) {
@@ -659,7 +659,7 @@ export default function CoreConsole({
               await new Promise(r => setTimeout(r, 10));
             }
             term.clear(); 
-            term.writeln(`\x1b[1m\x1b[97mCORE OS v4.2.0 — ADMIN_CONSOLE\x1b[0m`); 
+            term.writeln(`\x1b[1m\x1b[97mCORE OS v4.2.0 — CONSOLA_ADMIN\x1b[0m`);
             term.writeln(`\x1b[90m─────────────────────────────────────────────\x1b[0m`);
           } else {
             for (const line of result) { 
@@ -749,15 +749,15 @@ export default function CoreConsole({
       {!(mode === 'logs' && hideLogsHeader) && (
         <div className={`border-b border-white/15 px-4 py-3 flex items-center gap-3 bg-carbono shrink-0 group ${mode === 'logs' ? 'cursor-pointer hover:bg-carbono/20' : ''}`} onClick={mode === 'logs' ? enterTerminal : undefined}>
           <div className="flex items-center gap-3">
-            <span className="text-xs text-text-faint tracking-widest uppercase">{mode === 'logs' ? 'SYSTEM LOGS' : 'CORE OPERATING SYSTEM'}</span>
+            <span className="text-xs text-text-faint tracking-widest uppercase">{mode === 'logs' ? 'REGISTROS DEL SISTEMA' : 'SISTEMA OPERATIVO CORE'}</span>
             {mode === 'logs' && (
               <span className="text-xs text-white/70 tracking-widest uppercase opacity-40 group-hover:opacity-100 transition-opacity">
-                [ {'>'}_ BOOT_CONSOLE ]
+                [ {'>'}_ CONSOLA_DE_ARANQUE ]
               </span>
             )}
           </div>
           <div className="flex gap-1.5 ml-auto"><div className="w-2 h-2 bg-err/60" /><div className="w-2 h-2 bg-warn/60" /><div className="w-2 h-2 bg-cobalt/60" /></div>
-          {mode === 'logs' ? <span className="text-xs text-cobalt tracking-widest">● LIVE</span> : <button onClick={exitTerminal} className="text-xs text-text-faint hover:text-err tracking-widest transition-colors">✕ SHUTDOWN</button>}
+          {mode === 'logs' ? <span className="text-xs text-cobalt tracking-widest">● EN VIVO</span> : <button onClick={exitTerminal} className="text-xs text-text-faint hover:text-err tracking-widest transition-colors">✕ APAGAR</button>}
         </div>
       )}
       <div className={`flex-1 min-h-0 flex flex-col overflow-hidden ${phase === 'crt-off' ? 'crt-off' : ''} ${phase === 'crt-boot' ? 'crt-boot' : ''}`}>

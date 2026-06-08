@@ -69,7 +69,7 @@ export default function IdentitySection({ name, handle, bio, quote, status, avai
             onError={() => setImgError(true)}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-xs text-white/20 uppercase tracking-widest">NO_SIGNAL</div>
+          <div className="w-full h-full flex items-center justify-center text-xs text-white/20 uppercase tracking-widest">SIN_SEÑAL</div>
         )}
         <div className="absolute inset-0 bg-linear-to-t from-[#0a0c10] via-transparent to-transparent pointer-events-none" />
         
@@ -103,10 +103,10 @@ export default function IdentitySection({ name, handle, bio, quote, status, avai
                   onClick={() => forceDownload(cvUrl, 'Alejandro-CV.pdf')}
                   className="w-full bg-cobalt text-white text-sm font-black tracking-[0.2em] uppercase px-4 py-3 hover:bg-blue-500 transition-all duration-150 active:scale-[0.98] shadow-lg border border-white/15"
                 >
-                  ↓ DOWNLOAD CV (EN)
+                  ↓ DESCARGAR CV
                 </button>
                 <p className="text-xs text-white/50 tracking-widest uppercase text-center font-bold">
-                  // CV — Work experience and history
+                  // CV — Experiencia e historial laboral
                 </p>
               </div>
             )}

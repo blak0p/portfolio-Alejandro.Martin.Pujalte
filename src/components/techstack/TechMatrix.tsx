@@ -33,7 +33,7 @@ export default function TechMatrix({ tools: initialTools = [] }: TechMatrixProps
   if (tools.length === 0) {
     return (
       <div className="border border-white/15 bg-carbono-surface p-8 text-center island-fade">
-        <span className="text-base text-text-faint tracking-widest">NO_TOOLS_REGISTERED</span>
+        <span className="text-base text-text-faint tracking-widest">SIN_HERRAMIENTAS_REGISTRADAS</span>
       </div>
     );
   }
@@ -41,7 +41,7 @@ export default function TechMatrix({ tools: initialTools = [] }: TechMatrixProps
   return (
     <div className={`flex flex-col gap-4 island-load h-full @container transition-all duration-500 ${isGlowing ? 'ring-2 ring-cobalt shadow-[0_0_20px_rgba(0,85,255,0.3)]' : ''}`}>
       <div className="flex items-center justify-between text-xs text-text-faint tracking-widest uppercase opacity-60 mb-1">
-        <span className="text-cobalt font-bold">● curated</span>
+        <span className="text-cobalt font-bold">● curado</span>
       </div>
       <div className="grid grid-cols-1 @[500px]:grid-cols-2 gap-3">
         {tools.map((tool) => (
