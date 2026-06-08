@@ -478,5 +478,11 @@
     "message": "fix: daily cron for hobby plan",
     "author": "Alejandro-M-P",
     "date": "2026-04-22"
+  },
+  {
+    "sha": "1466ab16cce7250ac7bc6580512909de702784f2",
+    "message": "fix: localize UI to Spanish and synchronize tech stack state\n\nWHY\nInconsistencies existed between English and Spanish localization across project statuses, labels, and terminal logs, alongside missing styles for specific status keys. Additionally, the tech stack components failed to reflect real-time updates from localStorage without manual reloads.\n\nWHAT\n* Translated project statuses, availability labels, contact buttons, and terminal log messages to Spanish\n* Added missing CSS styles for EN_PROGRESO and PAUSADO status keys\n* Implemented localStorage synchronization and event listeners for TechMatrix components\n* Updated tech stack usage levels and added Docker to the configuration\n* Populated roadmap labels and timeframes in settings configuration",
+    "author": "blak0p",
+    "date": "2026-06-08T17:49:14Z"
   }
 ]
