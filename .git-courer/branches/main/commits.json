@@ -1,5 +1,71 @@
 [
   {
+    "sha": "d5538e885e6c40f28c8e93b57019c209f8270a59",
+    "message": "feat: traducir portfolio completo a español",
+    "author": "blak0p",
+    "date": "2026-06-08"
+  },
+  {
+    "sha": "584dd625edfd1b3abd3dd37d47603e6510836c4d",
+    "message": "data: daily sync 2 projects [2026-06-08]",
+    "author": "Alejandro",
+    "date": "2026-06-08"
+  },
+  {
+    "sha": "7e5dde03c7659c8efb0a2397e3927d7b706e9581",
+    "message": "data: daily sync 2 projects [2026-06-07]",
+    "author": "Alejandro",
+    "date": "2026-06-07"
+  },
+  {
+    "sha": "8ee9a21e25d90225b1312db23b5ba96e29f22c18",
+    "message": "data: daily sync 2 projects [2026-06-06]",
+    "author": "Alejandro",
+    "date": "2026-06-06"
+  },
+  {
+    "sha": "1406c73b48a08159babda8703c2678464053622d",
+    "message": "data: daily sync 2 projects [2026-06-05]",
+    "author": "Alejandro",
+    "date": "2026-06-05"
+  },
+  {
+    "sha": "e6c24f0957c0c31a63c1f302f4ea8fe003c5240c",
+    "message": "data: full update projects and roadmap + techstack",
+    "author": "Alejandro",
+    "date": "2026-06-04"
+  },
+  {
+    "sha": "579ebfd015afd80ee1e15459252c522aea031068",
+    "message": "data: full update projects and roadmap",
+    "author": "Alejandro",
+    "date": "2026-06-04"
+  },
+  {
+    "sha": "8637a10db8998db1dc0bbf4206e62f472b739829",
+    "message": "data: full update projects and techstack",
+    "author": "Alejandro",
+    "date": "2026-06-04"
+  },
+  {
+    "sha": "461ff6a2aab6e6fd75978303f0f7af67bc449491",
+    "message": "data: daily sync 2 projects [2026-06-04]",
+    "author": "Alejandro",
+    "date": "2026-06-04"
+  },
+  {
+    "sha": "896fc44e10a81125b7c84a44e46dc398cb5c3961",
+    "message": "data: update projects",
+    "author": "Alejandro",
+    "date": "2026-06-03"
+  },
+  {
+    "sha": "582eec7472c35e8060f61757d80d094cc266e292",
+    "message": "docs: initialize portfolio content and core data structures",
+    "author": "blak0p",
+    "date": "2026-06-03"
+  },
+  {
     "sha": "3ad0bdb16f5b4326f99ec46e3fc0f4084e7a0c50",
     "message": "fix: update title and description to Backend Developer",
     "author": "blak0p",

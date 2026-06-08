@@ -6,9 +6,9 @@ interface AvailabilityBarProps {
 }
 
 const STATUS_LABELS: Record<string, string> = {
-  ONLINE: 'System_Ready',
-  BUSY: 'System_Busy',
-  OFFLINE: 'System_Maintenance',
+  ONLINE: 'Sistema_Listo',
+  BUSY: 'Sistema_Ocupado',
+  OFFLINE: 'Sistema_Mantenimiento',
 };
 
 export default function AvailabilityBar({ value = 99.9 }: AvailabilityBarProps) {
@@ -31,7 +31,7 @@ export default function AvailabilityBar({ value = 99.9 }: AvailabilityBarProps) 
     return () => window.removeEventListener('portfolioSettingsChanged', load);
   }, [value]);
 
-  const label = STATUS_LABELS[status] ?? 'System_Ready';
+  const label = STATUS_LABELS[status] ?? 'Sistema_Listo';
 
   return (
     <div className="w-full">

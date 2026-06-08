@@ -10,9 +10,9 @@ const STORAGE_KEY = 'portfolio_ambitions_v2';
 const SESSION_KEY = 'admin_session';
 
 const DEFAULT_SECTION_META = {
-  short: { label: '', timeframe: '' },
-  mid:   { label: '', timeframe: '' },
-  long:  { label: '', timeframe: '' },
+  short: { label: 'CORTO PLAZO', timeframe: '6-12 meses' },
+  mid:   { label: 'MEDIO PLAZO', timeframe: '1-3 años' },
+  long:  { label: 'LARGO PLAZO', timeframe: '3-5 años' },
 };
 
 export default function Roadmap({ ambitions: initial }: RoadmapProps) {

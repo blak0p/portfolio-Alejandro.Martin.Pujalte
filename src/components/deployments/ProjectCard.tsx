@@ -35,8 +35,10 @@ function getEntropyStyle(pushedAt: string | undefined, thresholdDays: number): R
 }
 
 const statusStyle: Record<string, string> = {
+  EN_PROGRESO: 'text-warn border-warn/50 bg-warn/10',
   IN_PROGRESS: 'text-warn border-warn/50 bg-warn/10',
   COMPLETED:   'text-cobalt border-cobalt/50 bg-cobalt/10',
+  PAUSADO:     'text-white/70 border-white/30 bg-white/5',
   PAUSED:      'text-white/70 border-white/30 bg-white/5',
   ARCHIVED:    'text-err/60 border-err/30 bg-err/5',
 };

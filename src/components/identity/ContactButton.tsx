@@ -11,7 +11,7 @@ export default function ContactButton({ href = 'mailto:martinpujaltea@gmail.com'
       data-contact-button
       className="block w-full bg-cobalt text-white text-center text-xs font-bold tracking-widest uppercase px-6 py-3 hover:bg-cobalt-light active:bg-cobalt-dark transition-colors duration-100 cursor-pointer"
     >
-      INITIATE_CONTACT →
+      INICIAR_CONTACTO →
     </a>
   );
 }

@@ -43,8 +43,10 @@ const VERSION_MAP: Record<string, string> = {
 };
 
 const STATUS_STYLE: Record<string, string> = {
+  EN_PROGRESO: 'text-warn border-warn/40 bg-warn/5',
   IN_PROGRESS: 'text-warn border-warn/40 bg-warn/5',
   COMPLETED:   'text-cobalt border-cobalt/40 bg-cobalt/5',
+  PAUSADO:     'text-white/70 border-white/30 bg-white/[0.06]',
   PAUSED:      'text-white/70 border-white/30 bg-white/[0.06]',
   ARCHIVED:    'text-err/60 border-err/30 bg-err/5',
 };

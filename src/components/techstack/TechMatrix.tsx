@@ -9,10 +9,57 @@ interface TechMatrixProps {
 export default function TechMatrix({ tools: initialTools = [] }: TechMatrixProps) {
   const [tools, setTools] = useState<TechTool[]>([]);
   const [isGlowing, setIsGlowing] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
+    if (loaded) return;
+    // Try localStorage first (admin edits live here)
+    const stored = localStorage.getItem('portfolioTechstack');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setTools(parsed);
+          setLoaded(true);
+          return;
+        }
+      } catch {}
+    }
+    // Fallback to props (build-time JSON)
     setTools(initialTools);
-  }, [initialTools]);
+    setLoaded(true);
+  }, [initialTools, loaded]);
+
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === 'portfolioTechstack' || e.key === 'lastDataUpdate') {
+        const stored = localStorage.getItem('portfolioTechstack');
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed)) setTools(parsed);
+          } catch {}
+        }
+      }
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, []);
+
+  // Also refresh when coming back from admin (same tab)
+  useEffect(() => {
+    const onRefresh = () => {
+      const stored = localStorage.getItem('portfolioTechstack');
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) setTools(parsed);
+        } catch {}
+      }
+    };
+    window.addEventListener('portfolioProjectsRefreshed', onRefresh);
+    return () => window.removeEventListener('portfolioProjectsRefreshed', onRefresh);
+  }, []);
 
   useEffect(() => {
     const glow = (ms = 1500) => { setIsGlowing(true); setTimeout(() => setIsGlowing(false), ms); };

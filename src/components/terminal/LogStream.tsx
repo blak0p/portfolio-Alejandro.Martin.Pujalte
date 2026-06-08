@@ -225,7 +225,7 @@ export default function LogStream({ logs, logLimit = 10, hideHeader = false }: L
           id: `sync-${now}`,
           timestamp: new Date().toISOString().slice(0, 19).replace('T', ' '),
           level: 'INFO',
-          message: '[GH] UPLINK_SYNC_COMPLETE \u2014 No new activity detected.'
+          message: '[GH] UPLINK_SYNC_COMPLETE \u2014 Sin actividad nueva detectada.'
         };
         setLiveEntries(prev => [syncLog, ...prev].slice(0, logLimit));
       } else {
@@ -271,12 +271,12 @@ export default function LogStream({ logs, logLimit = 10, hideHeader = false }: L
 
       if (isGold) {
         level = 'MILESTONE';
-        message = `[ALERT] GOLD_TARGET_DETECTED: ${projectName} — (High Value Infrastructure)`;
+        message = `[ALERT] GOLD_TARGET_DETECTED: ${projectName} — (Infraestructura de Alto Valor)`;
       } else if (isDusty) {
         level = 'WARN';
-        message = `[INFO] RECOVERING_LEGACY_MODULE: ${projectName} — (Cleaning dust...)`;
+        message = `[INFO] RECOVERING_LEGACY_MODULE: ${projectName} — (Limpiando polvo...)`;
       } else {
-        message = `[GUEST] ACCESSING_MODULE: ${projectName} — (Protocol: READ_ONLY)`;
+        message = `[GUEST] ACCESSING_MODULE: ${projectName} — (Protocolo: SOLO_LECTURA)`;
       }
 
       const newEntry: LogEntry = {
@@ -333,8 +333,8 @@ export default function LogStream({ logs, logLimit = 10, hideHeader = false }: L
             <div className="w-2 h-2 bg-cobalt/60" />
           </div>
           {fetching
-            ? <span className="text-xs text-warn tracking-widest animate-pulse">● FETCHING</span>
-            : <span className="text-xs text-cobalt tracking-widest">● LIVE</span>
+            ? <span className="text-xs text-warn tracking-widest animate-pulse">● SINCRONIZANDO</span>
+            : <span className="text-xs text-cobalt tracking-widest">● EN_VIVO</span>
           }
         </div>
       )}
@@ -354,7 +354,7 @@ export default function LogStream({ logs, logLimit = 10, hideHeader = false }: L
             <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${fetching ? 'bg-warn' : 'bg-cobalt'}`}></span>
           </span>
           <span className={`text-sm ${fetching ? 'text-warn' : 'text-cobalt'} tracking-widest`}>
-            {fetching ? 'SYNCING...' : 'ESTABLISHED'}
+            {fetching ? 'SINCRONIZANDO...' : 'ESTABLECIDO'}
           </span>
         </div>
       </div>
@@ -362,8 +362,8 @@ export default function LogStream({ logs, logLimit = 10, hideHeader = false }: L
       <div ref={containerRef} className="overflow-y-auto overflow-x-hidden flex-1 min-h-0 p-3 flex flex-col gap-1 whitespace-normal break-all relative z-20">
         {combined.length === 0 ? (
           <div className="text-xs text-text-faint tracking-widest flex flex-col gap-1">
-            <span>// NO_NEW_ACTIVITY</span>
-            <span className="text-cobalt/60">System idle — awaiting input...</span>
+            <span>// SIN_ACTIVIDAD_RECIENTE</span>
+            <span className="text-cobalt/60">Sistema inactivo — esperando entrada...</span>
           </div>
         ) : (
           combined.map((entry) => {
@@ -396,7 +396,7 @@ export default function LogStream({ logs, logLimit = 10, hideHeader = false }: L
         </div>
         <div className="opacity-40">
           <p className="text-xs text-text-faint tracking-widest leading-relaxed uppercase">
-            // [SYSTEM_HINT]: This panel tracks live GitHub commits and infrastructure updates.
+            // [SYSTEM_HINT]: Este panel rastrea commits de GitHub y actualizaciones de infraestructura en vivo.
           </p>
         </div>
       </div>

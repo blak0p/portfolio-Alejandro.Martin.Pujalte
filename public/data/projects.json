@@ -42,7 +42,7 @@
     "description": "MCP server for Git with local Ollama — zero tokens for git operations",
     "businessImpact": "",
     "specs": {
-      "status": "IN_PROGRESS",
+      "status": "EN_PROGRESO",
       "stars": "31",
       "language": "GO",
       "license": "MIT",
@@ -103,7 +103,7 @@
     "description": "",
     "businessImpact": "",
     "specs": {
-      "status": "PAUSED",
+      "status": "PAUSADO",
       "stars": "1",
       "language": "Astro,java",
       "license": "",
