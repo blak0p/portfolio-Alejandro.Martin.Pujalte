@@ -43,7 +43,7 @@
     "businessImpact": "",
     "specs": {
       "status": "IN_PROGRESS",
-      "stars": "32",
+      "stars": "36",
       "language": "GO",
       "license": "MIT",
       "description": "MCP server for Git with local Ollama — zero tokens for git operations",
@@ -57,7 +57,7 @@
     "isHighlighted": false,
     "isFavorite": false,
     "isPrivate": false,
-    "pushedAt": "2026-06-11T18:25:46Z",
+    "pushedAt": "2026-06-12T20:50:11Z",
     "order": 0
   },
   {
