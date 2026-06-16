@@ -6,6 +6,7 @@
     "stack": [
       "GO",
       "C",
+      "HTML",
       "PYTHON",
       "SHELL",
       "MAKEFILE"
@@ -14,12 +15,17 @@
       {
         "name": "GO",
         "color": "#00ADD8",
-        "usageLevel": 90
+        "usageLevel": 89
       },
       {
         "name": "C",
         "color": "#555555",
         "usageLevel": 8
+      },
+      {
+        "name": "HTML",
+        "color": "#e34c26",
+        "usageLevel": 1
       },
       {
         "name": "PYTHON",
@@ -43,7 +49,7 @@
     "businessImpact": "",
     "specs": {
       "status": "IN_PROGRESS",
-      "stars": "37",
+      "stars": "38",
       "language": "GO",
       "license": "MIT",
       "description": "MCP server for Git with local Ollama — zero tokens for git operations",
@@ -57,7 +63,7 @@
     "isHighlighted": false,
     "isFavorite": false,
     "isPrivate": false,
-    "pushedAt": "2026-06-14T21:11:06Z",
+    "pushedAt": "2026-06-15T12:36:30Z",
     "order": 0
   },
   {
