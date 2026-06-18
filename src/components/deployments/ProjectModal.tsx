@@ -203,10 +203,10 @@ export default function ProjectModal({ project, onClose, theme = 'dev' }: Projec
         onClick={onClose}
       >
         <div
-          className={`bg-carbono-surface w-full max-w-3xl h-[88vh] flex flex-col pointer-events-auto ${
+          className={`bg-carbono-surface w-full h-[88vh] flex flex-col pointer-events-auto ${
             isRecruiter 
-              ? 'font-sans rounded-2xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.85)]' 
-              : 'font-mono border border-white/15'
+              ? 'font-sans rounded-2xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.85)] max-w-5xl' 
+              : 'font-mono border border-white/15 max-w-3xl'
           }`}
           onClick={e => e.stopPropagation()}
         >
