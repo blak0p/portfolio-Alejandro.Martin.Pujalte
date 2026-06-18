@@ -1,0 +1,51 @@
+---
+interface HeroProps {
+  name: string;
+  handle: string;
+  status?: string;
+  photo?: string;
+}
+
+const { name, handle, photo = '/profile.jpg' } = Astro.props;
+---
+
+<section class="relative w-full min-h-[70vh] flex items-center justify-center overflow-hidden recruiter-hero">
+  <!-- Animated warm gradient backdrop -->
+  <div class="absolute inset-0 -z-10 recruiter-gradient-bg" aria-hidden="true"></div>
+
+  <!-- Large rectangular photo with parallax -->
+  <div class="relative z-10 flex flex-col items-center gap-6 px-6 text-center">
+    <div class="recruiter-parallax w-full max-w-lg aspect-[3/2] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(202,138,4,0.15)]">
+      <img
+        src={photo}
+        alt={name}
+        class="w-full h-full object-cover"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+
+    <div class="flex flex-col items-center gap-2">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+        {name.replace('\n', ' ')}
+      </h1>
+      <p class="text-base sm:text-lg text-recruiter-accent-light/80 font-medium">
+        {handle}
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .recruiter-gradient-bg {
+    background: linear-gradient(135deg, #9A6B03 0%, #181818 55%, #0d0d0d 100%);
+    background-size: 200% 200%;
+    animation: recruiter-gradient-shift 14s ease-in-out infinite;
+  }
+
+  @keyframes recruiter-gradient-shift {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+  }
+</style>

@@ -1,0 +1,50 @@
+---
+interface ExternalLink {
+  label: string;
+  href: string;
+}
+
+interface ContactProps {
+  contactEmail?: string;
+  links?: ExternalLink[];
+  linkedinUrl?: string;
+}
+
+const { contactEmail, links = [], linkedinUrl } = Astro.props;
+
+// Merge explicit links with LinkedIn (if not already present)
+const allLinks: ExternalLink[] = [];
+if (linkedinUrl && !links.some((l) => l.href === linkedinUrl)) {
+  allLinks.push({ label: 'LinkedIn', href: linkedinUrl });
+}
+allLinks.push(...links);
+---
+
+<section class="recruiter-section" id="contact">
+  <div class="recruiter-container">
+    <h2 class="recruiter-section-title">Contacto</h2>
+
+    <div class="flex flex-col gap-3 max-w-md">
+      {contactEmail && (
+        <a
+          href={`mailto:${contactEmail}`}
+          class="group flex items-center gap-3 bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3 hover:border-recruiter-accent/40 hover:shadow-[0_0_16px_rgba(202,138,4,0.1)] transition-all duration-200"
+        >
+          <span class="text-sm font-medium text-recruiter-accent-light shrink-0">Email</span>
+          <span class="text-sm text-white/70 group-hover:text-white transition-colors">{contactEmail}</span>
+        </a>
+      )}
+
+      {allLinks.map((link) => (
+        <a
+          href={link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group flex items-center gap-3 bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3 hover:border-recruiter-accent/40 hover:shadow-[0_0_16px_rgba(202,138,4,0.1)] transition-all duration-200"
+        >
+          <span class="text-sm font-medium text-recruiter-accent-light shrink-0">{link.label}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

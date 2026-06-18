@@ -1,0 +1,81 @@
+---
+interface AboutProps {
+  bio: string;
+  birthDate?: string;
+  availabilityValue?: number;
+  cvUrl?: string;
+  linkedinUrl?: string;
+}
+
+const { bio, birthDate, availabilityValue = 0, cvUrl, linkedinUrl } = Astro.props;
+
+// Compute age at build time
+let age: number | null = null;
+if (birthDate) {
+  const birth = new Date(birthDate);
+  if (!isNaN(birth.getTime())) {
+    const today = new Date();
+    let calculatedAge = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) calculatedAge--;
+    age = calculatedAge;
+  }
+}
+
+const availability = Math.max(0, Math.min(100, availabilityValue));
+---
+
+<section class="recruiter-section" id="about">
+  <div class="recruiter-container">
+    <h2 class="recruiter-section-title">Sobre mí</h2>
+
+    <p class="text-base text-white/70 leading-relaxed mb-8 max-w-2xl">
+      {bio}
+    </p>
+
+    <div class="flex flex-wrap gap-6 mb-8">
+      {age !== null && (
+        <div class="bg-white/[0.04] border border-white/10 rounded-xl px-5 py-4">
+          <span class="block text-xs text-white/40 mb-1">Edad</span>
+          <span class="text-2xl font-bold text-white">{age}</span>
+        </div>
+      )}
+
+      <div class="bg-white/[0.04] border border-white/10 rounded-xl px-5 py-4 min-w-[200px]">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs text-white/40">Disponibilidad</span>
+          <span class="text-sm font-semibold text-recruiter-accent-light">{availability}%</span>
+        </div>
+        <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+          <div
+            class="h-full bg-recruiter-accent rounded-full transition-[width] duration-700 ease-out"
+            style={`width: ${availability}%`}
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3">
+      {cvUrl && (
+        <a
+          href={cvUrl}
+          download
+          class="inline-flex items-center justify-center bg-recruiter-accent text-carbono text-sm font-semibold px-6 py-3 rounded-xl hover:bg-recruiter-accent-light transition-all duration-150 active:scale-[0.98]"
+        >
+          Descargar CV
+        </a>
+      )}
+
+      {linkedinUrl && (
+        <a
+          href={linkedinUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center border border-white/20 text-white/80 text-sm font-semibold px-6 py-3 rounded-xl hover:bg-[#0077B5] hover:text-white hover:border-[#0077B5] transition-all duration-150 active:scale-[0.98]"
+        >
+          LinkedIn
+        </a>
+      )}
+    </div>
+  </div>
+</section>

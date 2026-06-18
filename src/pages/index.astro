@@ -1,17 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import IdentitySection from '../components/identity/IdentitySection';
-import ProjectGrid from '../components/deployments/ProjectGrid';
-import TechMatrix from '../components/techstack/TechMatrix';
-import CoreConsole from '../components/terminal/CoreConsole';
-import Roadmap from '../components/ambitions/Roadmap';
-import CoreHome from '../components/ui/CoreHome';
-import ambitions from '../../public/data/ambitions.json';
+import Hero from '../components/recruiter/Hero.astro';
+import About from '../components/recruiter/About.astro';
+import Projects from '../components/recruiter/Projects.astro';
+import Tech from '../components/recruiter/Tech.astro';
+import Contact from '../components/recruiter/Contact.astro';
 import identity from '../../public/data/identity.json';
-import logs from '../../public/data/logs.json';
 import settings from '../../public/data/settings.json';
-import techStack from '../../public/data/techstack.json';
 import projects from '../../public/data/projects.json';
+import techStack from '../../public/data/techstack.json';
 
 // Merge identity with settings (settings override identity for dynamic values)
 const identityData = {
@@ -23,128 +20,151 @@ const identityData = {
   birthDate: settings.birthDate ?? (identity as any).birthDate,
 };
 
-const totalProjects = projects.length;
-const totalTech = techStack.length;
+// Recruiter-facing project view: show ALL projects (including private),
+// strip internal fields. No "privado" labels — all projects look equal.
+const visibleProjects = (projects as any[]).map((p) => ({
+  name: p.name,
+  photo: p.photo,
+  description: p.description || p.specs?.description,
+  stack: Array.isArray(p.stack) ? p.stack : [],
+  repo: p.specs?.repo ?? p.repo,
+}));
 ---
 
-<BaseLayout 
-  title={`${identityData.name.replace('\n', ' ')} \u2014 Desarrollador Backend`} 
+<BaseLayout
+  title={`${identityData.name.replace('\n', ' ')} — Backend Developer`}
   description={identityData.bio}
   handle={identityData.handle}
   status={identityData.status}
+  navStyle="recruiter"
 >
-  <div class="w-full h-[calc(100vh-48px)] p-2 md:p-3 overflow-hidden flex flex-col gap-2 md:gap-3 boot-up">
-    
-    <!-- DESKTOP: 2-column layout -->
-    <div class="hidden lg:grid lg:grid-cols-[clamp(280px,22vw,380px)_1fr] flex-1 min-h-0 gap-3 sharp-corner">
-      
-      <!-- LEFT: Identity + Console (con pestañas) -->
-      <aside class="flex flex-col gap-0 min-h-0">
-        <!-- Tab bar -->
-        <div class="flex border border-white/15 border-b-0 bg-carbono-surface sharp-corner" id="left-tabs">
-          <button data-tab="profile" class="flex-1 py-2 text-xs font-black tracking-widest uppercase border-r border-white/10 bg-cobalt text-white transition-all" onclick="switchLeftTab('profile')">// PERFIL</button>
-          <button data-tab="terminal" class="flex-1 py-2 text-xs font-black tracking-widest uppercase text-white/50 hover:text-white transition-all" onclick="switchLeftTab('terminal')">// TERMINAL</button>
-        </div>
-        <!-- Tab content -->
-        <div id="tab-profile" class="flex-1 border border-white/15 border-t-0 bg-carbono-surface overflow-hidden sharp-corner">
-            <IdentitySection {...identityData} client:idle />
-        </div>
-        <div id="tab-terminal" class="hidden flex-1 border border-white/15 border-t-0 bg-carbono-surface overflow-hidden sharp-corner">
-          <div class="h-full overflow-hidden">
-            <CoreConsole 
-              logs={logs} 
-              logLimit={settings.logLimit ?? 10} 
-              projects={projects}
-              settings={settings}
-              identity={identityData}
-              techStack={techStack}
-              client:idle 
-            />
-          </div>
-        </div>
-      </aside>
+  <div class="warm-bg">
+    <Hero
+      name={identityData.name}
+      handle={identityData.handle}
+      status={identityData.status}
+    />
 
-      <!-- RIGHT: Projects TOP, TechStack+Roadmap BOTTOM (side by side) -->
-      <main class="flex flex-col gap-3 min-h-0">
-        
-        <!-- PROJECTS (arriba) -->
-        <section class="border border-white/15 bg-carbono-surface p-3 overflow-hidden" style="flex: 1.2">
-          <div class="h-full overflow-y-auto">
-            <div class="mb-3 shrink-0">
-              <div class="flex items-center justify-between pb-2">
-                <span class="text-sm font-bold text-white tracking-widest">// PROYECTOS</span>
-              </div>
-              <div class="h-0.5 w-full bg-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]"></div>
-            </div>
-            <ProjectGrid projects={projects} client:idle />
-          </div>
-        </section>
-
-        <!-- BOTTOM: Dashboard de Módulos -->
-        <div class="grid grid-cols-3 gap-3 min-h-0" style="flex: 2">
-
-          <!-- TechStack -->
-          <section class="border border-white/15 bg-carbono-surface p-3 overflow-hidden">
-            <div class="h-full overflow-y-auto">
-              <div class="mb-2">
-                <div class="flex items-center justify-between pb-2">
-                  <span class="text-sm font-bold text-white tracking-widest">// TECH_STACK_RECIENTE</span>
-                </div>
-                <div class="h-0.5 w-full bg-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]"></div>
-              </div>
-              <div class="text-xs text-text-faint tracking-widest uppercase opacity-60 mb-2">// curado desde panel admin</div>
-              <TechMatrix tools={techStack} client:idle />
-            </div>
-          </section>
-
-          <!-- Roadmap -->
-          <section class="border border-white/15 bg-carbono-surface p-3 overflow-hidden col-span-2">
-            <div class="h-full overflow-y-auto">
-              <div class="mb-2">
-                <div class="flex items-center justify-between pb-2">
-                  <span class="text-sm font-bold text-white tracking-widest">// HOJA DE RUTA</span>
-                </div>
-                <div class="h-0.5 w-full bg-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]"></div>
-              </div>
-              <Roadmap ambitions={ambitions} client:idle />
-            </div>
-          </section>
-        </div>
-      </main>
-      
-    </div>
-
-    <!-- MOBILE: stacked -->
-    <div class="lg:hidden flex-1 min-h-0 overflow-y-auto">
-      <CoreHome
-        identityData={identityData}
-        projects={projects}
-        techStack={techStack}
-        ambitions={ambitions}
-        logs={logs}
-        logLimit={settings.logLimit ?? 10}
-        settings={settings}
-        client:idle
+    <main class="flex flex-col gap-16 pb-20 recruiter-reveal-root">
+      <About
+        bio={identityData.bio}
+        birthDate={identityData.birthDate}
+        availabilityValue={identityData.availabilityValue}
+        cvUrl={identityData.cvUrl}
+        linkedinUrl={identityData.linkedinUrl}
       />
-    </div>
 
+      <Projects projects={visibleProjects} />
+
+      <Tech tools={techStack} />
+
+      <Contact
+        contactEmail={identityData.contactEmail}
+        links={identityData.links}
+        linkedinUrl={identityData.linkedinUrl}
+      />
+    </main>
   </div>
 </BaseLayout>
 
-<script>
-  function switchLeftTab(tab) {
-    document.querySelectorAll('#left-tabs button').forEach(b => {
-      b.classList.remove('bg-cobalt', 'text-white');
-      b.classList.add('text-white/50');
-      if (b.dataset.tab === tab) {
-        b.classList.add('bg-cobalt', 'text-white');
-        b.classList.remove('text-white/50');
-      }
-    });
-    document.getElementById('tab-profile').classList.toggle('hidden', tab !== 'profile');
-    document.getElementById('tab-terminal').classList.toggle('hidden', tab !== 'terminal');
+<style is:global>
+  /* Smooth scroll for anchor nav */
+  html {
+    scroll-behavior: smooth;
   }
-  document.querySelectorAll('#left-tabs button').forEach(b => {
-    b.addEventListener('click', () => switchLeftTab(b.dataset.tab));
-  });
+
+  /* Warm page background fallback (sits under the hero gradient) */
+  .warm-bg {
+    background-color: #0d0d0d;
+  }
+
+  /* Section layout shared by all recruiter sections */
+  .recruiter-section {
+    padding-top: 1rem;
+    scroll-margin-top: 4rem; /* clear the fixed nav */
+  }
+
+  .recruiter-container {
+    max-width: 56rem; /* ~896px — readable single column */
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .recruiter-section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Fade-in reveal on scroll (Intersection Observer adds .visible) */
+  .recruiter-section {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .recruiter-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .recruiter-section {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+    .recruiter-gradient-bg {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  // Fade-in section reveal + hero parallax — vanilla JS, no libraries.
+  // Runs once on page load and on Astro view transitions.
+  function initRecruiterAnimations() {
+    const sections = document.querySelectorAll('.recruiter-section');
+    if ('IntersectionObserver' in window) {
+      const reveal = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              reveal.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+      );
+      sections.forEach((s) => reveal.observe(s));
+    } else {
+      sections.forEach((s) => s.classList.add('visible'));
+    }
+
+    // Hero parallax — translate the photo layer based on scroll position.
+    const parallax = document.querySelector('.recruiter-parallax');
+    if (parallax && 'IntersectionObserver' in window) {
+      let ticking = false;
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const y = window.scrollY;
+          if (y < 600) {
+            (parallax as HTMLElement).style.transform = `translateY(${y * 0.25}px)`;
+          }
+          ticking = false;
+        });
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+  }
+
+  initRecruiterAnimations();
+  document.addEventListener('astro:page-load', initRecruiterAnimations);
 </script>

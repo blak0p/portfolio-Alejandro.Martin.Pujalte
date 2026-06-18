@@ -7,6 +7,7 @@ interface Props {
   description?: string;
   handle?: string;
   status?: string;
+  navStyle?: 'dev' | 'recruiter';
 }
 
 const {
@@ -14,6 +15,7 @@ const {
   description = 'Desarrollador Backend construyendo infraestructura de alta disponibilidad, herramientas de IA local y arquitecturas estructuralmente honestas.',
   handle = 'ALEJANDRO.MP',
   status = 'ONLINE',
+  navStyle = 'dev',
 } = Astro.props;
 
 const ogImage = '/profile.jpg';
@@ -40,63 +42,83 @@ const siteUrl = Astro.site ?? 'https://alejandro-mp.dev';
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL(ogImage, siteUrl).toString()} />
   </head>
-  <body class="bg-carbono text-text-primary font-mono">
+  <body class={`bg-carbono text-text-primary ${navStyle === 'recruiter' ? 'font-sans' : 'font-mono'}`}>
 
-    <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/15 bg-carbono/80 backdrop-blur-md h-12">
-      <div class="w-full px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
-
-        <a href="/" class="text-sm font-bold tracking-widest text-white hover:text-cobalt transition-colors duration-100 shrink-0">
-          {handle.replace('@', '').toUpperCase()}
-        </a>
-
-        <!-- Desktop links -->
-        <div class="hidden md:flex items-center gap-5 text-xs text-text-muted tracking-widest uppercase">
-          <a href="#deployments" class="hover:text-cobalt transition-colors duration-100">Proyectos</a>
-          <span class="text-white/20">|</span>
-          <a href="#tech" class="hover:text-cobalt transition-colors duration-100">Tecnologías</a>
-          <span class="text-white/20">|</span>
-          <a href="#ambitions" class="hover:text-cobalt transition-colors duration-100">Metas</a>
-        </div>
-
-        <div class="flex items-center gap-3">
-          <div class="hidden sm:flex items-center gap-1.5 text-xs text-text-faint tracking-widest">
-            <span class={`w-1.5 h-1.5 ${status === 'ONLINE' ? 'bg-cobalt' : status === 'BUSY' ? 'bg-warn' : 'bg-text-faint'} animate-pulse inline-block`} style="border-radius:50%"></span>
-            <span class={status === 'ONLINE' ? 'text-cobalt' : status === 'BUSY' ? 'text-warn' : 'text-text-faint'}>{status}</span>
+    {navStyle === 'recruiter' ? (
+      <!-- RECRUITER NAV — rounded, warm, professional -->
+      <nav class="fixed top-0 left-0 right-0 z-50 bg-carbono/85 backdrop-blur-md h-14">
+        <div class="max-w-5xl mx-auto px-6 h-full flex items-center justify-between">
+          <a href="/" class="text-sm font-bold tracking-wide text-white/90 hover:text-recruiter-accent-light transition-colors">
+            {handle.replace('@', '').toUpperCase()}
+          </a>
+          <div class="flex items-center gap-6 text-sm text-white/60">
+            <a href="/#about" class="hover:text-recruiter-accent-light transition-colors">Sobre mí</a>
+            <a href="/#projects" class="hover:text-recruiter-accent-light transition-colors">Proyectos</a>
+            <a href="/#tech" class="hover:text-recruiter-accent-light transition-colors">Tecnologías</a>
+            <a href="/#contact" class="hover:text-recruiter-accent-light transition-colors">Contacto</a>
+            <span class="text-white/20">|</span>
+            <a href="/dev" class="text-xs text-white/40 hover:text-recruiter-accent-light transition-colors tracking-wider uppercase">Dev</a>
           </div>
-          <span class="hidden sm:inline text-white/20">|</span>
-          <a href="/admin" class="hidden md:inline text-xs text-text-faint tracking-widest hover:text-white transition-colors">ADMIN</a>
-
-          <!-- Hamburger (mobile only) -->
-          <button
-            id="hamburger"
-            class="md:hidden flex flex-col gap-1.5 p-1 text-text-faint hover:text-white transition-colors"
-            aria-label="Menú"
-          >
-            <span class="block w-5 h-px bg-current transition-all duration-200" id="bar1"></span>
-            <span class="block w-5 h-px bg-current transition-all duration-200" id="bar2"></span>
-            <span class="block w-5 h-px bg-current transition-all duration-200" id="bar3"></span>
-          </button>
         </div>
+      </nav>
+    ) : (
+      <!-- DEV NAV — sharp, cyberpunk, existing style -->
+      <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/15 bg-carbono/80 backdrop-blur-md h-12">
+        <div class="w-full px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
 
-      </div>
-    </nav>
+          <a href="/" class="text-sm font-bold tracking-widest text-white hover:text-cobalt transition-colors duration-100 shrink-0">
+            {handle.replace('@', '').toUpperCase()}
+          </a>
 
-    <!-- Mobile dropdown menu -->
-    <div
-      id="mobile-menu"
-      class="fixed top-12 left-0 right-0 z-40 md:hidden border-b border-white/15 bg-carbono/95 backdrop-blur-md hidden"
-    >
-      <div class="flex flex-col px-6 py-4 gap-4">
-        <a href="#deployments" class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Proyectos</a>
-        <a href="#tech" class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Tecnologías</a>
-        <a href="#ambitions" class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Metas</a>
-        <div class="border-t border-white/15 pt-3">
-          <a href="/admin" class="text-xs text-text-faint tracking-widest hover:text-white transition-colors">PANEL ADMIN →</a>
+          <!-- Desktop links — point at dev page sections -->
+          <div class="hidden md:flex items-center gap-5 text-xs text-text-muted tracking-widest uppercase">
+            <a href="/dev#deployments" class="hover:text-cobalt transition-colors duration-100">Proyectos</a>
+            <span class="text-white/20">|</span>
+            <a href="/dev#tech" class="hover:text-cobalt transition-colors duration-100">Tecnologías</a>
+            <span class="text-white/20">|</span>
+            <a href="/dev#ambitions" class="hover:text-cobalt transition-colors duration-100">Metas</a>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="hidden sm:flex items-center gap-1.5 text-xs text-text-faint tracking-widest">
+              <span class={`w-1.5 h-1.5 ${status === 'ONLINE' ? 'bg-cobalt' : status === 'BUSY' ? 'bg-warn' : 'bg-text-faint'} animate-pulse inline-block`} style="border-radius:50%"></span>
+              <span class={status === 'ONLINE' ? 'text-cobalt' : status === 'BUSY' ? 'text-warn' : 'text-text-faint'}>{status}</span>
+            </div>
+            <span class="hidden sm:inline text-white/20">|</span>
+            <a href="/admin" class="hidden md:inline text-xs text-text-faint tracking-widest hover:text-white transition-colors">ADMIN</a>
+
+            <!-- Hamburger (mobile only) -->
+            <button
+              id="hamburger"
+              class="md:hidden flex flex-col gap-1.5 p-1 text-text-faint hover:text-white transition-colors"
+              aria-label="Menú"
+            >
+              <span class="block w-5 h-px bg-current transition-all duration-200" id="bar1"></span>
+              <span class="block w-5 h-px bg-current transition-all duration-200" id="bar2"></span>
+              <span class="block w-5 h-px bg-current transition-all duration-200" id="bar3"></span>
+            </button>
+          </div>
+
+        </div>
+      </nav>
+
+      <!-- Mobile dropdown menu (dev only) -->
+      <div
+        id="mobile-menu"
+        class="fixed top-12 left-0 right-0 z-40 md:hidden border-b border-white/15 bg-carbono/95 backdrop-blur-md hidden"
+      >
+        <div class="flex flex-col px-6 py-4 gap-4">
+          <a href="/dev#deployments" class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Proyectos</a>
+          <a href="/dev#tech" class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Tecnologías</a>
+          <a href="/dev#ambitions" class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Metas</a>
+          <div class="border-t border-white/15 pt-3">
+            <a href="/admin" class="text-xs text-text-faint tracking-widest hover:text-white transition-colors">PANEL ADMIN →</a>
+          </div>
         </div>
       </div>
-    </div>
+    )}
 
-    <main class="pt-12">
+    <main class={navStyle === 'recruiter' ? 'pt-14' : 'pt-12'}>
       <slot />
     </main>
 

@@ -1,0 +1,150 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import IdentitySection from '../components/identity/IdentitySection';
+import ProjectGrid from '../components/deployments/ProjectGrid';
+import TechMatrix from '../components/techstack/TechMatrix';
+import CoreConsole from '../components/terminal/CoreConsole';
+import Roadmap from '../components/ambitions/Roadmap';
+import CoreHome from '../components/ui/CoreHome';
+import ambitions from '../../public/data/ambitions.json';
+import identity from '../../public/data/identity.json';
+import logs from '../../public/data/logs.json';
+import settings from '../../public/data/settings.json';
+import techStack from '../../public/data/techstack.json';
+import projects from '../../public/data/projects.json';
+
+// Merge identity with settings (settings override identity for dynamic values)
+const identityData = {
+  ...identity,
+  status: settings.status ?? identity.status,
+  availabilityValue: settings.availabilityValue ?? identity.availabilityValue,
+  cvUrl: settings.cvUrl ?? identity.cvUrl,
+  linkedinUrl: settings.linkedinUrl ?? identity.linkedinUrl,
+  birthDate: settings.birthDate ?? (identity as any).birthDate,
+};
+
+const totalProjects = projects.length;
+const totalTech = techStack.length;
+---
+
+<BaseLayout 
+  title={`${identityData.name.replace('\n', ' ')} \u2014 Desarrollador Backend`} 
+  description={identityData.bio}
+  handle={identityData.handle}
+  status={identityData.status}
+>
+  <div class="w-full h-[calc(100vh-48px)] p-2 md:p-3 overflow-hidden flex flex-col gap-2 md:gap-3 boot-up">
+    
+    <!-- DESKTOP: 2-column layout -->
+    <div class="hidden lg:grid lg:grid-cols-[clamp(280px,22vw,380px)_1fr] flex-1 min-h-0 gap-3 sharp-corner">
+      
+      <!-- LEFT: Identity + Console (con pestañas) -->
+      <aside class="flex flex-col gap-0 min-h-0">
+        <!-- Tab bar -->
+        <div class="flex border border-white/15 border-b-0 bg-carbono-surface sharp-corner" id="left-tabs">
+          <button data-tab="profile" class="flex-1 py-2 text-xs font-black tracking-widest uppercase border-r border-white/10 bg-cobalt text-white transition-all" onclick="switchLeftTab('profile')">// PERFIL</button>
+          <button data-tab="terminal" class="flex-1 py-2 text-xs font-black tracking-widest uppercase text-white/50 hover:text-white transition-all" onclick="switchLeftTab('terminal')">// TERMINAL</button>
+        </div>
+        <!-- Tab content -->
+        <div id="tab-profile" class="flex-1 border border-white/15 border-t-0 bg-carbono-surface overflow-hidden sharp-corner">
+            <IdentitySection {...identityData} client:idle />
+        </div>
+        <div id="tab-terminal" class="hidden flex-1 border border-white/15 border-t-0 bg-carbono-surface overflow-hidden sharp-corner">
+          <div class="h-full overflow-hidden">
+            <CoreConsole 
+              logs={logs} 
+              logLimit={settings.logLimit ?? 10} 
+              projects={projects}
+              settings={settings}
+              identity={identityData}
+              techStack={techStack}
+              client:idle 
+            />
+          </div>
+        </div>
+      </aside>
+
+      <!-- RIGHT: Projects TOP, TechStack+Roadmap BOTTOM (side by side) -->
+      <main class="flex flex-col gap-3 min-h-0">
+        
+        <!-- PROJECTS (arriba) -->
+        <section id="deployments" class="border border-white/15 bg-carbono-surface p-3 overflow-hidden" style="flex: 1.2">
+          <div class="h-full overflow-y-auto">
+            <div class="mb-3 shrink-0">
+              <div class="flex items-center justify-between pb-2">
+                <span class="text-sm font-bold text-white tracking-widest">// PROYECTOS</span>
+              </div>
+              <div class="h-0.5 w-full bg-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]"></div>
+            </div>
+            <ProjectGrid projects={projects} client:idle />
+          </div>
+        </section>
+
+        <!-- BOTTOM: Dashboard de Módulos -->
+        <div class="grid grid-cols-3 gap-3 min-h-0" style="flex: 2">
+
+          <!-- TechStack -->
+          <section id="tech" class="border border-white/15 bg-carbono-surface p-3 overflow-hidden">
+            <div class="h-full overflow-y-auto">
+              <div class="mb-2">
+                <div class="flex items-center justify-between pb-2">
+                  <span class="text-sm font-bold text-white tracking-widest">// TECH_STACK_RECIENTE</span>
+                </div>
+                <div class="h-0.5 w-full bg-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]"></div>
+              </div>
+              <div class="text-xs text-text-faint tracking-widest uppercase opacity-60 mb-2">// curado desde panel admin</div>
+              <TechMatrix tools={techStack} client:idle />
+            </div>
+          </section>
+
+          <!-- Roadmap -->
+          <section id="ambitions" class="border border-white/15 bg-carbono-surface p-3 overflow-hidden col-span-2">
+            <div class="h-full overflow-y-auto">
+              <div class="mb-2">
+                <div class="flex items-center justify-between pb-2">
+                  <span class="text-sm font-bold text-white tracking-widest">// HOJA DE RUTA</span>
+                </div>
+                <div class="h-0.5 w-full bg-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]"></div>
+              </div>
+              <Roadmap ambitions={ambitions} client:idle />
+            </div>
+          </section>
+        </div>
+      </main>
+      
+    </div>
+
+    <!-- MOBILE: stacked -->
+    <div class="lg:hidden flex-1 min-h-0 overflow-y-auto">
+      <CoreHome
+        identityData={identityData}
+        projects={projects}
+        techStack={techStack}
+        ambitions={ambitions}
+        logs={logs}
+        logLimit={settings.logLimit ?? 10}
+        settings={settings}
+        client:idle
+      />
+    </div>
+
+  </div>
+</BaseLayout>
+
+<script>
+  function switchLeftTab(tab) {
+    document.querySelectorAll('#left-tabs button').forEach(b => {
+      b.classList.remove('bg-cobalt', 'text-white');
+      b.classList.add('text-white/50');
+      if (b.dataset.tab === tab) {
+        b.classList.add('bg-cobalt', 'text-white');
+        b.classList.remove('text-white/50');
+      }
+    });
+    document.getElementById('tab-profile').classList.toggle('hidden', tab !== 'profile');
+    document.getElementById('tab-terminal').classList.toggle('hidden', tab !== 'terminal');
+  }
+  document.querySelectorAll('#left-tabs button').forEach(b => {
+    b.addEventListener('click', () => switchLeftTab(b.dataset.tab));
+  });
+</script>
