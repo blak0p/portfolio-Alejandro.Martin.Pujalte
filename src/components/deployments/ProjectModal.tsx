@@ -164,7 +164,7 @@ export default function ProjectModal({ project, onClose, theme = 'dev' }: Projec
     : readme
       ? renderMarkdown(readme)
       : '';
-  const specsEntries = Object.entries(project.specs || {}).filter(([k]) => !['repoSlug', 'video', 'status'].includes(k));
+  const specsEntries = Object.entries(project.specs || {}).filter(([k]) => !['repoSlug', 'video', 'status', 'repo', 'description', 'demo', 'tags', 'stackWithUsage'].includes(k));
 
   const isRecruiter = theme === 'recruiter';
   const getTabClass = (t: Tab) => {
@@ -294,6 +294,21 @@ export default function ProjectModal({ project, onClose, theme = 'dev' }: Projec
                 </div>
               </div>
 
+              {/* Specifications Table */}
+              {specsEntries.length > 0 && (
+                <div className="flex flex-col gap-2">
+                  <span className="text-xs text-white/40 uppercase font-bold tracking-wider">Especificaciones</span>
+                  <div className="border border-white/10 rounded-xl overflow-hidden bg-white/[0.01] w-full">
+                    {specsEntries.map(([key, value]) => (
+                      <div key={key} className="flex border-b border-white/5 last:border-b-0 text-xs">
+                        <span className="text-white/60 uppercase px-3 py-2 border-r border-white/10 w-24 shrink-0 font-semibold text-[10px] tracking-wider truncate">{key}</span>
+                        <span className="text-white/95 px-3 py-2 truncate text-[11px] font-medium">{Array.isArray(value) ? value.join(', ') : String(value)}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Repository Button / Badge */}
               <div className="flex flex-col gap-3 mt-2">
                 {!project.isPrivate ? (
@@ -408,30 +423,13 @@ export default function ProjectModal({ project, onClose, theme = 'dev' }: Projec
                 </div>
               )}
 
-              {/* Specs details */}
-              <div className="flex flex-col gap-5 border-t border-white/10 pt-6 mt-2">
-                <div>
-                  <h3 className="text-xs text-recruiter-accent-light uppercase font-bold tracking-wider">Arquitectura</h3>
-                  <p className="text-xs text-text-muted leading-relaxed whitespace-pre-wrap">{project.architecture || 'N/A'}</p>
+              {/* Architecture Section */}
+              {project.architecture && (
+                <div className="flex flex-col gap-2 border-t border-white/10 pt-6 mt-2">
+                  <h3 className="text-xs text-recruiter-accent-light uppercase font-bold tracking-wider">Arquitectura del Proyecto</h3>
+                  <p className="text-sm text-white leading-relaxed font-medium whitespace-pre-wrap">{project.architecture}</p>
                 </div>
-                <div>
-                  <h3 className="text-xs text-recruiter-accent-light uppercase font-bold tracking-wider">Secuencia de inicio</h3>
-                  <pre className="p-3 text-xs text-text-primary leading-relaxed overflow-x-auto bg-[#0a0a0a] border border-white/10 rounded-xl">{project.initSequence || 'N/A'}</pre>
-                </div>
-                {specsEntries.length > 0 && (
-                  <div>
-                    <h3 className="text-xs text-recruiter-accent-light uppercase font-bold tracking-wider mb-2">Especificaciones técnicas</h3>
-                    <div className="border border-white/10 rounded-xl overflow-hidden bg-white/[0.01]">
-                      {specsEntries.map(([key, value]) => (
-                        <div key={key} className="flex border-b border-white/5 last:border-b-0">
-                          <span className="text-xs text-white/70 uppercase px-3 py-2 border-r border-white/10 w-28 shrink-0 font-semibold">{key}</span>
-                          <span className="text-xs text-text-primary px-3 py-2">{Array.isArray(value) ? value.join(', ') : String(value)}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
+              )}
             </div>
           </div>
         ) : (
