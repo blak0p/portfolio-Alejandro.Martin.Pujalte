@@ -20,11 +20,56 @@ const {
 
 const ogImage = '/profile.jpg';
 const siteUrl = Astro.site ?? 'https://alejandro-mp.dev';
+
+const isDevPage = Astro.url.pathname.replace(/\/$/, '') === '/dev';
+const deploymentsHref = isDevPage ? '#deployments' : '/dev#deployments';
+const techHref = isDevPage ? '#tech' : '/dev#tech';
+const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
 ---
 
 <html lang="es">
   <head>
+    <script is:inline>
+      // Prevent React from crashing when Google Translate mutates the DOM
+      if (typeof Node !== 'undefined' && Node.prototype) {
+        const originalRemoveChild = Node.prototype.removeChild;
+        Node.prototype.removeChild = function(child) {
+          if (child.parentNode !== this) {
+            return child;
+          }
+          return originalRemoveChild.call(this, child);
+        };
+        const originalInsertBefore = Node.prototype.insertBefore;
+        Node.prototype.insertBefore = function(newNode, referenceNode) {
+          if (referenceNode && referenceNode.parentNode !== this) {
+            return originalInsertBefore.call(this, newNode, null);
+          }
+          return originalInsertBefore.call(this, newNode, referenceNode);
+        };
+      }
+    </script>
     <ClientRouter />
+    <script is:inline>
+      window.googleTranslateElementInit = function() {
+        const el = document.getElementById('google_translate_element');
+        if (!el) return;
+        if (el.querySelector('.goog-te-combo')) return;
+        
+        new google.translate.TranslateElement({
+          pageLanguage: 'auto',
+          includedLanguages: 'es,en',
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+          autoDisplay: false
+        }, 'google_translate_element');
+      };
+
+      document.addEventListener('astro:page-load', () => {
+        if (window.googleTranslateElementInit && window.google && window.google.translate && window.google.translate.TranslateElement) {
+          window.googleTranslateElementInit();
+        }
+      });
+    </script>
+    <script is:inline src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
@@ -55,7 +100,14 @@ const siteUrl = Astro.site ?? 'https://alejandro-mp.dev';
             <a href="/#about" class="hover:text-recruiter-accent-light transition-colors">Sobre mí</a>
             <a href="/#projects" class="hover:text-recruiter-accent-light transition-colors">Proyectos</a>
             <a href="/#tech" class="hover:text-recruiter-accent-light transition-colors">Tecnologías</a>
+            <a href="/#ambitions" class="hover:text-recruiter-accent-light transition-colors">Metas</a>
             <a href="/#contact" class="hover:text-recruiter-accent-light transition-colors">Contacto</a>
+            <span class="text-white/20">|</span>
+            <div id="google_translate_element" class="google-translate-dropdown"></div>
+            <div class="flex items-center gap-2 select-none shrink-0">
+              <button class="translate-btn text-base hover:scale-110 active:scale-95 transition-all cursor-pointer p-0.5" data-lang="es" title="Español">🇪🇸</button>
+              <button class="translate-btn text-base hover:scale-110 active:scale-95 transition-all cursor-pointer p-0.5" data-lang="en" title="English">🇬🇧</button>
+            </div>
             <span class="text-white/20">|</span>
             <a href="/dev" class="text-xs text-white/40 hover:text-recruiter-accent-light transition-colors tracking-wider uppercase">Dev</a>
           </div>
@@ -72,17 +124,23 @@ const siteUrl = Astro.site ?? 'https://alejandro-mp.dev';
 
           <!-- Desktop links — point at dev page sections -->
           <div class="hidden md:flex items-center gap-5 text-xs text-text-muted tracking-widest uppercase">
-            <a href="/dev#deployments" class="hover:text-cobalt transition-colors duration-100">Proyectos</a>
+            <a href={deploymentsHref} class="hover:text-cobalt transition-colors duration-100">Proyectos</a>
             <span class="text-white/20">|</span>
-            <a href="/dev#tech" class="hover:text-cobalt transition-colors duration-100">Tecnologías</a>
+            <a href={techHref} class="hover:text-cobalt transition-colors duration-100">Tecnologías</a>
             <span class="text-white/20">|</span>
-            <a href="/dev#ambitions" class="hover:text-cobalt transition-colors duration-100">Metas</a>
+            <a href={ambitionsHref} class="hover:text-cobalt transition-colors duration-100">Metas</a>
           </div>
 
           <div class="flex items-center gap-3">
             <div class="hidden sm:flex items-center gap-1.5 text-xs text-text-faint tracking-widest">
               <span class={`w-1.5 h-1.5 ${status === 'ONLINE' ? 'bg-cobalt' : status === 'BUSY' ? 'bg-warn' : 'bg-text-faint'} animate-pulse inline-block`} style="border-radius:50%"></span>
               <span class={status === 'ONLINE' ? 'text-cobalt' : status === 'BUSY' ? 'text-warn' : 'text-text-faint'}>{status}</span>
+            </div>
+            <span class="hidden sm:inline text-white/20">|</span>
+            <div id="google_translate_element" class="google-translate-dropdown"></div>
+            <div class="flex items-center gap-2 select-none shrink-0">
+              <button class="translate-btn text-base hover:scale-110 active:scale-95 transition-all cursor-pointer p-0.5" data-lang="es" title="Español">🇪🇸</button>
+              <button class="translate-btn text-base hover:scale-110 active:scale-95 transition-all cursor-pointer p-0.5" data-lang="en" title="English">🇬🇧</button>
             </div>
             <span class="hidden sm:inline text-white/20">|</span>
             <a href="/admin" class="hidden md:inline text-xs text-text-faint tracking-widest hover:text-white transition-colors">ADMIN</a>
@@ -108,9 +166,9 @@ const siteUrl = Astro.site ?? 'https://alejandro-mp.dev';
         class="fixed top-12 left-0 right-0 z-40 md:hidden border-b border-white/15 bg-carbono/95 backdrop-blur-md hidden"
       >
         <div class="flex flex-col px-6 py-4 gap-4">
-          <a href="/dev#deployments" class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Proyectos</a>
-          <a href="/dev#tech" class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Tecnologías</a>
-          <a href="/dev#ambitions" class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Metas</a>
+          <a href={deploymentsHref} class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Proyectos</a>
+          <a href={techHref} class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Tecnologías</a>
+          <a href={ambitionsHref} class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Metas</a>
           <div class="border-t border-white/15 pt-3">
             <a href="/admin" class="text-xs text-text-faint tracking-widest hover:text-white transition-colors">PANEL ADMIN →</a>
           </div>
@@ -146,6 +204,39 @@ const siteUrl = Astro.site ?? 'https://alejandro-mp.dev';
       document.querySelectorAll('.mobile-link').forEach(link => {
         link.addEventListener('click', () => { if (open) toggle(); });
       });
+
+      // Google Translate click triggers
+      function triggerTranslation(lang: string) {
+        // Set cookie for path /
+        document.cookie = "googtrans=/auto/" + lang + "; path=/;";
+        // Set cookie with explicit domain fallback
+        document.cookie = "googtrans=/auto/" + lang + "; path=/; domain=" + window.location.hostname;
+        
+        const combo = document.querySelector('.goog-te-combo') as HTMLSelectElement | null;
+        if (combo) {
+          combo.value = lang;
+          combo.dispatchEvent(new Event('change'));
+        } else {
+          // Fallback if Google Translate script has not finished loading
+          window.location.reload();
+        }
+      }
+
+      function initTranslationButtons() {
+        document.querySelectorAll('.translate-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const target = e.currentTarget as HTMLElement;
+            const lang = target.dataset.lang;
+            if (lang) {
+              triggerTranslation(lang);
+            }
+          });
+        });
+      }
+
+      // Initialize on load and page transition
+      initTranslationButtons();
+      document.addEventListener('astro:page-load', initTranslationButtons);
     </script>
 
   </body>
