@@ -1,9 +1,0 @@
-2026/04/22 20:06:27 ✓ Ollama started by git-courer2026/04/22 20:06:27 ✓ Model ready2026/04/22 20:06:27 Starting git-courer v1.3.12026/04/22 20:06:27 Working directory: .2026/04/22 20:06:27 Ollama host: http://localhost:114342026/04/22 20:06:27 Ollama model: gemma4:26b2026/04/22 20:06:27 Initialize: client=opencode v1.14.202026/04/22 20:06:27 Client registered: opencode v1.14.20 (sampling: false, elicitation: false)2026/04/22 23:49:16 Cerrando git-courer...2026/04/23 21:37:40 Starting Ollama...2026/04/23 21:37:41 ✓ Ollama started by git-courer2026/04/23 21:37:41 ✓ Model ready2026/04/23 21:37:41 Starting git-courer v1.3.12026/04/23 21:37:41 Working directory: .2026/04/23 21:37:41 Ollama host: http://localhost:114342026/04/23 21:37:41 Ollama model: gemma4:26b2026/04/23 21:37:41 Initialize: client=gemini-cli-mcp-client v0.38.22026/04/23 21:37:41 Client registered: gemini-cli-mcp-client v0.38.2 (sampling: false, elicitation: false)2026/04/23 22:11:56 Cerrando git-courer...2026/04/24 23:01:17 Starting Ollama...
-2026/04/24 23:01:25 ✓ Model ready
-2026/04/24 23:01:25 Starting git-courer v1.3.1
-2026/04/24 23:01:25 Working directory: .
-2026/04/24 23:01:25 Ollama host: http://localhost:11434
-2026/04/24 23:01:25 Ollama model: gemma4:26b
-2026/04/24 23:01:25 Initialize: client=opencode v1.14.20
-2026/04/24 23:01:25 Client registered: opencode v1.14.20 (sampling: false, elicitation: false)
-2026/04/24 23:01:29 Cerrando git-courer...

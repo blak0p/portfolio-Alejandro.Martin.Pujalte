@@ -15,20 +15,30 @@ const GITHUB_USER = import.meta.env.GITHUB_USER;
 async function handleUploadCv(body: any) {
   const { base64 } = body;
   if (!base64) throw new Error('Missing base64');
-  const content = decodeBase64(base64);
+  const content = base64; // already base64 from client
   const path = 'public/cv.pdf';
+  const repo = GITHUB_REPO;
   
-  const existing = await getRepoContent({ path });
-  const sha = existing?.content?.sha;
+  const h = authHeaders();
+  
+  // Try to get existing file SHA
+  let sha: string | undefined;
+  try {
+    const existingRes = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, { headers: h });
+    if (existingRes.ok) {
+      const existing = await existingRes.json();
+      sha = existing.sha;
+    }
+  } catch {}
   
   const msg = {
     message: sha ? 'Update CV' : 'Add CV',
     content,
+    encoding: 'base64',
     ...(sha && { sha })
   };
   
-  const h = authHeaders();
-  const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${path}`, {
+  const res = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
     method: 'PUT',
     headers: h,
     body: JSON.stringify(msg)

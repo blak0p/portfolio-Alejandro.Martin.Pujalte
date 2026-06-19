@@ -47,6 +47,7 @@ export default function PublishTab({ onLog }: PublishTabProps) {
         return name;
       }).join(' + ').replace(' + ', ', ').replace(/, ([^,]*)$/, ' and $1');
       
+      const buildNum = (builds[0]?.buildNumber ?? 0) + 1;
       const changedCount = files.length;
       const prefix = changedCount === 1 ? 'update' : 'full update';
       const message = `data: ${prefix} ${changedTypes}`;
@@ -54,7 +55,7 @@ export default function PublishTab({ onLog }: PublishTabProps) {
       const res = await fetch('/api/github', { 
         method: 'POST', 
         headers: { 'Content-Type': 'application/json' }, 
-        body: JSON.stringify({ action: 'publish', files, message }) 
+        body: JSON.stringify({ action: 'publish', files, branch: 'main', buildNum, message })
       });
       
       if (!res.ok) throw new Error('BRIDGE_REJECTED');
@@ -62,7 +63,7 @@ export default function PublishTab({ onLog }: PublishTabProps) {
       onLog('UPLINK_SUCCESS');
       
       const entry: BuildEntry = { 
-        buildNumber: (builds[0]?.buildNumber ?? 0) + 1, 
+        buildNumber: buildNum, 
         status: 'SUCCESS', 
         timestamp: new Date().toISOString().slice(0, 19).replace('T', ' '), 
         files: files.map(f => f.path.split('/').pop()!) 
