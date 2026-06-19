@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { marked } from 'marked';
 import type { Project } from '../../types';
 
@@ -198,7 +199,7 @@ export default function ProjectModal({ project, onClose, theme = 'dev' }: Projec
   const showPhoto = !!(project.photo && !imageFailed);
   const showNdaPlaceholder = !!(project.isPrivate && (!project.photo || imageFailed));
 
-  return (
+  const portal = (
     <>
       {/* Backdrop */}
       <div
@@ -207,14 +208,14 @@ export default function ProjectModal({ project, onClose, theme = 'dev' }: Projec
       />
       {/* Modal container — z-[9999] to sit above backdrop */}
       <div
-        className="fixed inset-0 z-[9999] flex items-center justify-center p-4 pointer-events-none"
+        className="fixed inset-0 z-[9999] flex items-center justify-center sm:p-4 pointer-events-none"
         onClick={onClose}
       >
         <div
-          className={`bg-carbono-surface w-full h-[88vh] flex flex-col pointer-events-auto ${
+          className={`bg-carbono-surface w-full flex flex-col pointer-events-auto h-full sm:h-[78vh] ${
             isRecruiter 
-              ? 'font-sans rounded-2xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.85)] max-w-5xl' 
-              : 'font-mono border border-white/15 max-w-3xl'
+              ? 'font-sans sm:rounded-2xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.85)] sm:max-w-5xl' 
+              : 'font-mono border border-white/15 sm:max-w-3xl'
           }`}
           onClick={e => e.stopPropagation()}
         >
@@ -251,9 +252,10 @@ export default function ProjectModal({ project, onClose, theme = 'dev' }: Projec
 
         {/* Body */}
         {isRecruiter ? (
-          <div className="flex-1 overflow-hidden grid grid-cols-1 md:grid-cols-[280px_1fr] h-full" ref={readmeBodyRef}>
-            {/* Left Column (col-1) */}
-            <div className="overflow-y-auto px-5 py-6 flex flex-col gap-6 border-r border-white/10 bg-white/[0.01]">
+          // Mobile: single scrollable column. Desktop (md+): two-column fixed layout
+          <div className="flex-1 overflow-y-auto md:overflow-hidden md:grid md:grid-cols-[280px_1fr] md:h-full" ref={readmeBodyRef}>
+            {/* Left Column (col-1) — sidebar on desktop, inline on mobile */}
+            <div className="px-5 py-6 flex flex-col gap-6 md:overflow-y-auto md:border-r border-white/10 bg-white/[0.01] border-b md:border-b-0">
               {/* Image/Photo */}
               {showPhoto && (
                 <img 
@@ -354,7 +356,7 @@ export default function ProjectModal({ project, onClose, theme = 'dev' }: Projec
             </div>
 
             {/* Right Column (col-2) */}
-            <div className="overflow-y-auto px-6 py-6 flex flex-col gap-6">
+            <div className="md:overflow-y-auto px-6 py-6 flex flex-col gap-6 border-t border-white/10 md:border-t-0">
               {/* Title */}
               <h2 className="text-2xl font-bold text-white tracking-wide">{project.name}</h2>
 
@@ -621,4 +623,6 @@ export default function ProjectModal({ project, onClose, theme = 'dev' }: Projec
       </div>
     </>
   );
+
+  return typeof document !== 'undefined' ? createPortal(portal, document.body) : null;
 }

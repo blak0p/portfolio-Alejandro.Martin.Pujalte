@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import type { Project } from '../../types';
 import { sortProjects } from '../../lib/projectRanking';
 import ProjectCard from './ProjectCard';
@@ -14,14 +15,14 @@ export default function AllProjectsModal({ projects, onClose }: AllProjectsModal
 
   const sorted = sortProjects(projects);
 
-  return (
+  const content = (
     <>
       <div
-        className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex flex-col p-4"
+        className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex flex-col sm:p-4"
         onClick={onClose}
       >
         <div
-          className="bg-carbono-surface border border-white/15 w-full max-w-5xl mx-auto flex flex-col max-h-full"
+          className="bg-carbono-surface border border-white/15 w-full sm:max-w-5xl mx-auto flex flex-col max-h-full"
           onClick={e => e.stopPropagation()}
         >
           <div className="flex items-center justify-between border-b border-white/15 px-5 py-3 shrink-0">
@@ -50,4 +51,6 @@ export default function AllProjectsModal({ projects, onClose }: AllProjectsModal
       <ProjectModal project={detail} onClose={() => setDetail(null)} />
     </>
   );
+
+  return typeof document !== 'undefined' ? createPortal(content, document.body) : null;
 }

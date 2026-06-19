@@ -101,7 +101,9 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
           <a href="/" class="text-sm font-bold tracking-wide text-white/90 hover:text-recruiter-accent-light transition-colors">
             {handle.replace('@', '').toUpperCase()}
           </a>
-          <div class="flex items-center gap-6 text-sm text-white/70 font-medium">
+
+          <!-- Desktop links (recruiter) -->
+          <div class="hidden md:flex items-center gap-6 text-sm text-white/70 font-medium">
             <a href="/#about" class="hover:text-recruiter-accent-light transition-colors">Sobre mí</a>
             <a href="/#projects" class="hover:text-recruiter-accent-light transition-colors">Proyectos</a>
             <a href="/#tech" class="hover:text-recruiter-accent-light transition-colors">Tecnologías</a>
@@ -117,8 +119,44 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
             <span class="text-white/20">|</span>
             <a href="/dev" class="text-xs text-white/40 hover:text-recruiter-accent-light transition-colors tracking-wider uppercase">Dev</a>
           </div>
+
+          <!-- Mobile right side (recruiter) -->
+          <div class="flex md:hidden items-center gap-3">
+            <div id="google_translate_element_r" class="google-translate-dropdown"></div>
+            <div class="flex items-center gap-2 select-none shrink-0">
+              <button class="translate-btn text-base hover:scale-110 active:scale-95 transition-all cursor-pointer p-0.5" data-lang="es" title="Español">🇪🇸</button>
+              <button class="translate-btn text-base hover:scale-110 active:scale-95 transition-all cursor-pointer p-0.5" data-lang="en" title="English">🇬🇧</button>
+            </div>
+            <!-- Hamburger recruiter -->
+            <button
+              id="hamburger-r"
+              class="flex flex-col gap-1.5 p-1 text-white/60 hover:text-white transition-colors"
+              aria-label="Menú"
+            >
+              <span class="block w-5 h-px bg-current transition-all duration-200" id="rbar1"></span>
+              <span class="block w-5 h-px bg-current transition-all duration-200" id="rbar2"></span>
+              <span class="block w-5 h-px bg-current transition-all duration-200" id="rbar3"></span>
+            </button>
+          </div>
         </div>
       </nav>
+
+      <!-- Fullscreen mobile menu (recruiter) -->
+      <div
+        id="mobile-menu-r"
+        class="fixed inset-0 z-40 md:hidden bg-[#080c14]/98 backdrop-blur-xl flex-col items-center justify-center hidden"
+      >
+        <button id="mobile-close-r" class="absolute top-5 right-5 text-white/50 hover:text-white text-3xl transition-colors" aria-label="Cerrar">&times;</button>
+        <nav class="flex flex-col items-center gap-8 text-xl font-medium">
+          <a href="/#about"    class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors">Sobre mí</a>
+          <a href="/#projects" class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors">Proyectos</a>
+          <a href="/#tech"     class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors">Tecnologías</a>
+          <a href="/#ambitions" class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors">Metas</a>
+          <a href="/#contact"  class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors">Contacto</a>
+          <a href="/bitacora"  class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors">Bitácora</a>
+          <a href="/dev" class="mt-4 text-sm text-white/30 hover:text-recruiter-accent-light transition-colors tracking-wider uppercase">Dev</a>
+        </nav>
+      </div>
     ) : (
       <!-- DEV NAV — sharp, cyberpunk, existing style -->
       <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/15 bg-carbono/80 backdrop-blur-md h-12">
@@ -137,6 +175,9 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
             <a href={ambitionsHref} class="hover:text-cobalt transition-colors duration-100">Metas</a>
             <span class="text-white/20">|</span>
             <a href="/dev/bitacora" class="hover:text-cobalt transition-colors duration-100">Bitácora</a>
+            <span class="text-white/20">|</span>
+            <span class="text-text-faint/40 normal-case tracking-normal">Para técnicos</span>
+            <a href="/" class="text-text-faint/40 hover:text-white transition-colors duration-100 normal-case tracking-normal">← Recruiter</a>
           </div>
 
           <div class="flex items-center gap-3">
@@ -166,16 +207,39 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
         </div>
       </nav>
 
-      <!-- Mobile dropdown menu (dev only) -->
+      <!-- Fullscreen mobile menu (dev) -->
       <div
         id="mobile-menu"
-        class="fixed top-12 left-0 right-0 z-40 md:hidden border-b border-white/15 bg-carbono/95 backdrop-blur-md hidden"
+        class="fixed inset-0 z-40 md:hidden bg-carbono/98 backdrop-blur-xl flex-col items-center justify-center hidden"
       >
-        <div class="flex flex-col px-6 py-4 gap-4">
-          <a href={deploymentsHref} class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Proyectos</a>
-          <a href={techHref} class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Tecnologías</a>
-          <a href={ambitionsHref} class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Metas</a>
-          <a href="/dev/bitacora" class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Bitácora</a>
+        <button id="mobile-close" class="absolute top-4 right-4 text-text-faint hover:text-white text-3xl transition-colors" aria-label="Cerrar">&times;</button>
+
+        <!-- Status -->
+        <div class="flex items-center gap-1.5 text-xs tracking-widest mb-10">
+          <span class={`w-1.5 h-1.5 ${status === 'ONLINE' ? 'bg-cobalt' : status === 'BUSY' ? 'bg-warn' : 'bg-text-faint'} animate-pulse inline-block`} style="border-radius:50%"></span>
+          <span class={status === 'ONLINE' ? 'text-cobalt' : status === 'BUSY' ? 'text-warn' : 'text-text-faint'}>{status}</span>
+        </div>
+
+        <!-- Nav links — mismo texto y estilo que desktop -->
+        <nav class="flex flex-col items-center gap-8 text-xs text-text-muted tracking-widest uppercase">
+          <a href={deploymentsHref} class="mobile-link hover:text-cobalt transition-colors duration-100">Proyectos</a>
+          <span class="text-white/20">|</span>
+          <a href={techHref}        class="mobile-link hover:text-cobalt transition-colors duration-100">Tecnologías</a>
+          <span class="text-white/20">|</span>
+          <a href={ambitionsHref}   class="mobile-link hover:text-cobalt transition-colors duration-100">Metas</a>
+          <span class="text-white/20">|</span>
+          <a href="/dev/bitacora"   class="mobile-link hover:text-cobalt transition-colors duration-100">Bitácora</a>
+        </nav>
+
+        <!-- Flags -->
+        <div class="flex items-center gap-3 mt-10 select-none">
+          <button class="translate-btn text-base hover:scale-110 active:scale-95 transition-all cursor-pointer p-0.5" data-lang="es" title="Español">🇪🇸</button>
+          <button class="translate-btn text-base hover:scale-110 active:scale-95 transition-all cursor-pointer p-0.5" data-lang="en" title="English">🇬🇧</button>
+        </div>
+
+        <!-- Volver a modo recruiter -->
+        <div class="absolute bottom-8 left-0 right-0 flex justify-center">
+          <a href="/" class="mobile-link text-xs text-text-faint/50 hover:text-white tracking-widest uppercase transition-colors">← Volver a modo recruiter</a>
         </div>
       </div>
     )}
@@ -185,43 +249,72 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
     </main>
 
     <script>
-      const hamburger = document.getElementById('hamburger');
-      const menu      = document.getElementById('mobile-menu');
-      const bar1      = document.getElementById('bar1');
-      const bar2      = document.getElementById('bar2');
-      const bar3      = document.getElementById('bar3');
+      function initHamburger() {
+        // Reset body scroll in case a previous menu was open
+        document.body.style.overflow = '';
 
-      let open = false;
+        // ── DEV hamburger ──
+        const hamburger = document.getElementById('hamburger');
+        const menu      = document.getElementById('mobile-menu');
+        const closeBtn  = document.getElementById('mobile-close');
+        const bar1      = document.getElementById('bar1');
+        const bar2      = document.getElementById('bar2');
+        const bar3      = document.getElementById('bar3');
 
-      function toggle() {
-        open = !open;
-        menu?.classList.toggle('hidden', !open);
-        // Animate bars to X
-        if (bar1) bar1.style.transform = open ? 'translateY(7px) rotate(45deg)' : '';
-        if (bar2) bar2.style.opacity   = open ? '0' : '1';
-        if (bar3) bar3.style.transform = open ? 'translateY(-7px) rotate(-45deg)' : '';
+        let open = false;
+
+        function toggle() {
+          open = !open;
+          menu?.classList.toggle('hidden', !open);
+          menu?.classList.toggle('flex', open);
+          document.body.style.overflow = open ? 'hidden' : '';
+          if (bar1) bar1.style.transform = open ? 'translateY(7px) rotate(45deg)' : '';
+          if (bar2) bar2.style.opacity   = open ? '0' : '1';
+          if (bar3) bar3.style.transform = open ? 'translateY(-7px) rotate(-45deg)' : '';
+        }
+
+        hamburger?.addEventListener('click', toggle);
+        closeBtn?.addEventListener('click', () => { if (open) toggle(); });
+        document.querySelectorAll('.mobile-link').forEach(link => {
+          link.addEventListener('click', () => { if (open) toggle(); });
+        });
+
+        // ── RECRUITER hamburger ──
+        const hamburgerR = document.getElementById('hamburger-r');
+        const menuR      = document.getElementById('mobile-menu-r');
+        const closeBtnR  = document.getElementById('mobile-close-r');
+        const rbar1      = document.getElementById('rbar1');
+        const rbar2      = document.getElementById('rbar2');
+        const rbar3      = document.getElementById('rbar3');
+
+        let openR = false;
+
+        function toggleR() {
+          openR = !openR;
+          menuR?.classList.toggle('hidden', !openR);
+          menuR?.classList.toggle('flex', openR);
+          document.body.style.overflow = openR ? 'hidden' : '';
+          if (rbar1) rbar1.style.transform = openR ? 'translateY(7px) rotate(45deg)' : '';
+          if (rbar2) rbar2.style.opacity   = openR ? '0' : '1';
+          if (rbar3) rbar3.style.transform = openR ? 'translateY(-7px) rotate(-45deg)' : '';
+        }
+
+        hamburgerR?.addEventListener('click', toggleR);
+        closeBtnR?.addEventListener('click', () => { if (openR) toggleR(); });
+        document.querySelectorAll('.mobile-link-r').forEach(link => {
+          link.addEventListener('click', () => { if (openR) toggleR(); });
+        });
       }
-
-      hamburger?.addEventListener('click', toggle);
-
-      // Close on link click
-      document.querySelectorAll('.mobile-link').forEach(link => {
-        link.addEventListener('click', () => { if (open) toggle(); });
-      });
 
       // Google Translate click triggers
       function triggerTranslation(lang: string) {
-        // Set cookie for path /
         document.cookie = "googtrans=/auto/" + lang + "; path=/;";
-        // Set cookie with explicit domain fallback
         document.cookie = "googtrans=/auto/" + lang + "; path=/; domain=" + window.location.hostname;
-        
         const combo = document.querySelector('.goog-te-combo') as HTMLSelectElement | null;
         if (combo) {
           combo.value = lang;
           combo.dispatchEvent(new Event('change'));
         } else {
-          // Fallback if Google Translate script has not finished loading
           window.location.reload();
         }
       }
@@ -231,16 +324,18 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
           btn.addEventListener('click', (e) => {
             const target = e.currentTarget as HTMLElement;
             const lang = target.dataset.lang;
-            if (lang) {
-              triggerTranslation(lang);
-            }
+            if (lang) triggerTranslation(lang);
           });
         });
       }
 
-      // Initialize on load and page transition
+      // Run on every page load (includes view transitions)
+      initHamburger();
       initTranslationButtons();
-      document.addEventListener('astro:page-load', initTranslationButtons);
+      document.addEventListener('astro:page-load', () => {
+        initHamburger();
+        initTranslationButtons();
+      });
     </script>
 
   </body>

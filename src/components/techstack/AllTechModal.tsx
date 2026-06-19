@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import type { TechTool } from '../../types';
 import ProgressBar from '../ui/ProgressBar';
 
@@ -8,13 +9,13 @@ interface AllTechModalProps {
 }
 
 export default function AllTechModal({ tools, onClose }: AllTechModalProps) {
-  return (
+  const content = (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm sm:p-4"
       onClick={onClose}
     >
       <div
-        className="border border-white/15 bg-carbono-surface w-full max-w-2xl max-h-[88vh] flex flex-col"
+        className="border border-white/15 bg-carbono-surface w-full h-full sm:max-w-2xl sm:max-h-[88vh] sm:h-auto flex flex-col"
         onClick={e => e.stopPropagation()}
       >
         <div className="flex items-center justify-between border-b border-white/15 px-5 py-3 shrink-0">
@@ -58,4 +59,6 @@ export default function AllTechModal({ tools, onClose }: AllTechModalProps) {
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined' ? createPortal(content, document.body) : null;
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import type { Experience } from '../../types';
 
 interface Props {
@@ -23,13 +24,13 @@ export default function ExperienceModal({ exp, onClose }: Props) {
 
   const hasImpact = !!exp.impact;
 
-  return (
+  const content = (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm sm:p-4"
       onClick={onClose}
     >
       <div
-        className="border border-white/15 bg-carbono-surface w-full max-w-2xl max-h-[80vh] flex flex-col"
+        className="border border-white/15 bg-carbono-surface w-full h-full sm:max-w-2xl sm:max-h-[80vh] sm:h-auto flex flex-col"
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
@@ -146,4 +147,6 @@ export default function ExperienceModal({ exp, onClose }: Props) {
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined' ? createPortal(content, document.body) : null;
 }
