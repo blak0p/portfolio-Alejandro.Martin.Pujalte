@@ -1,13 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Project } from '../../types';
 import ProjectModal from '../deployments/ProjectModal';
+import { parseStoredProjects, sanitizeProjects } from '../../lib/projectStorage';
 
 interface ProjectsProps {
   projects: Project[];
+  syncWithStorage?: boolean;
 }
 
-export default function Projects({ projects }: ProjectsProps) {
+export default function Projects({ projects: initialProjects, syncWithStorage = false }: ProjectsProps) {
+  const [projects, setProjects] = useState<Project[]>(sanitizeProjects(initialProjects));
   const [selected, setSelected] = useState<Project | null>(null);
+
+  useEffect(() => {
+    if (!syncWithStorage) {
+      setProjects(sanitizeProjects(initialProjects));
+      return;
+    }
+
+    const load = () => {
+      const sanitized = parseStoredProjects(localStorage.getItem('portfolioProjects'), sanitizeProjects(initialProjects));
+      setProjects(sanitized);
+      localStorage.setItem('portfolioProjects', JSON.stringify(sanitized));
+    };
+
+    load();
+
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === 'portfolioProjects' || e.key === 'lastDataUpdate') load();
+    };
+    const onRefresh = () => load();
+
+    window.addEventListener('storage', onStorage);
+    window.addEventListener('portfolioProjectsRefreshed', onRefresh);
+
+    return () => {
+      window.removeEventListener('storage', onStorage);
+      window.removeEventListener('portfolioProjectsRefreshed', onRefresh);
+    };
+  }, [initialProjects, syncWithStorage]);
   const [showListModal, setShowListModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterTab, setFilterTab] = useState<'all' | 'public' | 'private'>('all');

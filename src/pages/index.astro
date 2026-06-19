@@ -4,6 +4,12 @@ import Hero from '../components/recruiter/Hero.astro';
 import Projects from '../components/recruiter/Projects';
 import Tech from '../components/recruiter/Tech.astro';
 import Contact from '../components/recruiter/Contact.astro';
+import type { Ambition, SiteSettings, LogEntry } from '../types';
+import type identityRaw from '../../public/data/identity.json';
+import type settingsRaw from '../../public/data/settings.json';
+import type projectsRaw from '../../public/data/projects.json';
+import type ambitionsRaw from '../../public/data/ambitions.json';
+import type techstackRaw from '../../public/data/techstack.json';
 import identity from '../../public/data/identity.json';
 import settings from '../../public/data/settings.json';
 import projects from '../../public/data/projects.json';
@@ -11,16 +17,19 @@ import ambitions from '../../public/data/ambitions.json';
 import techStack from '../../public/data/techstack.json';
 import Roadmap from '../components/recruiter/Roadmap.astro';
 
+const s = settings as unknown as SiteSettings;
+const i = identity as any;
+
 // Merge identity with settings (settings override identity for dynamic values)
 const identityData = {
-  ...identity,
-  status: settings.status ?? identity.status,
-  availabilityValue: settings.availabilityValue ?? identity.availabilityValue,
-  cvUrl: settings.cvUrl ?? identity.cvUrl,
-  linkedinUrl: settings.linkedinUrl ?? identity.linkedinUrl,
-  birthDate: settings.birthDate ?? (identity as any).birthDate,
-  bio: settings.bio ?? identity.bio,
-  photoUrl: settings.photoUrl ?? (identity as any).photoUrl ?? '/profile.jpg',
+  ...i,
+  status: s.status ?? i.status,
+  availabilityValue: s.availabilityValue ?? i.availabilityValue,
+  cvUrl: s.cvUrl ?? i.cvUrl,
+  linkedinUrl: s.linkedinUrl ?? i.linkedinUrl,
+  birthDate: s.birthDate ?? i.birthDate,
+  bio: s.bio ? s.bio : i.bio,
+  photoUrl: s.photoUrl ? s.photoUrl : (i.photoUrl || '/profile.jpg'),
 };
 
 const heroPhotoUrl: string = identityData.photoUrl;
@@ -70,11 +79,11 @@ const recruiterTech = techStack.map((t: any) => ({
     />
 
     <main class="flex flex-col gap-16 pb-20 recruiter-reveal-root relative z-10">
-      <Projects projects={recruiterProjects} client:load />
+      <Projects projects={recruiterProjects} syncWithStorage={true} client:load />
 
       <Tech tools={recruiterTech} />
 
-      <Roadmap ambitions={ambitions} roadmapLabels={settings.roadmapLabels} />
+      <Roadmap ambitions={ambitions as unknown as Ambition[]} roadmapLabels={(settings as unknown as SiteSettings).roadmapLabels} />
     </main>
   </div>
 </BaseLayout>

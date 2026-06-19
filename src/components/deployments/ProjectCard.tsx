@@ -103,8 +103,7 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
             loading="lazy"
             decoding="async"
             onError={() => setImageError(true)}
-            className={`absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105
-              ${project.isPrivate ? 'opacity-40' : ''}`}
+            className={`absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105`}
           />
         ) : (
           <div className="absolute inset-0 bg-carbono-mid flex items-center justify-center">
@@ -119,17 +118,17 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
         )}
 
         {project.isPrivate && (
-          <div className="absolute inset-0 redacted-stripes flex flex-col items-center justify-center gap-1.5">
-            <div className="border-2 border-err/70 px-2.5 py-0.5 bg-carbono/80" style={{ transform: 'rotate(-6deg)' }}>
-              <span className="text-err text-xs font-bold tracking-[0.3em] uppercase">CLASIFICADO</span>
-            </div>
-            <span className="text-xs text-white/70 tracking-widest">Privado · NDA</span>
-          </div>
+          <div className="absolute inset-0 redacted-stripes pointer-events-none z-10 opacity-30" />
         )}
 
         <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent" />
 
         <div className="absolute top-2 left-2 hidden @[180px]:flex gap-1.5">
+          {project.isPrivate && (
+            <span className="text-[10px] font-bold tracking-widest text-err border border-err/50 bg-err/10 px-1.5 py-1 leading-none backdrop-blur-sm">
+              NDA
+            </span>
+          )}
           {status && statusStyle[status] && (
             <span className={`text-xs font-bold tracking-widest uppercase border px-2 py-1 leading-none backdrop-blur-sm ${statusStyle[status]}`}>
               {status.replace('_', ' ')}

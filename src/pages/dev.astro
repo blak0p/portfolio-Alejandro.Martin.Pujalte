@@ -6,6 +6,7 @@ import TechMatrix from '../components/techstack/TechMatrix';
 import CoreConsole from '../components/terminal/CoreConsole';
 import Roadmap from '../components/ambitions/Roadmap';
 import CoreHome from '../components/ui/CoreHome';
+import type { Ambition, LogEntry, SiteSettings } from '../types';
 import ambitions from '../../public/data/ambitions.json';
 import identity from '../../public/data/identity.json';
 import logs from '../../public/data/logs.json';
@@ -13,14 +14,19 @@ import settings from '../../public/data/settings.json';
 import techStack from '../../public/data/techstack.json';
 import projects from '../../public/data/projects.json';
 
+const s = settings as unknown as SiteSettings;
+const i = identity as any;
+const a = ambitions as unknown as Ambition[];
+const l = logs as unknown as LogEntry[];
+
 // Merge identity with settings (settings override identity for dynamic values)
 const identityData = {
-  ...identity,
-  status: settings.status ?? identity.status,
-  availabilityValue: settings.availabilityValue ?? identity.availabilityValue,
-  cvUrl: settings.cvUrl ?? identity.cvUrl,
-  linkedinUrl: settings.linkedinUrl ?? identity.linkedinUrl,
-  birthDate: settings.birthDate ?? (identity as any).birthDate,
+  ...i,
+  status: s.status ?? i.status,
+  availabilityValue: s.availabilityValue ?? i.availabilityValue,
+  cvUrl: s.cvUrl ?? i.cvUrl,
+  linkedinUrl: s.linkedinUrl ?? i.linkedinUrl,
+  birthDate: s.birthDate ?? i.birthDate,
 };
 
 const totalProjects = projects.length;
@@ -54,10 +60,10 @@ const totalTech = techStack.length;
           <div class="h-full overflow-hidden island-wrapper min-h-[450px]">
             <div class="island-placeholder absolute inset-0 bg-carbono-surface"></div>
             <CoreConsole 
-              logs={logs} 
-              logLimit={settings.logLimit ?? 10} 
+              logs={l} 
+              logLimit={s.logLimit ?? 10} 
               projects={projects}
-              settings={settings}
+              settings={s}
               identity={identityData}
               techStack={techStack}
               client:only="react" 
@@ -80,7 +86,7 @@ const totalTech = techStack.length;
             </div>
             <div class="island-wrapper min-h-[250px] h-full">
               <div class="island-placeholder absolute inset-0 bg-carbono-surface"></div>
-              <ProjectGrid projects={projects} client:only="react" />
+              <ProjectGrid projects={projects} syncWithStorage={true} client:only="react" />
             </div>
           </div>
         </section>
@@ -116,7 +122,7 @@ const totalTech = techStack.length;
               </div>
               <div class="island-wrapper min-h-[180px]">
                 <div class="island-placeholder absolute inset-0 bg-carbono-surface"></div>
-                <Roadmap ambitions={ambitions} client:only="react" />
+                <Roadmap ambitions={a} client:only="react" />
               </div>
             </div>
           </section>
@@ -132,10 +138,10 @@ const totalTech = techStack.length;
         identityData={identityData}
         projects={projects}
         techStack={techStack}
-        ambitions={ambitions}
-        logs={logs}
-        logLimit={settings.logLimit ?? 10}
-        settings={settings}
+        ambitions={a}
+        logs={l}
+        logLimit={s.logLimit ?? 10}
+        settings={s}
         client:only="react"
       />
     </div>
