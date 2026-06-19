@@ -25,7 +25,7 @@ export default function Projects({ projects }: ProjectsProps) {
             <article
               key={project.id || project.name}
               onClick={() => setSelected(project)}
-              className="group relative bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden transition-all duration-200 hover:border-recruiter-accent/40 hover:shadow-[0_0_24px_rgba(202,138,4,0.1)] hover:scale-[1.015] cursor-pointer"
+              className="group relative bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden transition-all duration-200 hover:border-recruiter-accent/40 hover:shadow-[0_0_24px_rgba(0,102,255,0.1)] hover:scale-[1.015] cursor-pointer"
             >
               {isPrivate && (
                 <div className="absolute inset-0 redacted-stripes pointer-events-none z-10 opacity-30" />
@@ -40,7 +40,7 @@ export default function Projects({ projects }: ProjectsProps) {
                     decoding="async"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-transparent pointer-events-none"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#080c14] via-transparent to-transparent pointer-events-none"></div>
                 </div>
               ) : (
                 <div className="relative aspect-[16/9] bg-carbono-mid flex items-center justify-center border-b border-white/5">

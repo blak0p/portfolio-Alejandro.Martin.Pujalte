@@ -6,7 +6,7 @@ interface ProfilePhotoProps {
   size?: number;
 }
 
-export default function ProfilePhoto({ src, alt = 'ALEJANDRO.MP', size = 96 }: ProfilePhotoProps) {
+export default function ProfilePhoto({ src, alt = 'blak0p', size = 96 }: ProfilePhotoProps) {
   const [error, setError] = React.useState(false);
 
   return (

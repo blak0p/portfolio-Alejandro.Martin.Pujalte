@@ -85,11 +85,11 @@ export const GET: APIRoute = async ({ request }) => {
         p.specs.stars = details.specsStars;
         p.pushedAt = details.pushedAt;
         
-        // Update stack/languages if daily
-        if (isDailyUpdate && details.stackWithUsage?.length) {
-          p.stack = details.stack;
-          p.stackWithUsage = details.stackWithUsage;
-        }
+        // Update stack/languages if daily - disabled: stack is 100% manually controlled
+        // if (isDailyUpdate && details.stackWithUsage?.length) {
+        //   p.stack = details.stack;
+        //   p.stackWithUsage = details.stackWithUsage;
+        // }
         
         console.log(`[CRON] Synced ${slug}: ${details.specsStars} stars`);
       } catch (e: any) {

@@ -42,15 +42,17 @@ const totalTech = techStack.length;
       <aside class="flex flex-col gap-0 min-h-0">
         <!-- Tab bar -->
         <div class="flex border border-white/15 border-b-0 bg-carbono-surface sharp-corner" id="left-tabs">
-          <button data-tab="profile" class="flex-1 py-2 text-xs font-black tracking-widest uppercase border-r border-white/10 bg-cobalt text-white transition-all" onclick="switchLeftTab('profile')">// PERFIL</button>
-          <button data-tab="terminal" class="flex-1 py-2 text-xs font-black tracking-widest uppercase text-white/50 hover:text-white transition-all" onclick="switchLeftTab('terminal')">// TERMINAL</button>
+          <button data-tab="profile" class="flex-1 py-2 text-xs font-black tracking-widest uppercase border-r border-white/10 bg-cobalt text-white transition-all">// PERFIL</button>
+          <button data-tab="terminal" class="flex-1 py-2 text-xs font-black tracking-widest uppercase text-white/50 hover:text-white transition-all">// TERMINAL</button>
         </div>
         <!-- Tab content -->
-        <div id="tab-profile" class="flex-1 border border-white/15 border-t-0 bg-carbono-surface overflow-hidden sharp-corner">
-            <IdentitySection {...identityData} client:idle />
+        <div id="tab-profile" class="flex-1 border border-white/15 border-t-0 bg-carbono-surface overflow-hidden sharp-corner island-wrapper min-h-[450px]">
+            <div class="island-placeholder absolute inset-0 bg-carbono-surface"></div>
+            <IdentitySection {...identityData} client:only="react" />
         </div>
         <div id="tab-terminal" class="hidden flex-1 border border-white/15 border-t-0 bg-carbono-surface overflow-hidden sharp-corner">
-          <div class="h-full overflow-hidden">
+          <div class="h-full overflow-hidden island-wrapper min-h-[450px]">
+            <div class="island-placeholder absolute inset-0 bg-carbono-surface"></div>
             <CoreConsole 
               logs={logs} 
               logLimit={settings.logLimit ?? 10} 
@@ -58,7 +60,7 @@ const totalTech = techStack.length;
               settings={settings}
               identity={identityData}
               techStack={techStack}
-              client:idle 
+              client:only="react" 
             />
           </div>
         </div>
@@ -76,7 +78,10 @@ const totalTech = techStack.length;
               </div>
               <div class="h-0.5 w-full bg-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]"></div>
             </div>
-            <ProjectGrid projects={projects} client:idle />
+            <div class="island-wrapper min-h-[250px] h-full">
+              <div class="island-placeholder absolute inset-0 bg-carbono-surface"></div>
+              <ProjectGrid projects={projects} client:only="react" />
+            </div>
           </div>
         </section>
 
@@ -93,7 +98,10 @@ const totalTech = techStack.length;
                 <div class="h-0.5 w-full bg-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]"></div>
               </div>
               <div class="text-xs text-text-faint tracking-widest uppercase opacity-60 mb-2">// curado desde panel admin</div>
-              <TechMatrix tools={techStack} client:idle />
+              <div class="island-wrapper min-h-[180px]">
+                <div class="island-placeholder absolute inset-0 bg-carbono-surface"></div>
+                <TechMatrix tools={techStack} client:only="react" />
+              </div>
             </div>
           </section>
 
@@ -106,7 +114,10 @@ const totalTech = techStack.length;
                 </div>
                 <div class="h-0.5 w-full bg-cobalt shadow-[0_0_10px_rgba(0,85,255,0.3)]"></div>
               </div>
-              <Roadmap ambitions={ambitions} client:idle />
+              <div class="island-wrapper min-h-[180px]">
+                <div class="island-placeholder absolute inset-0 bg-carbono-surface"></div>
+                <Roadmap ambitions={ambitions} client:only="react" />
+              </div>
             </div>
           </section>
         </div>
@@ -115,7 +126,8 @@ const totalTech = techStack.length;
     </div>
 
     <!-- MOBILE: stacked -->
-    <div class="lg:hidden flex-1 min-h-0 overflow-y-auto">
+    <div class="lg:hidden flex-1 min-h-0 overflow-y-auto island-wrapper min-h-[500px]">
+      <div class="island-placeholder absolute inset-0 bg-carbono-surface"></div>
       <CoreHome
         identityData={identityData}
         projects={projects}
@@ -124,16 +136,37 @@ const totalTech = techStack.length;
         logs={logs}
         logLimit={settings.logLimit ?? 10}
         settings={settings}
-        client:idle
+        client:only="react"
       />
     </div>
 
   </div>
 </BaseLayout>
 
+<style>
+  /* Scoped style for target sections scroll-margin-top */
+  #deployments,
+  #tech,
+  #ambitions {
+    scroll-margin-top: 4rem; /* clear the fixed nav */
+  }
+
+  /* CSS selector for hiding placeholders when react island loaded */
+  .island-wrapper {
+    position: relative;
+  }
+  .island-wrapper :global(astro-island) {
+    display: contents;
+  }
+  .island-wrapper:has(astro-island:not(:empty)) .island-placeholder {
+    display: none !important;
+  }
+</style>
+
 <script>
-  function switchLeftTab(tab) {
+  function switchLeftTab(tab: string) {
     document.querySelectorAll('#left-tabs button').forEach(b => {
+      if (!(b instanceof HTMLElement)) return;
       b.classList.remove('bg-cobalt', 'text-white');
       b.classList.add('text-white/50');
       if (b.dataset.tab === tab) {
@@ -141,10 +174,40 @@ const totalTech = techStack.length;
         b.classList.remove('text-white/50');
       }
     });
-    document.getElementById('tab-profile').classList.toggle('hidden', tab !== 'profile');
-    document.getElementById('tab-terminal').classList.toggle('hidden', tab !== 'terminal');
+    const profileTab = document.getElementById('tab-profile');
+    const terminalTab = document.getElementById('tab-terminal');
+    if (profileTab) profileTab.classList.toggle('hidden', tab !== 'profile');
+    if (terminalTab) terminalTab.classList.toggle('hidden', tab !== 'terminal');
   }
-  document.querySelectorAll('#left-tabs button').forEach(b => {
-    b.addEventListener('click', () => switchLeftTab(b.dataset.tab));
+
+  function initTabs() {
+    document.querySelectorAll('#left-tabs button').forEach(b => {
+      if (!(b instanceof HTMLElement)) return;
+      b.addEventListener('click', () => {
+        if (b.dataset.tab) {
+          switchLeftTab(b.dataset.tab);
+        }
+      });
+    });
+  }
+
+  function handleHashScroll() {
+    const hash = window.location.hash;
+    if (hash) {
+      const target = document.querySelector(hash);
+      if (target) {
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150); // slight delay to allow React DOM mounting/render
+      }
+    }
+  }
+
+  // Bind to page transitions and load
+  document.addEventListener('astro:page-load', () => {
+    initTabs();
+    handleHashScroll();
   });
+
+  window.addEventListener('hashchange', handleHashScroll);
 </script>

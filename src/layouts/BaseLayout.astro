@@ -11,9 +11,9 @@ interface Props {
 }
 
 const {
-  title = 'ALEJANDRO.MARTIN.PUJALTE \u2014 Desarrollador Backend',
+  title = 'ALEJANDRO MARTIN PUJALTE \u2014 Desarrollador Backend',
   description = 'Desarrollador Backend construyendo infraestructura de alta disponibilidad, herramientas de IA local y arquitecturas estructuralmente honestas.',
-  handle = 'ALEJANDRO.MP',
+  handle = 'blak0p',
   status = 'ONLINE',
   navStyle = 'dev',
 } = Astro.props;
@@ -86,22 +86,28 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL(ogImage, siteUrl).toString()} />
+    <style define:vars={{ bgPage: navStyle === 'recruiter' ? '#080c14' : '#0d0d0d' }}>
+      html, body {
+        background-color: var(--bgPage) !important;
+      }
+    </style>
   </head>
-  <body class={`bg-carbono text-text-primary ${navStyle === 'recruiter' ? 'font-sans' : 'font-mono'}`}>
+  <body class={navStyle === 'recruiter' ? 'bg-[#080c14] text-white font-sans' : 'bg-carbono text-text-primary font-mono'}>
 
     {navStyle === 'recruiter' ? (
-      <!-- RECRUITER NAV — rounded, warm, professional -->
-      <nav class="fixed top-0 left-0 right-0 z-50 bg-carbono/85 backdrop-blur-md h-14">
+      <!-- RECRUITER NAV — rounded, professional deep blue theme -->
+      <nav class="fixed top-0 left-0 right-0 z-50 bg-[#080c14]/85 backdrop-blur-md border-b border-white/10 h-14">
         <div class="max-w-5xl mx-auto px-6 h-full flex items-center justify-between">
           <a href="/" class="text-sm font-bold tracking-wide text-white/90 hover:text-recruiter-accent-light transition-colors">
             {handle.replace('@', '').toUpperCase()}
           </a>
-          <div class="flex items-center gap-6 text-sm text-white/60">
+          <div class="flex items-center gap-6 text-sm text-white/70 font-medium">
             <a href="/#about" class="hover:text-recruiter-accent-light transition-colors">Sobre mí</a>
             <a href="/#projects" class="hover:text-recruiter-accent-light transition-colors">Proyectos</a>
             <a href="/#tech" class="hover:text-recruiter-accent-light transition-colors">Tecnologías</a>
             <a href="/#ambitions" class="hover:text-recruiter-accent-light transition-colors">Metas</a>
             <a href="/#contact" class="hover:text-recruiter-accent-light transition-colors">Contacto</a>
+            <a href="/bitacora" class="hover:text-recruiter-accent-light transition-colors">Bitácora</a>
             <span class="text-white/20">|</span>
             <div id="google_translate_element" class="google-translate-dropdown"></div>
             <div class="flex items-center gap-2 select-none shrink-0">
@@ -129,6 +135,8 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
             <a href={techHref} class="hover:text-cobalt transition-colors duration-100">Tecnologías</a>
             <span class="text-white/20">|</span>
             <a href={ambitionsHref} class="hover:text-cobalt transition-colors duration-100">Metas</a>
+            <span class="text-white/20">|</span>
+            <a href="/dev/bitacora" class="hover:text-cobalt transition-colors duration-100">Bitácora</a>
           </div>
 
           <div class="flex items-center gap-3">
@@ -142,8 +150,6 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
               <button class="translate-btn text-base hover:scale-110 active:scale-95 transition-all cursor-pointer p-0.5" data-lang="es" title="Español">🇪🇸</button>
               <button class="translate-btn text-base hover:scale-110 active:scale-95 transition-all cursor-pointer p-0.5" data-lang="en" title="English">🇬🇧</button>
             </div>
-            <span class="hidden sm:inline text-white/20">|</span>
-            <a href="/admin" class="hidden md:inline text-xs text-text-faint tracking-widest hover:text-white transition-colors">ADMIN</a>
 
             <!-- Hamburger (mobile only) -->
             <button
@@ -169,9 +175,7 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
           <a href={deploymentsHref} class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Proyectos</a>
           <a href={techHref} class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Tecnologías</a>
           <a href={ambitionsHref} class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Metas</a>
-          <div class="border-t border-white/15 pt-3">
-            <a href="/admin" class="text-xs text-text-faint tracking-widest hover:text-white transition-colors">PANEL ADMIN →</a>
-          </div>
+          <a href="/dev/bitacora" class="mobile-link text-sm text-text-muted tracking-widest uppercase hover:text-cobalt transition-colors">Bitácora</a>
         </div>
       </div>
     )}

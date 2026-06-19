@@ -6,7 +6,6 @@
     "stack": [
       "GO",
       "C",
-      "HTML",
       "PYTHON",
       "SHELL",
       "MAKEFILE"
@@ -15,17 +14,12 @@
       {
         "name": "GO",
         "color": "#00ADD8",
-        "usageLevel": 89
+        "usageLevel": 90
       },
       {
         "name": "C",
         "color": "#555555",
         "usageLevel": 8
-      },
-      {
-        "name": "HTML",
-        "color": "#e34c26",
-        "usageLevel": 1
       },
       {
         "name": "PYTHON",
@@ -48,8 +42,8 @@
     "description": "MCP server for Git with local Ollama — zero tokens for git operations",
     "businessImpact": "",
     "specs": {
-      "status": "IN_PROGRESS",
-      "stars": "38",
+      "status": "EN_PROGRESO",
+      "stars": "31",
       "language": "GO",
       "license": "MIT",
       "description": "MCP server for Git with local Ollama — zero tokens for git operations",
@@ -63,7 +57,7 @@
     "isHighlighted": false,
     "isFavorite": false,
     "isPrivate": false,
-    "pushedAt": "2026-06-18T15:54:20Z",
+    "pushedAt": "2026-06-18T15:54:20Z"
     "order": 0
   },
   {
@@ -77,14 +71,40 @@
       "JAVASCRIPT",
       "CSS"
     ],
-    "stackWithUsage": [],
+    "stackWithUsage": [
+      {
+        "name": "ASTRO",
+        "color": "#ff5a03",
+        "usageLevel": 70
+      },
+      {
+        "name": "TYPESCRIPT",
+        "color": "#3178c6",
+        "usageLevel": 17
+      },
+      {
+        "name": "JAVA",
+        "color": "#b07219",
+        "usageLevel": 12
+      },
+      {
+        "name": "JAVASCRIPT",
+        "color": "#f1e05a",
+        "usageLevel": 1
+      },
+      {
+        "name": "CSS",
+        "color": "#663399",
+        "usageLevel": 0
+      }
+    ],
     "architecture": "",
     "initSequence": "",
     "description": "",
     "businessImpact": "",
     "specs": {
-      "status": "IN_PROGRESS",
-      "stars": "0",
+      "status": "PAUSADO",
+      "stars": "1",
       "language": "Astro,java",
       "license": "",
       "description": "",

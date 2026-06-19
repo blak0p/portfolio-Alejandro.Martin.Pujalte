@@ -317,7 +317,7 @@ export default function ProjectModal({ project, onClose, theme = 'dev' }: Projec
                       href={repoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center px-4 py-2 border border-recruiter-accent/40 bg-recruiter-accent/10 hover:bg-recruiter-accent/25 text-recruiter-accent-light text-sm font-semibold rounded-xl transition-all duration-200 shadow-[0_0_12px_rgba(202,138,4,0.05)] text-center cursor-pointer"
+                      className="inline-flex items-center justify-center px-4 py-2 border border-recruiter-accent/40 bg-recruiter-accent/10 hover:bg-recruiter-accent/25 text-recruiter-accent-light text-sm font-semibold rounded-xl transition-all duration-200 shadow-[0_0_12px_rgba(0,102,255,0.05)] text-center cursor-pointer"
                     >
                       Ver Repositorio
                     </a>
@@ -337,7 +337,7 @@ export default function ProjectModal({ project, onClose, theme = 'dev' }: Projec
                     href={String(project.specs.demo)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-4 py-2.5 bg-recruiter-accent hover:bg-recruiter-accent-light text-carbono font-bold rounded-xl transition-all duration-200 shadow-[0_4px_20px_rgba(202,138,4,0.25)] hover:shadow-[0_4px_24px_rgba(202,138,4,0.4)] text-center cursor-pointer"
+                    className="inline-flex items-center justify-center px-4 py-2.5 bg-recruiter-accent hover:bg-recruiter-accent-light text-white font-bold rounded-xl transition-all duration-200 shadow-[0_4px_20px_rgba(0,102,255,0.25)] hover:shadow-[0_4px_24px_rgba(0,102,255,0.4)] text-center cursor-pointer"
                   >
                     Visitar Sitio Web →
                   </a>

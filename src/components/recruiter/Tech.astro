@@ -6,24 +6,43 @@ interface TechItem {
 }
 
 interface TechProps {
-  tools: TechItem[];
+  // Accepts either rich TechItem[] (with usageLevel) or a plain curated list of
+  // technology names. When names are plain strings, they render as a tag grid 
+  // without a usage bar.
+  tools: TechItem[] | string[];
 }
 
 const { tools } = Astro.props;
+
+// Normalize to a discriminated shape for rendering.
+const items: TechItem[] = Array.isArray(tools)
+  ? tools.map((t) =>
+      typeof t === 'string' ? { name: t, usageLevel: 0 } : t
+    )
+  : [];
+const isFlat = items.length > 0 && !items.some((t) => typeof (t as TechItem).usageLevel === 'number' && (t as TechItem).usageLevel > 0);
 ---
 
 <section class="recruiter-section" id="tech">
   <div class="recruiter-container">
     <h2 class="recruiter-section-title">Tecnologías</h2>
 
-    {tools.length === 0 ? (
+    {items.length === 0 ? (
       <p class="text-sm text-white/40">Sin tecnologías registradas.</p>
+    ) : isFlat ? (
+      <div class="flex flex-wrap gap-2">
+        {items.map((tool) => (
+          <span class="bg-white/[0.06] border border-white/10 text-white/80 text-sm px-3 py-1.5 rounded-md">
+            {tool.name}
+          </span>
+        ))}
+      </div>
     ) : (
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {tools.map((tool) => {
+        {items.map((tool) => {
           const level = Math.max(0, Math.min(100, tool.usageLevel));
           return (
-            <div class="bg-white/[0.03] border border-white/10 rounded-xl p-4 flex flex-col gap-2 transition-all duration-200 hover:border-recruiter-accent/40 hover:shadow-[0_0_12px_rgba(202,138,4,0.08)]">
+            <div class="bg-white/[0.03] border border-white/10 rounded-xl p-4 flex flex-col gap-2 transition-all duration-200 hover:border-recruiter-accent/40 hover:shadow-[0_0_12px_rgba(0,102,255,0.08)]">
               <div class="flex justify-between items-center">
                 <span class="text-base font-semibold text-white">{tool.name}</span>
                 {tool.version && (

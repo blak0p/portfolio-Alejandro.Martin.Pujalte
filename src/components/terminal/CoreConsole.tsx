@@ -52,7 +52,7 @@ function updateVFS(projects: Project[], identity: any, techStack: TechTool[], lo
     projects.forEach(p => {
       VFS.root.children.projects.children[projectFileName(p)] = { 
         type: 'file', 
-        content: `ID: ${p.id}\nNAME: ${p.name}\nSTACK: ${p.stack.join(', ')}\nSTARS: ${p.specs?.stars || 0}\nURL: ${String(p.specs?.repo || 'N/A')}` 
+        content: `ID: ${p.id}\nNAME: ${p.name}\nSTACK: ${p.stack.join(', ')}\nSTARS: ${p.specs?.stars || 0}\nURL: ${p.isPrivate ? 'N/A' : String(p.specs?.repo || 'N/A')}` 
       };
     });
   }

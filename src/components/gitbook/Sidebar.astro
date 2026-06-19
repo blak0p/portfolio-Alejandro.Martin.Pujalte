@@ -1,0 +1,252 @@
+---
+import type { SidebarItem } from '../../lib/gitbook';
+
+interface Props {
+  menu: SidebarItem[];
+  currentPath: string;
+  externalUrl: string;
+  navStyle?: 'dev' | 'recruiter';
+}
+
+const { menu, currentPath, externalUrl, navStyle = 'dev' } = Astro.props;
+
+function isActive(slug?: string) {
+  if (!slug) return false;
+  const normPath = currentPath.replace(/\/$/, '').toLowerCase();
+  const normSlug = slug.replace(/\/$/, '').toLowerCase();
+  return normPath === normSlug;
+}
+
+const isRecruiter = navStyle === 'recruiter';
+
+// Styles based on theme
+const activeClass = isRecruiter
+  ? 'text-recruiter-accent-light bg-white/5 font-semibold rounded'
+  : 'text-white bg-white/10 font-bold border-l-2 border-cobalt -ml-[9px] pl-[7px]';
+
+const inactiveClass = isRecruiter
+  ? 'text-white/60 hover:text-white hover:bg-white/5 rounded'
+  : 'text-text-faint hover:text-white hover:bg-white/5';
+
+const headerClass = isRecruiter
+  ? 'text-white/30 font-semibold'
+  : 'text-text-faint/50 tracking-widest font-bold';
+
+const subHeaderClass = isRecruiter
+  ? 'text-white/55'
+  : 'text-text-faint/70';
+
+const sidebarPanelClass = isRecruiter
+  ? 'bg-carbono-surface/40 border border-white/5 rounded-lg p-4'
+  : 'border border-white/10 bg-carbono-surface p-4 sharp-corner';
+---
+
+<div class={sidebarPanelClass}>
+  <div class="space-y-4">
+    {menu.map((level1) => {
+      const level1Key = level1.slug || `dir-${level1.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
+      const hasChildren = level1.children && level1.children.length > 0;
+
+      return (
+        <div class="space-y-1">
+          {hasChildren ? (
+            <div class="flex items-center justify-between group/dir">
+              {level1.slug ? (
+                <a
+                  href={level1.slug}
+                  class={`block py-1.5 px-2 text-xs transition-all duration-150 flex-1 ${
+                    isActive(level1.slug) ? activeClass : inactiveClass
+                  }`}
+                >
+                  {level1.title}
+                </a>
+              ) : (
+                <div
+                  class={`px-2 py-1 text-[10px] uppercase tracking-wider flex-1 cursor-pointer select-none dir-toggle-text ${headerClass}`}
+                  data-target-id={level1Key}
+                >
+                  {level1.title}
+                </div>
+              )}
+              <button
+                class="p-1 text-white/30 hover:text-white/80 transition-colors cursor-pointer dir-toggle-btn shrink-0"
+                data-target-id={level1Key}
+                aria-label="Toggle directory"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 transform transition-transform duration-150 chevron-icon" data-target-id={level1Key} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            </div>
+          ) : (
+            level1.slug ? (
+              <a
+                href={level1.slug}
+                class={`block py-1.5 px-2 text-xs transition-all duration-150 ${
+                  isActive(level1.slug) ? activeClass : inactiveClass
+                }`}
+              >
+                {level1.title}
+              </a>
+            ) : (
+              <div class={`px-2 py-1 text-[10px] uppercase tracking-wider ${headerClass}`}>
+                {level1.title}
+              </div>
+            )
+          )}
+
+          {hasChildren && (
+            <div class="mt-1 ml-2 border-l border-white/5 pl-2 space-y-1 submenu" data-submenu-id={level1Key}>
+              {level1.children!.map((level2) => {
+                const level2Key = level2.slug || `dir-${level1Key}-${level2.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
+                const hasLevel2Children = level2.children && level2.children.length > 0;
+
+                return (
+                  <div class="space-y-1">
+                    {hasLevel2Children ? (
+                      <div class="flex items-center justify-between group/dir">
+                        {level2.slug ? (
+                          <a
+                            href={level2.slug}
+                            class={`block py-1 px-2 text-xs transition-all duration-150 flex-1 ${
+                              isActive(level2.slug) ? activeClass : inactiveClass
+                            }`}
+                          >
+                            {level2.title}
+                          </a>
+                        ) : (
+                          <div
+                            class={`px-2 py-0.5 text-xs font-semibold flex-1 cursor-pointer select-none dir-toggle-text ${subHeaderClass}`}
+                            data-target-id={level2Key}
+                          >
+                            {level2.title}
+                          </div>
+                        )}
+                        <button
+                          class="p-1 text-white/30 hover:text-white/80 transition-colors cursor-pointer dir-toggle-btn shrink-0"
+                          data-target-id={level2Key}
+                          aria-label="Toggle directory"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 transform transition-transform duration-150 chevron-icon" data-target-id={level2Key} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+                      </div>
+                    ) : (
+                      level2.slug ? (
+                        <a
+                          href={level2.slug}
+                          class={`block py-1 px-2 text-xs transition-all duration-150 ${
+                            isActive(level2.slug) ? activeClass : inactiveClass
+                          }`}
+                        >
+                          {level2.title}
+                        </a>
+                      ) : (
+                        <div class={`px-2 py-0.5 text-xs font-semibold ${subHeaderClass}`}>
+                          {level2.title}
+                        </div>
+                      )
+                    )}
+
+                    {hasLevel2Children && (
+                      <div class="mt-0.5 ml-2 border-l border-white/5 pl-2 space-y-0.5 submenu" data-submenu-id={level2Key}>
+                        {level2.children!.map((level3) => (
+                          <a
+                            href={level3.slug}
+                            class={`block py-0.5 px-2 text-[11px] transition-all duration-150 ${
+                              isActive(level3.slug) ? activeClass : inactiveClass
+                            }`}
+                          >
+                            {level3.title}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      );
+    })}
+  </div>
+</div>
+
+<script>
+  function initSidebarCollapse() {
+    const submenus = document.querySelectorAll<HTMLElement>('.submenu');
+    const toggles = document.querySelectorAll<HTMLElement>('.dir-toggle-btn, .dir-toggle-text');
+
+    let collapsedStates: Record<string, boolean> = {};
+    try {
+      collapsedStates = JSON.parse(localStorage.getItem('sidebar-collapsed-directories') || '{}');
+    } catch (e) {
+      console.error('Failed to parse sidebar collapse states', e);
+    }
+
+    submenus.forEach(submenu => {
+      const id = submenu.dataset.submenuId;
+      if (!id) return;
+
+      // Check if this submenu or any of its nested submenus contains the active item
+      // Active item is marked with active classes (either text-recruiter-accent-light or text-white bg-white/10)
+      const hasActiveChild = submenu.querySelector('.text-recruiter-accent-light, .bg-white\\/10');
+      
+      let isCollapsed = collapsedStates[id] === true;
+
+      // Force open if it contains the active item
+      if (hasActiveChild) {
+        isCollapsed = false;
+      }
+
+      const chevrons = document.querySelectorAll(`.chevron-icon[data-target-id="${id}"]`);
+      
+      if (isCollapsed) {
+        submenu.classList.add('hidden');
+        chevrons.forEach(chev => chev.classList.add('-rotate-90'));
+      } else {
+        submenu.classList.remove('hidden');
+        chevrons.forEach(chev => chev.classList.remove('-rotate-90'));
+      }
+    });
+
+    // Handle toggles
+    toggles.forEach(toggle => {
+      // Avoid adding multiple listeners if init runs multiple times
+      toggle.removeAttribute('data-has-listener');
+      const clickHandler = (e: MouseEvent) => {
+        const id = toggle.dataset.targetId;
+        if (!id) return;
+
+        e.stopPropagation();
+
+        const submenu = document.querySelector<HTMLElement>(`.submenu[data-submenu-id="${id}"]`);
+        const chevrons = document.querySelectorAll(`.chevron-icon[data-target-id="${id}"]`);
+
+        if (!submenu) return;
+
+        const isCurrentlyHidden = submenu.classList.contains('hidden');
+        
+        if (isCurrentlyHidden) {
+          submenu.classList.remove('hidden');
+          chevrons.forEach(chev => chev.classList.remove('-rotate-90'));
+          collapsedStates[id] = false;
+        } else {
+          submenu.classList.add('hidden');
+          chevrons.forEach(chev => chev.classList.add('-rotate-90'));
+          collapsedStates[id] = true;
+        }
+
+        localStorage.setItem('sidebar-collapsed-directories', JSON.stringify(collapsedStates));
+      };
+      
+      toggle.addEventListener('click', clickHandler as EventListener);
+    });
+  }
+
+  // Initialize on load and Astro page-load transition
+  initSidebarCollapse();
+  document.addEventListener('astro:page-load', initSidebarCollapse);
+</script>

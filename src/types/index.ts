@@ -71,6 +71,8 @@ export interface SiteSettings {
     mid: { label: string; timeframe: string };
     long: { label: string; timeframe: string };
   };
+  bio?: string;
+  photoUrl?: string;
 }
 
 export interface BuildEntry {
@@ -78,4 +80,23 @@ export interface BuildEntry {
   status: 'SUCCESS' | 'FAIL';
   timestamp: string;
   files: string[];
+}
+
+// Recruiter-facing content. Bio is tailored for recruiters, featured projects
+// carry manual non-technical descriptions, showcaseTech is a curated list of
+// technology names shown on the recruiter page (replaces techstack.json there).
+export interface RecruiterFeaturedProject {
+  name: string;
+  description: string; // manual, non-technical, written by admin
+  stack: string[];
+  repoUrl: string;
+}
+
+export interface RecruiterData {
+  bio: string;
+  photoUrl: string;
+  cvUrl: string;
+  linkedinUrl: string;
+  featuredProjects: RecruiterFeaturedProject[];
+  showcaseTech: string[];
 }

@@ -1,0 +1,181 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Sidebar from '../../../components/gitbook/Sidebar.astro';
+import { getAllSlugs, getSidebarMenu, getPageContent } from '../../../lib/gitbook';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const slugs = getAllSlugs();
+  return slugs.map((slug) => ({
+    params: { slug: slug === '' ? undefined : slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const prefix = '/dev/bitacora';
+
+const page = await getPageContent(slug, prefix);
+if (!page) {
+  return Astro.redirect('/404');
+}
+
+const menu = await getSidebarMenu(prefix);
+const externalUrl = 'https://blak0p.gitbook.io/bitacora';
+const currentPath = Astro.url.pathname;
+---
+
+<BaseLayout title={`${page.title} — Bitácora (DEV)`} navStyle="dev">
+  <div class="w-full px-4 sm:px-6 lg:px-8 py-6">
+    <div class="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-6 font-mono">
+      <!-- Sidebar Column -->
+      <aside class="md:sticky md:top-18 md:h-[calc(100vh-5rem)] overflow-y-auto">
+        <Sidebar
+          menu={menu}
+          currentPath={currentPath}
+          externalUrl={externalUrl}
+          navStyle="dev"
+        />
+      </aside>
+
+      <!-- Content Column -->
+      <article class="min-w-0">
+        <div class="border border-white/10 bg-carbono-surface p-6 md:p-8 sharp-corner">
+          <div class="gitbook-content" set:html={page.html} />
+        </div>
+      </article>
+    </div>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  /* Developer/Monospace styles for GitBook Content */
+  .gitbook-content {
+    font-size: 0.8125rem; /* 13px */
+    line-height: 1.6;
+    color: var(--color-text-muted, #e2e4f0);
+  }
+
+  .gitbook-content h1 {
+    font-size: 1.25rem; /* 20px */
+    font-weight: 700;
+    color: #ffffff;
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .gitbook-content h2 {
+    font-size: 1rem; /* 16px */
+    font-weight: 600;
+    color: #ffffff;
+    margin-top: 1.75rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 0.25rem;
+    text-transform: uppercase;
+  }
+
+  .gitbook-content h3 {
+    font-size: 0.875rem; /* 14px */
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .gitbook-content p {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .gitbook-content a {
+    color: var(--color-cobalt, #0055ff);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--color-cobalt, #0055ff);
+  }
+
+  .gitbook-content a:hover {
+    color: var(--color-cobalt-light, #3377ff);
+    border-bottom-style: solid;
+  }
+
+  .gitbook-content ul,
+  .gitbook-content ol {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    padding-left: 1.25rem;
+  }
+
+  .gitbook-content li {
+    margin-bottom: 0.2;
+  }
+
+  .gitbook-content code {
+    background: var(--color-carbono-highest, #2a2a2a);
+    color: #ffffff;
+    padding: 0.1em 0.3em;
+    font-size: 0.75rem;
+  }
+
+  .gitbook-content pre {
+    background: var(--color-carbono-low, #080808);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 1rem;
+    overflow-x: auto;
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+  }
+
+  .gitbook-content pre code {
+    background: transparent;
+    padding: 0;
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+  }
+
+  .gitbook-content blockquote {
+    margin: 1.25rem 0;
+    padding: 0.4rem 0.75rem;
+    border-left: 2px solid var(--color-cobalt, #0055ff);
+    background: rgba(255, 255, 255, 0.01);
+    color: var(--color-text-faint);
+  }
+
+  .gitbook-content img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    filter: grayscale(30%);
+    margin: 1.25rem 0;
+  }
+
+  .gitbook-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.25rem 0;
+    font-size: 0.75rem;
+  }
+
+  .gitbook-content th {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 0.4rem;
+    background: var(--color-carbono-mid, #181818);
+    text-align: left;
+    color: #ffffff;
+  }
+
+  .gitbook-content td {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.4rem;
+  }
+
+  .gitbook-content hr {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    margin: 1.75rem 0;
+  }
+</style>

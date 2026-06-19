@@ -32,3 +32,11 @@ pnpm-debug.log*
 .opencode/
 .vercel/
 .tokensave
+
+# GitBook generated files
+/src/data/gitbook/
+/public/gitbook-assets/
+
+# Temporary and backups
+.git-corrupt-bak/
+dev-output.html

@@ -1,1 +1,11 @@
-[{"id":"short-1","text":"Conseguir mi primer puesto como desarrollador backend – resolver problemas reales, no proyectos de juguete","completed":false,"section":"short"},{"id":"short-2","text":"Lanzar GIT-COURIER hacia una versión 3.0 madura y con adopción real","completed":false,"section":"short"},{"id":"short-3","text":"Terminar y desplegar HITRO.ES para mi tío","completed":false,"section":"short"},{"id":"mid-1","text":"Diseñar y construir un sistema complejo desde cero – el lenguaje de programación es irrelevante","completed":false,"section":"mid"},{"id":"mid-2","section":"mid","text":"Solve hard architectural problems that actually matter","completed":false},{"id":"mid-3","section":"mid","text":"Build a SaaS/product from zero to paying users","completed":false},{"id":"long-1","text":"Contribuir a proyectos importantes de código abierto o de la industria","completed":false,"section":"long"},{"id":"long-2","section":"long","text":"Work abroad as a backend engineer","completed":false},{"id":"long-3","text":"Ser reconocido por la calidad de mi soluciones, no por el lenguaje que utilizo","completed":false,"section":"long"}]
+[
+  { "id": "short-1", "section": "short", "text": "Conseguir mi primer rol backend — resolver problemas reales, no proyectos de juguete", "completed": false },
+  { "id": "short-2", "section": "short", "text": "Llevar git-courer a un v3.0 maduro con adopción real", "completed": false },
+  { "id": "short-3", "section": "short", "text": "Terminar y desplegar hitro.es para mi tío", "completed": false },
+  { "id": "mid-1", "section": "mid", "text": "Diseñar y construir un sistema complejo desde cero — el lenguaje es irrelevante", "completed": false },
+  { "id": "mid-2", "section": "mid", "text": "Resolver problemas arquitectónicos difíciles que realmente importen", "completed": false },
+  { "id": "mid-3", "section": "mid", "text": "Construir un SaaS/producto desde cero hasta tener usuarios de pago", "completed": false },
+  { "id": "long-1", "section": "long", "text": "Contribuir a proyectos importantes de código abierto o de la industria", "completed": false },
+  { "id": "long-2", "section": "long", "text": "Trabajar en el extranjero como ingeniero backend", "completed": false },
+  { "id": "long-3", "section": "long", "text": "Ser reconocido por la calidad de mis soluciones, no por el lenguaje que uso", "completed": false }
+]

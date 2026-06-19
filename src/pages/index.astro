@@ -2,13 +2,15 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/recruiter/Hero.astro';
 import About from '../components/recruiter/About.astro';
-import Projects from '../components/recruiter/Projects.astro';
+import Projects from '../components/recruiter/Projects';
 import Tech from '../components/recruiter/Tech.astro';
 import Contact from '../components/recruiter/Contact.astro';
 import identity from '../../public/data/identity.json';
 import settings from '../../public/data/settings.json';
 import projects from '../../public/data/projects.json';
+import ambitions from '../../public/data/ambitions.json';
 import techStack from '../../public/data/techstack.json';
+import Roadmap from '../components/recruiter/Roadmap.astro';
 
 // Merge identity with settings (settings override identity for dynamic values)
 const identityData = {
@@ -18,22 +20,32 @@ const identityData = {
   cvUrl: settings.cvUrl ?? identity.cvUrl,
   linkedinUrl: settings.linkedinUrl ?? identity.linkedinUrl,
   birthDate: settings.birthDate ?? (identity as any).birthDate,
+  bio: settings.bio ?? identity.bio,
+  photoUrl: settings.photoUrl ?? (identity as any).photoUrl ?? '/profile.jpg',
 };
 
-// Recruiter-facing project view: show ALL projects (including private),
-// strip internal fields. No "privado" labels — all projects look equal.
-const visibleProjects = (projects as any[]).map((p) => ({
-  name: p.name,
-  photo: p.photo,
-  description: p.description || p.specs?.description,
-  stack: Array.isArray(p.stack) ? p.stack : [],
-  repo: p.specs?.repo ?? p.repo,
+const heroPhotoUrl: string = identityData.photoUrl;
+const recruiterBio: string = identityData.bio;
+const recruiterCvUrl: string = identityData.cvUrl;
+const recruiterLinkedinUrl: string = identityData.linkedinUrl;
+
+// Load and map all projects (both public and private) with description fallback
+const recruiterProjects = projects.map((p: any) => ({
+  ...p,
+  description: p.description || p.specs?.description || '',
+}));
+
+// Load and map all technical tools with their usage levels
+const recruiterTech = techStack.map((t: any) => ({
+  name: t.name,
+  version: t.version || undefined,
+  usageLevel: typeof t.usageLevel === 'number' ? t.usageLevel : 0,
 }));
 ---
 
 <BaseLayout
   title={`${identityData.name.replace('\n', ' ')} — Backend Developer`}
-  description={identityData.bio}
+  description={recruiterBio}
   handle={identityData.handle}
   status={identityData.status}
   navStyle="recruiter"
@@ -43,26 +55,28 @@ const visibleProjects = (projects as any[]).map((p) => ({
       name={identityData.name}
       handle={identityData.handle}
       status={identityData.status}
+      photo={heroPhotoUrl}
+      email={identityData.contactEmail}
+      linkedin={recruiterLinkedinUrl}
+      github={identityData.links.find((l: any) => l.label.includes('GITHUB'))?.href || 'https://github.com/blak0p'}
     />
 
     <main class="flex flex-col gap-16 pb-20 recruiter-reveal-root">
       <About
-        bio={identityData.bio}
+        bio={recruiterBio}
         birthDate={identityData.birthDate}
         availabilityValue={identityData.availabilityValue}
-        cvUrl={identityData.cvUrl}
-        linkedinUrl={identityData.linkedinUrl}
+        cvUrl={recruiterCvUrl}
+        linkedinUrl={recruiterLinkedinUrl}
+        email={identityData.contactEmail}
+        github={identityData.links.find((l: any) => l.label.includes('GITHUB'))?.href || 'https://github.com/blak0p'}
       />
 
-      <Projects projects={visibleProjects} />
+      <Projects projects={recruiterProjects} client:load />
 
-      <Tech tools={techStack} />
+      <Tech tools={recruiterTech} />
 
-      <Contact
-        contactEmail={identityData.contactEmail}
-        links={identityData.links}
-        linkedinUrl={identityData.linkedinUrl}
-      />
+      <Roadmap ambitions={ambitions} roadmapLabels={settings.roadmapLabels} />
     </main>
   </div>
 </BaseLayout>
@@ -75,7 +89,7 @@ const visibleProjects = (projects as any[]).map((p) => ({
 
   /* Warm page background fallback (sits under the hero gradient) */
   .warm-bg {
-    background-color: #0d0d0d;
+    background-color: #080c14;
   }
 
   /* Section layout shared by all recruiter sections */
