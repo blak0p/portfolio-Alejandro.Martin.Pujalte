@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/recruiter/Hero.astro';
-import About from '../components/recruiter/About.astro';
 import Projects from '../components/recruiter/Projects';
 import Tech from '../components/recruiter/Tech.astro';
 import Contact from '../components/recruiter/Contact.astro';
@@ -50,7 +49,12 @@ const recruiterTech = techStack.map((t: any) => ({
   status={identityData.status}
   navStyle="recruiter"
 >
-  <div class="warm-bg">
+  <div class="warm-bg relative overflow-hidden">
+    <!-- Ambient floating colored blur blobs -->
+    <div class="absolute top-[10%] left-[-15%] w-[35rem] h-[35rem] rounded-full bg-recruiter-accent-dark/15 blur-[120px] pointer-events-none animate-blob"></div>
+    <div class="absolute top-[45%] right-[-15%] w-[40rem] h-[40rem] rounded-full bg-recruiter-accent/10 blur-[130px] pointer-events-none animate-blob-delayed"></div>
+    <div class="absolute bottom-[5%] left-[10%] w-[30rem] h-[30rem] rounded-full bg-recruiter-accent-light/10 blur-[110px] pointer-events-none animate-blob-slow"></div>
+
     <Hero
       name={identityData.name}
       handle={identityData.handle}
@@ -59,19 +63,13 @@ const recruiterTech = techStack.map((t: any) => ({
       email={identityData.contactEmail}
       linkedin={recruiterLinkedinUrl}
       github={identityData.links.find((l: any) => l.label.includes('GITHUB'))?.href || 'https://github.com/blak0p'}
+      bio={recruiterBio}
+      birthDate={identityData.birthDate}
+      availabilityValue={identityData.availabilityValue}
+      cvUrl={recruiterCvUrl}
     />
 
-    <main class="flex flex-col gap-16 pb-20 recruiter-reveal-root">
-      <About
-        bio={recruiterBio}
-        birthDate={identityData.birthDate}
-        availabilityValue={identityData.availabilityValue}
-        cvUrl={recruiterCvUrl}
-        linkedinUrl={recruiterLinkedinUrl}
-        email={identityData.contactEmail}
-        github={identityData.links.find((l: any) => l.label.includes('GITHUB'))?.href || 'https://github.com/blak0p'}
-      />
-
+    <main class="flex flex-col gap-16 pb-20 recruiter-reveal-root relative z-10">
       <Projects projects={recruiterProjects} client:load />
 
       <Tech tools={recruiterTech} />
@@ -114,12 +112,64 @@ const recruiterTech = techStack.map((t: any) => ({
   /* Fade-in reveal on scroll (Intersection Observer adds .visible) */
   .recruiter-section {
     opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transform: translateY(24px) scale(0.99);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
   }
   .recruiter-section.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+  }
+
+  /* Ambient Blur Blobs Keyframe Animations */
+  @keyframes blob-drift {
+    0% {
+      transform: translate(0px, 0px) scale(1);
+    }
+    33% {
+      transform: translate(40px, -60px) scale(1.1);
+    }
+    66% {
+      transform: translate(-30px, 30px) scale(0.95);
+    }
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+  }
+  @keyframes blob-drift-delayed {
+    0% {
+      transform: translate(0px, 0px) scale(1);
+    }
+    33% {
+      transform: translate(-50px, 40px) scale(0.9);
+    }
+    66% {
+      transform: translate(50px, -30px) scale(1.15);
+    }
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+  }
+  @keyframes blob-drift-slow {
+    0% {
+      transform: translate(0px, 0px) scale(1);
+    }
+    50% {
+      transform: translate(30px, 30px) scale(1.08);
+    }
+    100% {
+      transform: translate(0px, 0px) scale(1);
+    }
+  }
+
+  .animate-blob {
+    animation: blob-drift 22s infinite ease-in-out;
+  }
+  .animate-blob-delayed {
+    animation: blob-drift-delayed 28s infinite ease-in-out;
+  }
+  .animate-blob-slow {
+    animation: blob-drift-slow 35s infinite ease-in-out;
   }
 
   /* Respect reduced motion */
@@ -133,6 +183,9 @@ const recruiterTech = techStack.map((t: any) => ({
       scroll-behavior: auto;
     }
     .recruiter-gradient-bg {
+      animation: none;
+    }
+    .animate-blob, .animate-blob-delayed, .animate-blob-slow {
       animation: none;
     }
   }

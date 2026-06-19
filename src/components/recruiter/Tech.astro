@@ -29,36 +29,168 @@ const isFlat = items.length > 0 && !items.some((t) => typeof (t as TechItem).usa
 
     {items.length === 0 ? (
       <p class="text-sm text-white/40">Sin tecnologías registradas.</p>
-    ) : isFlat ? (
-      <div class="flex flex-wrap gap-2">
-        {items.map((tool) => (
-          <span class="bg-white/[0.06] border border-white/10 text-white/80 text-sm px-3 py-1.5 rounded-md">
-            {tool.name}
-          </span>
-        ))}
-      </div>
     ) : (
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {items.map((tool) => {
-          const level = Math.max(0, Math.min(100, tool.usageLevel));
-          return (
-            <div class="bg-white/[0.03] border border-white/10 rounded-xl p-4 flex flex-col gap-2 transition-all duration-200 hover:border-recruiter-accent/40 hover:shadow-[0_0_12px_rgba(0,102,255,0.08)]">
-              <div class="flex justify-between items-center">
-                <span class="text-base font-semibold text-white">{tool.name}</span>
-                {tool.version && (
-                  <span class="text-xs text-white/40">{tool.version}</span>
-                )}
-              </div>
-              <div class="h-1.5 bg-white/10 rounded-full overflow-hidden">
-                <div
-                  class="h-full bg-gradient-to-r from-recruiter-accent-dark to-recruiter-accent-light rounded-full transition-[width] duration-700 ease-out"
-                  style={`width: ${level}%`}
-                ></div>
-              </div>
-            </div>
-          );
-        })}
+      <div class="space-y-4">
+        {isFlat ? (
+          <div class="flex flex-wrap gap-2 transition-all duration-500">
+            {items.slice(0, 8).map((tool) => (
+              <span class="bg-white/[0.06] border border-white/10 text-white/80 text-sm px-3 py-1.5 rounded-md">
+                {tool.name}
+              </span>
+            ))}
+          </div>
+        ) : (
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {items.slice(0, 5).map((tool) => {
+              const level = Math.max(0, Math.min(100, tool.usageLevel));
+              return (
+                <div 
+                  class="bg-white/[0.02] border border-white/10 rounded-2xl p-5 flex flex-col gap-3 transition-all duration-300 backdrop-blur-md hover:border-recruiter-accent/50 hover:shadow-[0_8px_30px_rgba(0,102,255,0.12)] hover:-translate-y-0.5 tech-item-card"
+                >
+                  <div class="flex justify-between items-center">
+                    <span class="text-base font-semibold text-white">{tool.name}</span>
+                    {tool.version && (
+                      <span class="text-xs text-white/40 font-mono">{tool.version}</span>
+                    )}
+                  </div>
+                  <div class="h-2 bg-white/10 rounded-full overflow-hidden p-[1px]">
+                    <div
+                      class="h-full bg-gradient-to-r from-recruiter-accent to-recruiter-accent-light rounded-full transition-all duration-[1.2s] cubic-bezier(0.16, 1, 0.3, 1) level-bar"
+                      style={`--target-width: ${level}%; width: 0%;`}
+                    ></div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {items.length > 5 && (
+          <div class="flex justify-center mt-6">
+            <button
+              id="tech-toggle-btn"
+              class="px-6 py-2.5 bg-white/[0.03] border border-white/10 hover:border-recruiter-accent/50 hover:bg-white/[0.08] hover:text-recruiter-accent-light rounded-xl text-sm font-semibold text-white/80 transition-all duration-300 shadow-md cursor-pointer hover:shadow-[0_0_15px_rgba(0,102,255,0.15)]"
+            >
+              Ver más
+            </button>
+          </div>
+        )}
       </div>
     )}
   </div>
 </section>
+
+{/* Vanilla Modal for Technologies */}
+{items.length > 5 && (
+  <div id="tech-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#080c14]/85 backdrop-blur-md hidden">
+    <div class="relative w-full max-w-4xl max-h-[80vh] flex flex-col bg-white/[0.02] border border-white/10 rounded-3xl backdrop-blur-2xl shadow-[0_24px_60px_rgba(0,0,0,0.5)] overflow-hidden">
+      {/* Header */}
+      <div class="p-6 border-b border-white/5 flex items-center justify-between shrink-0 pr-16">
+        <div>
+          <h3 class="text-xl font-bold text-white">Tecnologías</h3>
+          <p class="text-xs text-white/50 mt-1">Stack tecnológico y nivel de dominio</p>
+        </div>
+        <button
+          id="tech-modal-close-btn"
+          class="absolute top-6 right-6 p-2 rounded-full bg-white/[0.04] border border-white/5 hover:border-white/20 text-white/60 hover:text-white transition-all cursor-pointer animate-pulse-subtle"
+          aria-label="Cerrar"
+        >
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Body */}
+      <div class="flex-1 overflow-y-auto p-6 md:p-8 scroll-smooth">
+        {isFlat ? (
+          <div class="flex flex-wrap gap-2">
+            {items.map((tool) => (
+              <span class="bg-white/[0.06] border border-white/10 text-white/80 text-sm px-3 py-1.5 rounded-md">
+                {tool.name}
+              </span>
+            ))}
+          </div>
+        ) : (
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {items.map((tool) => {
+              const level = Math.max(0, Math.min(100, tool.usageLevel));
+              return (
+                <div class="bg-white/[0.02] border border-white/10 rounded-2xl p-5 flex flex-col gap-3 transition-all duration-300 backdrop-blur-md hover:border-recruiter-accent/50 hover:shadow-[0_8px_30px_rgba(0,102,255,0.12)] hover:-translate-y-0.5">
+                  <div class="flex justify-between items-center">
+                    <span class="text-base font-semibold text-white">{tool.name}</span>
+                    {tool.version && (
+                      <span class="text-xs text-white/40 font-mono">{tool.version}</span>
+                    )}
+                  </div>
+                  <div class="h-2 bg-white/10 rounded-full overflow-hidden p-[1px]">
+                    <div
+                      class="h-full bg-gradient-to-r from-recruiter-accent to-recruiter-accent-light rounded-full transition-all duration-[1.2s] cubic-bezier(0.16, 1, 0.3, 1) modal-level-bar"
+                      data-target-width={`${level}%`}
+                      style="width: 0%;"
+                    ></div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+)}
+
+<script>
+  function initTechModal() {
+    const toggleBtn = document.getElementById('tech-toggle-btn');
+    const modal = document.getElementById('tech-modal');
+    const closeBtn = document.getElementById('tech-modal-close-btn');
+
+    if (!toggleBtn || !modal || !closeBtn) return;
+
+    const modalBars = modal.querySelectorAll('.modal-level-bar');
+
+    toggleBtn.addEventListener('click', () => {
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+
+      // Animate level bars
+      setTimeout(() => {
+        modalBars.forEach((bar) => {
+          const target = bar.getAttribute('data-target-width');
+          if (target && bar instanceof HTMLElement) {
+            bar.style.width = target;
+          }
+        });
+      }, 50);
+    });
+
+    const closeModal = () => {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+      modalBars.forEach((bar) => {
+        if (bar instanceof HTMLElement) {
+          bar.style.width = '0%';
+        }
+      });
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+  }
+
+  // Run on load and Astro page-load transition
+  initTechModal();
+  document.addEventListener('astro:page-load', initTechModal);
+</script>
+
+<style>
+  :global(.recruiter-section.visible) .level-bar {
+    width: var(--target-width) !important;
+  }
+</style>

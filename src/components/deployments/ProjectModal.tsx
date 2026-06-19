@@ -79,12 +79,20 @@ export default function ProjectModal({ project, onClose, theme = 'dev' }: Projec
   useEffect(() => {
     setImageFailed(false);
     if (!project) { setTab('overview'); setReadme(null); setFileStack([]); return; }
-    const repoSlug = project.specs?.repoSlug as string | undefined;
-    if (!repoSlug || project.isPrivate) { setTab('overview'); return; }
+    
     setTab('overview');
     setReadme(null);
     setError(null);
     setFileStack([]);
+
+    if (project.readmeContent) {
+      setReadme(project.readmeContent);
+      return;
+    }
+
+    const repoSlug = project.specs?.repoSlug as string | undefined;
+    if (!repoSlug || project.isPrivate) { return; }
+
     setLoading(true);
     fetchReadme(repoSlug)
       .then(md => setReadme(md))
@@ -230,7 +238,7 @@ export default function ProjectModal({ project, onClose, theme = 'dev' }: Projec
         {!isRecruiter && (
           <div className="flex border-b border-white/15 shrink-0 flex-wrap">
             <button onClick={() => setTab('overview')} className={getTabClass('overview')}>VISIÓN GENERAL</button>
-            {hasRepo && !project.isPrivate && (
+            {((hasRepo && !project.isPrivate) || !!project.readmeContent) && (
               <button onClick={() => setTab('readme')} className={getTabClass('readme')}>README</button>
             )}
             <button onClick={() => setTab('stack')} className={getTabClass('stack')}>STACK</button>
@@ -369,7 +377,7 @@ export default function ProjectModal({ project, onClose, theme = 'dev' }: Projec
               )}
 
               {/* Dynamic README */}
-              {hasRepo && !project.isPrivate && (
+              {((hasRepo && !project.isPrivate) || !!project.readmeContent) && (
                 <div className="flex flex-col gap-2">
                   <h3 className="text-xs text-recruiter-accent-light uppercase font-bold tracking-wider">Documentación del Proyecto (README)</h3>
                   

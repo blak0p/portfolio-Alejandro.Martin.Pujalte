@@ -20,6 +20,9 @@ export interface Project {
   isFavorite?: boolean;
   pushedAt?: string;
   order?: number;
+  recruiterDescription?: string;
+  recruiterStack?: string[];
+  readmeContent?: string;
 }
 
 export interface TechTool {

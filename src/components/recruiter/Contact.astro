@@ -24,14 +24,17 @@ allLinks.push(...links);
   <div class="recruiter-container">
     <h2 class="recruiter-section-title">Contacto</h2>
 
-    <div class="flex flex-col gap-3 max-w-md">
+    <div class="flex flex-col gap-3.5 max-w-md">
       {contactEmail && (
         <a
           href={`mailto:${contactEmail}`}
-          class="group flex items-center gap-3 bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3 hover:border-recruiter-accent/40 hover:shadow-[0_0_16px_rgba(0,102,255,0.1)] transition-all duration-200"
+          class="group flex items-center justify-between gap-4 bg-white/[0.02] border border-white/10 rounded-2xl px-6 py-4 hover:border-recruiter-accent/50 hover:shadow-[0_8px_30px_rgba(0,102,255,0.15)] hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-md cursor-pointer"
         >
-          <span class="text-sm font-medium text-recruiter-accent-light shrink-0">Email</span>
-          <span class="text-sm text-white/70 group-hover:text-white transition-colors">{contactEmail}</span>
+          <div class="flex items-center gap-3">
+            <span class="text-sm font-semibold text-recruiter-accent-light shrink-0">Email</span>
+            <span class="text-sm text-white/70 group-hover:text-white transition-colors">{contactEmail}</span>
+          </div>
+          <span class="text-white/30 group-hover:text-recruiter-accent-light group-hover:translate-x-1.5 transition-all duration-300 font-mono">→</span>
         </a>
       )}
 
@@ -40,9 +43,10 @@ allLinks.push(...links);
           href={link.href}
           target="_blank"
           rel="noopener noreferrer"
-          class="group flex items-center gap-3 bg-white/[0.03] border border-white/10 rounded-xl px-5 py-3 hover:border-recruiter-accent/40 hover:shadow-[0_0_16px_rgba(0,102,255,0.1)] transition-all duration-200"
+          class="group flex items-center justify-between gap-4 bg-white/[0.02] border border-white/10 rounded-2xl px-6 py-4 hover:border-recruiter-accent/50 hover:shadow-[0_8px_30px_rgba(0,102,255,0.15)] hover:-translate-y-0.5 transition-all duration-300 backdrop-blur-md cursor-pointer"
         >
-          <span class="text-sm font-medium text-recruiter-accent-light shrink-0">{link.label}</span>
+          <span class="text-sm font-semibold text-recruiter-accent-light shrink-0">{link.label}</span>
+          <span class="text-white/30 group-hover:text-recruiter-accent-light group-hover:translate-x-1.5 transition-all duration-300 font-mono">→</span>
         </a>
       ))}
     </div>

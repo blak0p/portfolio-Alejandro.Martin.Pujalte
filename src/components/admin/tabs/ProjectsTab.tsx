@@ -9,6 +9,7 @@ import {
   CheckField, 
   SectionHeader 
 } from '../components/UI';
+import { InteractiveTags } from '../components/InteractiveTags';
 
 interface StackUsage {
   name: string;
@@ -35,7 +36,8 @@ interface GitHubDetails {
 const emptyProject = {
   name: '', gitUrl: '', photo: '', video: '', stack: '', architecture: '', initSequence: '', description: '', businessImpact: '',
   specsStatus: '', specsStars: '', specsLanguage: '', specsLicense: '', specsDescription: '', specsRepo: '', specsRepoSlug: '', specsDemo: '', specsTags: '', stackWithUsage: '',
-  isHighlighted: false, isPrivate: false, isFavorite: false, pushedAt: '', order: 0
+  isHighlighted: false, isPrivate: false, isFavorite: false, pushedAt: '', order: 0,
+  recruiterDescription: '', recruiterStack: '', readmeContent: ''
 };
 
 interface RepoImportModalProps {
@@ -271,12 +273,15 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
       id: projects[editingIdx ?? -1]?.id || String(Date.now()), 
       name: form.name.toUpperCase(), 
       photo: form.photo, 
-      stack: form.stack.split(',').map(s => s.trim().toUpperCase()).filter(Boolean),
+      stack: form.stack.split(',').map(s => s.trim()).filter(Boolean),
       stackWithUsage: savedStackWithUsage,
       architecture: form.architecture, 
       initSequence: form.initSequence, 
       description: form.description, 
       businessImpact: form.businessImpact, 
+      recruiterDescription: form.recruiterDescription,
+      recruiterStack: form.recruiterStack.split(',').map(s => s.trim()).filter(Boolean),
+      readmeContent: form.readmeContent,
       specs: { 
         status: form.specsStatus, 
         stars: form.specsStars, 
@@ -309,11 +314,14 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
       name: p.name, 
       photo: p.photo, 
       video: (p.specs?.video as string) || '', 
-      stack: p.stack.join(', '), 
+      stack: Array.isArray(p.stack) ? p.stack.join(', ') : '', 
       architecture: p.architecture, 
       initSequence: p.initSequence, 
       description: p.description ?? '', 
       businessImpact: p.businessImpact ?? '', 
+      recruiterDescription: p.recruiterDescription ?? '',
+      recruiterStack: Array.isArray(p.recruiterStack) ? p.recruiterStack.join(', ') : '',
+      readmeContent: p.readmeContent ?? '',
       specsStatus: (p.specs?.status as string) || '', 
       specsStars: (p.specs?.stars as string) || '', 
       specsLanguage: (p.specs?.language as string) || '', 
@@ -379,16 +387,18 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
             <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className={inputClass} placeholder="SYSTEM_MODULE" />
           </Field>
           
-          <div className="col-span-1 md:col-span-2 flex flex-col sm:flex-row gap-4 items-end">
-            <div className="flex-1 w-full">
-              <Field label="GITHUB_ENDPOINT">
-                <input value={form.gitUrl} onChange={e => setForm(f => ({ ...f, gitUrl: e.target.value }))} className={inputClass} placeholder="https://github.com/..." />
-              </Field>
+          {!form.isPrivate && (
+            <div className="col-span-1 md:col-span-2 flex flex-col sm:flex-row gap-4 items-end">
+              <div className="flex-1 w-full">
+                <Field label="GITHUB_ENDPOINT">
+                  <input value={form.gitUrl} onChange={e => setForm(f => ({ ...f, gitUrl: e.target.value }))} className={inputClass} placeholder="https://github.com/..." />
+                </Field>
+              </div>
+              <button onClick={fetchGitHub} disabled={scanLoading} className={buttonPrimaryClass}>
+                {scanLoading ? 'SCANNING...' : 'SYNC_METADATA'}
+              </button>
             </div>
-            <button onClick={fetchGitHub} disabled={scanLoading} className={buttonPrimaryClass}>
-              {scanLoading ? 'SCANNING...' : 'SYNC_METADATA'}
-            </button>
-          </div>
+          )}
 
           <div className="col-span-1 md:col-span-2 flex flex-wrap gap-x-10 gap-y-4 border-y border-zinc-800 py-6 my-2">
             <CheckField label="DESTACADO" value={form.isHighlighted} onChange={v => setForm(f => ({ ...f, isHighlighted: v }))} />
@@ -402,6 +412,15 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
           <Field label="BUSINESS_IMPACT">
             <input value={form.businessImpact} onChange={e => setForm(f => ({ ...f, businessImpact: e.target.value }))} className={inputClass} />
           </Field>
+
+          <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-zinc-800/50 pt-6 my-2">
+            <Field label="RECRUITER_DESCRIPTION">
+              <textarea value={form.recruiterDescription} onChange={e => setForm(f => ({ ...f, recruiterDescription: e.target.value }))} className={`${inputClass} h-24 resize-none`} placeholder="Recruiter-tailored project summary..." />
+            </Field>
+            <Field label="RECRUITER_STACK">
+              <InteractiveTags value={form.recruiterStack} onChange={v => setForm(f => ({ ...f, recruiterStack: v }))} placeholder="Add recruiter stack tag..." />
+            </Field>
+          </div>
           
           <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
             <div className="space-y-4">
@@ -418,11 +437,13 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
                 </div>
               )}
             </div>
-            <div className="space-y-4">
-              <Field label="STREAM_SOURCE [VIDEO]">
-                <input value={form.video} onChange={e => setForm(f => ({ ...f, video: e.target.value }))} className={inputClass} />
-              </Field>
-            </div>
+            {!form.isPrivate && (
+              <div className="space-y-4">
+                <Field label="STREAM_SOURCE [VIDEO]">
+                  <input value={form.video} onChange={e => setForm(f => ({ ...f, video: e.target.value }))} className={inputClass} />
+                </Field>
+              </div>
+            )}
           </div>
 
           <div className="col-span-1 md:col-span-2">
@@ -437,9 +458,23 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
             </Field>
           </div>
 
-          <Field label="TECH_STACK (CSV)">
-            <input value={form.stack} onChange={e => setForm(f => ({ ...f, stack: e.target.value }))} className={inputClass} />
-          </Field>
+          <div className="col-span-1 md:col-span-2">
+            <Field label="MANUAL README / DOCUMENTATION">
+              <textarea value={form.readmeContent} onChange={e => setForm(f => ({ ...f, readmeContent: e.target.value }))} className={`${inputClass} h-40 resize-y`} placeholder="Markdown documentation for private projects or custom readme overrides..." />
+            </Field>
+          </div>
+
+          <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Field label="TECH_STACK">
+              <InteractiveTags value={form.stack} onChange={v => setForm(f => ({ ...f, stack: v }))} placeholder="Add tech stack tag..." />
+            </Field>
+            {!form.isPrivate && (
+              <Field label="SPECIFICATIONS_TAGS">
+                <InteractiveTags value={form.specsTags} onChange={v => setForm(f => ({ ...f, specsTags: v }))} placeholder="Add spec tag..." />
+              </Field>
+            )}
+          </div>
+
           <Field label="STATUS">
             <select value={form.specsStatus} onChange={e => setForm(f => ({ ...f, specsStatus: e.target.value }))} className={inputClass}>
               <option value="">— SELECT_STATUS —</option>
@@ -449,18 +484,26 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
               <option value="ARCHIVED">ARCHIVED</option>
             </select>
           </Field>
-          <Field label="STARS">
-            <input value={form.specsStars} onChange={e => setForm(f => ({ ...f, specsStars: e.target.value }))} className={inputClass} />
-          </Field>
-          <Field label="LANGUAGE">
-            <input value={form.specsLanguage} onChange={e => setForm(f => ({ ...f, specsLanguage: e.target.value }))} className={inputClass} />
-          </Field>
-          <Field label="LICENSE">
-            <input value={form.specsLicense} onChange={e => setForm(f => ({ ...f, specsLicense: e.target.value }))} className={inputClass} />
-          </Field>
-          <Field label="REPO_SLUG">
-            <input value={form.specsRepoSlug} onChange={e => setForm(f => ({ ...f, specsRepoSlug: e.target.value }))} className={inputClass} />
-          </Field>
+
+          {!form.isPrivate && (
+            <>
+              <Field label="STARS">
+                <input value={form.specsStars} onChange={e => setForm(f => ({ ...f, specsStars: e.target.value }))} className={inputClass} />
+              </Field>
+              <Field label="LANGUAGE">
+                <input value={form.specsLanguage} onChange={e => setForm(f => ({ ...f, specsLanguage: e.target.value }))} className={inputClass} />
+              </Field>
+              <Field label="LICENSE">
+                <input value={form.specsLicense} onChange={e => setForm(f => ({ ...f, specsLicense: e.target.value }))} className={inputClass} />
+              </Field>
+              <Field label="REPO_SLUG">
+                <input value={form.specsRepoSlug} onChange={e => setForm(f => ({ ...f, specsRepoSlug: e.target.value }))} className={inputClass} />
+              </Field>
+              <Field label="DEMO_URL">
+                <input value={form.specsDemo} onChange={e => setForm(f => ({ ...f, specsDemo: e.target.value }))} className={inputClass} />
+              </Field>
+            </>
+          )}
         </div>
 
         <div className="mt-8 flex flex-col sm:flex-row items-center gap-6 border-t border-zinc-800 pt-6">

@@ -40,68 +40,84 @@ const sections = [
   <div class="recruiter-container">
     <h2 class="recruiter-section-title">Metas y Objetivos</h2>
 
-    <div class="overflow-x-auto border border-white/10 rounded-xl bg-white/[0.02] backdrop-blur-md shadow-xl">
-      <table class="w-full text-left border-collapse min-w-[600px]">
-        <thead>
-          <tr class="border-b border-white/10 text-xs text-recruiter-accent-light uppercase tracking-widest bg-white/[0.01]">
-            <th class="py-4 px-6 font-bold w-1/4">Plazo</th>
-            <th class="py-4 px-6 font-bold w-1/6">Estado</th>
-            <th class="py-4 px-6 font-bold">Meta u Objetivo</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-white/[0.05]">
-          {sections.flatMap(({ key, meta, list }) => 
-            list.map((item) => {
-              const badgeClass = 
-                key === 'short' ? 'bg-sky-500/10 text-sky-400 border border-sky-500/20' :
-                key === 'mid' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
-                'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20';
-              
-              return (
-                <tr class="hover:bg-white/[0.03] transition-colors duration-150">
-                  <td class="py-4 px-6 align-middle">
-                    <div class="flex flex-col">
-                      <span class={`text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full border inline-block w-fit ${badgeClass}`}>
-                        {meta.label}
-                      </span>
-                      <span class="text-[11px] text-white/40 mt-1 block pl-1">
-                        {meta.timeframe}
-                      </span>
-                    </div>
-                  </td>
-                  <td class="py-4 px-6 align-middle">
-                    {item.completed ? (
-                      <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-2.5 py-1 rounded-full">
-                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                        Completado
-                      </span>
-                    ) : (
-                      <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-white/40 bg-white/[0.03] border border-white/10 px-2.5 py-1 rounded-full">
-                        <span class="w-2 h-2 rounded-full bg-white/20 animate-pulse"></span>
-                        En progreso
-                      </span>
-                    )}
-                  </td>
-                  <td class="py-4 px-6 align-middle">
-                    <span class={`text-sm leading-relaxed ${item.completed ? 'text-white/35 line-through decoration-recruiter-accent/35' : 'text-white/80 font-medium'}`}>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {sections.map(({ key, meta, list }) => {
+        const borderGlowClass = 
+          key === 'short' ? 'group-hover:border-sky-500/50 group-hover:shadow-[0_8px_30px_rgba(14,165,233,0.15)]' :
+          key === 'mid' ? 'group-hover:border-blue-500/50 group-hover:shadow-[0_8px_30px_rgba(59,130,246,0.15)]' :
+          'group-hover:border-indigo-500/50 group-hover:shadow-[0_8px_30px_rgba(99,102,241,0.15)]';
+          
+        const accentGlow = 
+          key === 'short' ? 'bg-sky-500/10 text-sky-400 border border-sky-500/20' :
+          key === 'mid' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' :
+          'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20';
+
+        const accentLine =
+          key === 'short' ? 'bg-sky-500' :
+          key === 'mid' ? 'bg-blue-500' :
+          'bg-indigo-500';
+
+        return (
+          <div class="flex flex-col gap-4">
+            <!-- Section Header -->
+            <div class="flex flex-col gap-1 pb-3 border-b border-white/10">
+              <span class={`text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full border inline-block w-fit ${accentGlow}`}>
+                {meta.label}
+              </span>
+              <span class="text-xs text-white/40 mt-1 pl-1 font-mono">
+                {meta.timeframe}
+              </span>
+            </div>
+
+            <!-- Sleek connected timeline path -->
+            <div class="flex flex-col gap-6 relative pl-6 border-l border-white/10 ml-3.5 mt-2">
+              {list.map((item) => (
+                <div class={`group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-5 backdrop-blur-md transition-all duration-500 hover:-translate-y-1 hover:bg-white/[0.04] h-[170px] flex flex-col justify-between ${borderGlowClass}`}>
+                  <!-- Timeline Node Dot -->
+                  <div class={`absolute -left-[31px] top-6 w-3 h-3 rounded-full border border-white/20 transition-all duration-300 group-hover:scale-125 ${
+                    key === 'short' ? 'bg-sky-500 shadow-[0_0_8px_rgba(14,165,233,0.6)] group-hover:bg-sky-400' :
+                    key === 'mid' ? 'bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.6)] group-hover:bg-blue-400' :
+                    'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.6)] group-hover:bg-indigo-400'
+                  }`} />
+
+                  <!-- Dynamic Hover Accent Line -->
+                  <div class={`absolute left-0 top-0 bottom-0 w-[3px] transition-all duration-300 ${accentLine} opacity-40 group-hover:opacity-100`} />
+                  
+                  <div class="flex flex-col justify-between h-full pl-2">
+                    <!-- Text content -->
+                    <p class={`text-sm leading-relaxed ${item.completed ? 'text-white/30 line-through decoration-white/20' : 'text-white/80 font-medium'} line-clamp-4`}>
                       {item.text}
-                    </span>
-                  </td>
-                </tr>
-              );
-            })
-          )}
-          {ambitions.length === 0 && (
-            <tr>
-              <td colspan="3" class="py-8 px-6 text-center text-sm text-white/30 italic">
-                Sin metas ni objetivos definidos actualmente.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+                    </p>
+
+                    <div class="flex justify-between items-center mt-2">
+                      <!-- Status Badge -->
+                      {item.completed ? (
+                        <span class="inline-flex items-center gap-1 text-[10px] font-bold tracking-wider uppercase text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-2 py-0.5 rounded">
+                          <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                          </svg>
+                          Completado
+                        </span>
+                      ) : (
+                        <span class="inline-flex items-center gap-1 text-[10px] font-bold tracking-wider uppercase text-white/40 bg-white/[0.03] border border-white/10 px-2 py-0.5 rounded">
+                          <span class="w-1.5 h-1.5 rounded-full bg-white/30 animate-pulse"></span>
+                          En progreso
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {list.length === 0 && (
+                <div class="rounded-xl border border-dashed border-white/10 p-6 text-center text-xs text-white/30 italic">
+                  Sin metas definidas
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })}
     </div>
   </div>
 </section>
