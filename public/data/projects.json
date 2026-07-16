@@ -22,7 +22,7 @@
     "readmeContent": "",
     "specs": {
       "status": "IN_PROGRESS",
-      "stars": "43",
+      "stars": "44",
       "language": "GO",
       "license": "MIT",
       "description": "MCP server for Git with local Ollama — zero tokens for git operations",
