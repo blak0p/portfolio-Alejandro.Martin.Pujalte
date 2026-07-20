@@ -3,30 +3,22 @@
 //
 // Renders after Projects and before Contact on the recruiter home page. Reads
 // community.json via loadCommunity() (never throws; empty shape on absence).
-// Each project gets a glassmorphic card with repo name, owner, stars and PR
-// count. A horizontal dot timeline shows one dot per merged PR (oldest→
-// newest); hover/focus reveals the merged date tooltip, click pins the date
-// as an inline label. No modal here — summaries live on the dev face.
 //
-// Styling mirrors recruiter/Projects.tsx: recruiter-section / recruiter-container
-// classes, glassmorphic container, warm deep blue, font-sans.
+// The grid is mounted as a single React island so that:
+// - Card click → opens the project detail modal (README + docs on the left,
+//   full PR timeline on the right).
+// - Dot click → pins the date as an inline label below the timeline (no modal
+//   on the recruiter face per spec; summaries live on the dev face).
+//
+// Styling mirrors recruiter/Projects.tsx: warm deep blue, rounded, glassmorphic.
 
 import { loadCommunity } from '../../../lib/community-data';
 import type { CommunityProject } from '../../../lib/community';
+import RecruiterCommunitySection from './RecruiterCommunitySection';
 
 const data = loadCommunity();
 const projects: CommunityProject[] = data.projects;
 const isEmpty = projects.length === 0;
-
-function formatDate(iso: string): string {
-  try {
-    const d = new Date(iso);
-    if (Number.isNaN(d.getTime())) return iso;
-    return d.toLocaleDateString('es-AR', { year: 'numeric', month: 'short', day: 'numeric' });
-  } catch {
-    return iso;
-  }
-}
 ---
 
 <section class="recruiter-section" id="comunidad">
@@ -37,103 +29,8 @@ function formatDate(iso: string): string {
       {isEmpty ? (
         <p class="text-sm text-white/40">Sin contribuciones para mostrar todavía.</p>
       ) : (
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {projects.map((p) => (
-            <article
-              data-community-slug={p.slug}
-              class="group relative bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden backdrop-blur-md transition-all duration-500 hover:-translate-y-1.5 hover:border-recruiter-accent/50 hover:shadow-[0_12px_36px_rgba(0,102,255,0.15)]"
-            >
-              <div class="p-5 flex flex-col gap-4">
-                <div class="flex items-start justify-between gap-3">
-                  <div class="flex flex-col gap-0.5 min-w-0">
-                    <h3 class="text-lg font-semibold text-white leading-tight truncate">
-                      {p.name}
-                    </h3>
-                    <span class="text-xs text-white/40 tracking-wide truncate">{p.owner}/{p.name}</span>
-                  </div>
-                  <a
-                    href={p.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-xs font-medium text-recruiter-accent-light hover:text-recruiter-accent transition-colors shrink-0 mt-1"
-                    aria-label={`Repositorio de ${p.name}`}
-                  >
-                    Repo →
-                  </a>
-                </div>
-
-                <div class="flex items-center gap-4 text-xs text-white/60">
-                  <span class="inline-flex items-center gap-1">
-                    <span class="text-warn">★</span>
-                    <span class="font-mono font-bold text-white">{p.stars}</span>
-                  </span>
-                  <span class="inline-flex items-center gap-1">
-                    <span class="text-recruiter-accent-light">∉</span>
-                    <span class="font-mono font-bold text-white">{p.prs.length}</span>
-                    <span class="text-white/40">PRs merged</span>
-                  </span>
-                </div>
-
-                {p.prs.length === 0 ? (
-                  <p class="text-xs text-white/30">Sin PRs merged registrados.</p>
-                ) : (
-                  <div class="flex flex-col gap-2 mt-1">
-                    <div
-                      class="community-timeline flex items-center gap-2 flex-wrap"
-                      data-community-timeline
-                    >
-                      {p.prs.map((pr) => (
-                        <button
-                          type="button"
-                          class="community-dot group/dot relative w-3 h-3 rounded-full bg-recruiter-accent/70 hover:bg-recruiter-accent focus:bg-recruiter-accent focus:outline-none focus:ring-2 focus:ring-recruiter-accent/40 transition-all cursor-pointer"
-                          data-pr-number={pr.number}
-                          data-pr-date={formatDate(pr.mergedAt)}
-                          data-pr-iso={pr.mergedAt}
-                          aria-label={`PR #${pr.number} — ${formatDate(pr.mergedAt)}`}
-                        >
-                          <span class="community-dot-tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 rounded-md bg-[#080c14] border border-white/10 text-[10px] text-white/80 whitespace-nowrap opacity-0 group-hover/dot:opacity-100 group-focus/dot:opacity-100 pointer-events-none transition-opacity">
-                            {formatDate(pr.mergedAt)}
-                          </span>
-                        </button>
-                      ))}
-                    </div>
-                    <p
-                      class="community-date-label text-xs text-recruiter-accent-light/80 tracking-wide hidden"
-                      data-community-date-label
-                    >
-                      &nbsp;
-                    </p>
-                  </div>
-                )}
-              </div>
-            </article>
-          ))}
-        </div>
+        <RecruiterCommunitySection projects={projects} client:load />
       )}
     </div>
   </div>
 </section>
-
-<script>
-  // Click a dot → pin its date as an inline label below the timeline.
-  // No modal, no summary — recruiter face is intentionally lightweight.
-  function initCommunityTimelines() {
-    document.querySelectorAll<HTMLElement>('[data-community-timeline]').forEach((tl) => {
-      if (tl.dataset.bound === '1') return;
-      tl.dataset.bound = '1';
-      const label = tl.parentElement?.querySelector<HTMLElement>('[data-community-date-label]');
-      tl.querySelectorAll<HTMLButtonElement>('.community-dot').forEach((dot) => {
-        dot.addEventListener('click', () => {
-          if (!label) return;
-          const date = dot.dataset.prDate ?? '';
-          const number = dot.dataset.prNumber ?? '';
-          label.textContent = `#${number} — ${date}`;
-          label.classList.remove('hidden');
-        });
-      });
-    });
-  }
-
-  initCommunityTimelines();
-  document.addEventListener('astro:page-load', initCommunityTimelines);
-</script>
