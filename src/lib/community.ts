@@ -22,6 +22,7 @@ export interface CommunityProject {
   active: boolean;        // gates cron fetch (mirror of admin state at fetch time)
   addedAt: string;        // ISO 8601, admin-set
   lastSyncedAt: string | null;
+  readme?: string;        // markdown readme content (populated by cron at sync time)
   prs: CommunityPR[];     // oldest => newest by mergedAt
 }
 
