@@ -4,6 +4,7 @@ import Hero from '../components/recruiter/Hero.astro';
 import Projects from '../components/recruiter/Projects';
 import Tech from '../components/recruiter/Tech.astro';
 import Contact from '../components/recruiter/Contact.astro';
+import CommunitySection from '../components/community/recruiter/CommunitySection.astro';
 import type { Ambition, SiteSettings, LogEntry } from '../types';
 import type identityRaw from '../../public/data/identity.json';
 import type settingsRaw from '../../public/data/settings.json';
@@ -80,6 +81,8 @@ const recruiterTech = techStack.map((t: any) => ({
 
     <main class="flex flex-col gap-16 pb-20 recruiter-reveal-root relative z-10">
       <Projects projects={recruiterProjects} syncWithStorage={true} client:load />
+
+      <CommunitySection />
 
       <Tech tools={recruiterTech} />
 
