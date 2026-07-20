@@ -5,6 +5,7 @@ import AmbitionsTab from './tabs/AmbitionsTab';
 import SettingsTab from './tabs/SettingsTab';
 import DataTab from './tabs/DataTab';
 import PublishTab from './tabs/PublishTab';
+import CommunityTab from './tabs/CommunityTab';
 
 const SESSION_KEY = 'admin_session';
 const SESSION_TS = 'admin_session_ts';
@@ -131,6 +132,7 @@ export default function AdminPanel() {
     { id: 'ambitions', label: 'Roadmap', icon: '▲' },
     { id: 'settings', label: 'Settings', icon: '⚙' },
     { id: 'data', label: 'Raw Editor', icon: '◉' },
+    { id: 'community', label: 'Contribuciones', icon: '◆' },
     { id: 'publish', label: 'Publish', icon: '↑' },
   ];
 
@@ -209,6 +211,7 @@ export default function AdminPanel() {
             {tab === 'ambitions'  && <AmbitionsTab onLog={addLog} />}
             {tab === 'settings'   && <SettingsTab onLog={addLog} />}
             {tab === 'data'       && <DataTab onLog={addLog} />}
+            {tab === 'community'  && <CommunityTab onLog={addLog} />}
             {tab === 'publish'    && <PublishTab onLog={addLog} />}
           </div>
         </div>
