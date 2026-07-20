@@ -10,6 +10,7 @@ import type { CommunityProject, CommunityPR } from '../../../lib/community';
 
 interface CommunityCardProps {
   project: CommunityProject;
+  onOpenProject: (project: CommunityProject) => void;
   onOpenPr: (pr: CommunityPR) => void;
 }
 
@@ -23,14 +24,23 @@ function formatDate(iso: string): string {
   }
 }
 
-export default function CommunityCard({ project, onOpenPr }: CommunityCardProps) {
+export default function CommunityCard({ project, onOpenProject, onOpenPr }: CommunityCardProps) {
   const { name, owner, stars, prs, url, active } = project;
   const inactiveStyle: React.CSSProperties = active ? {} : { filter: 'brightness(0.55) saturate(0.3)' };
 
   return (
     <div data-community-slug={project.slug} className="@container">
       <div
-        className={`relative border bg-carbono-surface p-3 flex flex-col gap-3 transition-all duration-150 ${
+        onClick={() => onOpenProject(project)}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onOpenProject(project);
+          }
+        }}
+        className={`relative border bg-carbono-surface p-3 flex flex-col gap-3 transition-all duration-150 cursor-pointer ${
           active ? 'border-white/15 hover:border-cobalt/60' : 'border-white/10 opacity-70'
         }`}
         style={inactiveStyle}
@@ -85,8 +95,11 @@ export default function CommunityCard({ project, onOpenPr }: CommunityCardProps)
                 <button
                   key={pr.number}
                   type="button"
-                  onClick={() => onOpenPr(pr)}
-                  className="group/dot relative w-2.5 h-2.5 bg-cobalt/70 hover:bg-cobalt focus:bg-cobalt focus:outline-none focus:ring-1 focus:ring-cobalt/50 transition-all cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onOpenPr(pr);
+                  }}
+                  className="group/dot relative w-2.5 h-2.5 bg-cobalt/70 hover:bg-cobalt focus:bg-cobalt focus:outline-none focus:ring-1 focus:ring-cobalt/50 transition-all cursor-pointer z-10"
                   style={{ borderRadius: '50%' }}
                   aria-label={`PR #${pr.number} — ${formatDate(pr.mergedAt)}`}
                   title={`#${pr.number} — ${formatDate(pr.mergedAt)}`}
