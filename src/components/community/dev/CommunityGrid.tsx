@@ -1,21 +1,27 @@
 // Dev-face community grid.
 //
 // Mirrors deployments/ProjectGrid.tsx (React island, client:only="react").
-// Renders one CommunityCard per project; click a PR dot to open CommunityModal
-// with the PR title, summary and link. Empty state mirrors the dev face's
-// SIN_* convention.
+// Renders one CommunityCard per project.
+// - Click a project CARD → opens ProjectDetailModal (README + timeline).
+// - Click a PR DOT in the card OR in the project detail modal → opens
+//   PrDetailModal (summary + link to PR).
+// Empty state mirrors the dev face's SIN_* convention.
 
 import React, { useState } from 'react';
 import type { CommunityProject, CommunityPR } from '../../../lib/community';
 import CommunityCard from './CommunityCard';
-import CommunityModal from './CommunityModal';
+import PrDetailModal from './PrDetailModal';
+import ProjectDetailModal from '../ProjectDetailModal';
 
 interface CommunityGridProps {
   projects: CommunityProject[];
 }
 
+type ActivePr = { project: CommunityProject; pr: CommunityPR };
+
 export default function CommunityGrid({ projects }: CommunityGridProps) {
-  const [active, setActive] = useState<{ project: CommunityProject; pr: CommunityPR } | null>(null);
+  const [activeProject, setActiveProject] = useState<CommunityProject | null>(null);
+  const [activePr, setActivePr] = useState<ActivePr | null>(null);
 
   if (projects.length === 0) {
     return (
@@ -32,15 +38,26 @@ export default function CommunityGrid({ projects }: CommunityGridProps) {
           <CommunityCard
             key={p.slug}
             project={p}
-            onOpenPr={(pr) => setActive({ project: p, pr })}
+            onOpenProject={() => setActiveProject(p)}
+            onOpenPr={(pr) => setActivePr({ project: p, pr })}
           />
         ))}
       </div>
 
-      <CommunityModal
-        project={active?.project ?? null}
-        pr={active?.pr ?? null}
-        onClose={() => setActive(null)}
+      <ProjectDetailModal
+        project={activeProject}
+        face="dev"
+        onClose={() => setActiveProject(null)}
+        onOpenPr={(pr) => {
+          if (activeProject) setActivePr({ project: activeProject, pr });
+        }}
+      />
+
+      <PrDetailModal
+        project={activePr?.project ?? null}
+        pr={activePr?.pr ?? null}
+        face="dev"
+        onClose={() => setActivePr(null)}
       />
     </>
   );
