@@ -131,9 +131,12 @@ async function runCommunityStep(): Promise<void> {
 
   // Existing data: prefer on-disk community.json, fall back to last-known-good KV.
   const existingOnDisk = loadCommunity();
-  const lastGood = existingOnDisk.projects.length > 0 ? existingOnDisk : await getLastGoodCommunity();
+  const lastGood: CommunityData | null = existingOnDisk.projects.length > 0
+    ? existingOnDisk
+    : await getLastGoodCommunity();
+  const prevProjects: CommunityProject[] = (lastGood?.projects ?? []) as CommunityProject[];
   const existingBySlug = new Map<string, CommunityProject>(
-    (lastGood?.projects ?? []).map((p) => [p.slug, p]),
+    prevProjects.map((p) => [p.slug, p] as [string, CommunityProject]),
   );
 
   const newProjects: CommunityProject[] = [];
@@ -185,7 +188,7 @@ async function runCommunityStep(): Promise<void> {
   for (const repo of repos) {
     const slug = `${repo.owner}-${repo.name}`;
     if (!newProjects.some((p) => p.slug === slug)) {
-      const prev = existingBySlug.get(slug);
+      const prev = existingBySlug.get(slug) as CommunityProject | undefined;
       if (prev) {
         newProjects.push({ ...prev, active: false });
       } else {
@@ -194,11 +197,11 @@ async function runCommunityStep(): Promise<void> {
           owner: repo.owner,
           name: repo.name,
           url: `https://github.com/${repo.owner}/${repo.name}`,
-          stars: prev?.stars ?? 0,
+          stars: 0,
           active: false,
           addedAt: repo.addedAt,
-          lastSyncedAt: prev?.lastSyncedAt ?? null,
-          prs: prev?.prs ?? [],
+          lastSyncedAt: null,
+          prs: [],
         });
       }
     }
