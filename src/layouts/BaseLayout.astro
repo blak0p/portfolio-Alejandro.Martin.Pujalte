@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
+import { getTotalMerged } from '../lib/community-data';
 
 interface Props {
   title?: string;
@@ -21,10 +22,19 @@ const {
 const ogImage = '/profile.jpg';
 const siteUrl = Astro.site ?? 'https://alejandro-mp.dev';
 
-const isDevPage = Astro.url.pathname.replace(/\/$/, '') === '/dev';
+const pathname = Astro.url.pathname.replace(/\/$/, '');
+const isDevPage = pathname === '/dev';
+const isDevComunidad = pathname === '/dev/comunidad';
 const deploymentsHref = isDevPage ? '#deployments' : '/dev#deployments';
 const techHref = isDevPage ? '#tech' : '/dev#tech';
 const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
+
+// Community nav: recruiter face anchors to #comunidad (smooth scroll); dev face
+// routes to /dev/comunidad. Badge shows total merged PRs; hidden when 0 so the
+// nav doesn't advertise an empty section on first deploys.
+const totalMerged = getTotalMerged();
+const communityHref = navStyle === 'recruiter' ? '/#comunidad' : '/dev/comunidad';
+const showCommunityBadge = totalMerged > 0;
 ---
 
 <html lang="es">
@@ -106,6 +116,14 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
           <div class="hidden md:flex items-center gap-6 text-sm text-white/70 font-medium">
             <a href="/#about" class="hover:text-recruiter-accent-light transition-colors">Sobre mí</a>
             <a href="/#projects" class="hover:text-recruiter-accent-light transition-colors">Proyectos</a>
+            <a href="/#comunidad" class="hover:text-recruiter-accent-light transition-colors inline-flex items-center gap-1.5">
+              Comunidad
+              {showCommunityBadge && (
+                <span class="inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1.5 text-[10px] font-bold tracking-wider text-recruiter-accent-light bg-recruiter-accent/15 border border-recruiter-accent/40 rounded-full">
+                  • {totalMerged}
+                </span>
+              )}
+            </a>
             <a href="/#tech" class="hover:text-recruiter-accent-light transition-colors">Tecnologías</a>
             <a href="/#ambitions" class="hover:text-recruiter-accent-light transition-colors">Metas</a>
             <a href="/#contact" class="hover:text-recruiter-accent-light transition-colors">Contacto</a>
@@ -149,7 +167,15 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
         <button id="mobile-close-r" class="absolute top-5 right-5 text-white/50 hover:text-white text-3xl transition-colors" aria-label="Cerrar">&times;</button>
         <nav class="flex flex-col items-center gap-8 text-xl font-medium">
           <a href="/#about"    class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors">Sobre mí</a>
-          <a href="/#projects" class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors">Proyectos</a>
+          <a href="/#projects" class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors inline-flex items-center gap-1.5">Proyectos</a>
+          <a href="/#comunidad" class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors inline-flex items-center gap-1.5">
+            Comunidad
+            {showCommunityBadge && (
+              <span class="inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1.5 text-[10px] font-bold tracking-wider text-recruiter-accent-light bg-recruiter-accent/15 border border-recruiter-accent/40 rounded-full">
+                • {totalMerged}
+              </span>
+            )}
+          </a>
           <a href="/#tech"     class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors">Tecnologías</a>
           <a href="/#ambitions" class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors">Metas</a>
           <a href="/#contact"  class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors">Contacto</a>
@@ -169,6 +195,18 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
           <!-- Desktop links — point at dev page sections -->
           <div class="hidden md:flex items-center gap-5 text-xs text-text-muted tracking-widest uppercase">
             <a href={deploymentsHref} class="hover:text-cobalt transition-colors duration-100">Proyectos</a>
+            <span class="text-white/20">|</span>
+            <a
+              href={communityHref}
+              class={`hover:text-cobalt transition-colors duration-100 inline-flex items-center gap-1.5 ${isDevComunidad ? 'text-cobalt' : ''}`}
+            >
+              Comunidad
+              {showCommunityBadge && (
+                <span class="inline-flex items-center justify-center min-w-[1.1rem] h-4 px-1 text-[9px] font-bold tracking-wider text-cobalt bg-cobalt/10 border border-cobalt/40">
+                  • {totalMerged}
+                </span>
+              )}
+            </a>
             <span class="text-white/20">|</span>
             <a href={techHref} class="hover:text-cobalt transition-colors duration-100">Tecnologías</a>
             <span class="text-white/20">|</span>
@@ -223,6 +261,15 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
         <!-- Nav links — mismo texto y estilo que desktop -->
         <nav class="flex flex-col items-center gap-8 text-xs text-text-muted tracking-widest uppercase">
           <a href={deploymentsHref} class="mobile-link hover:text-cobalt transition-colors duration-100">Proyectos</a>
+          <span class="text-white/20">|</span>
+          <a href="/dev/comunidad" class="mobile-link hover:text-cobalt transition-colors duration-100 inline-flex items-center gap-1.5">
+            Comunidad
+            {showCommunityBadge && (
+              <span class="inline-flex items-center justify-center min-w-[1.1rem] h-4 px-1 text-[9px] font-bold tracking-wider text-cobalt bg-cobalt/10 border border-cobalt/40">
+                • {totalMerged}
+              </span>
+            )}
+          </a>
           <span class="text-white/20">|</span>
           <a href={techHref}        class="mobile-link hover:text-cobalt transition-colors duration-100">Tecnologías</a>
           <span class="text-white/20">|</span>
