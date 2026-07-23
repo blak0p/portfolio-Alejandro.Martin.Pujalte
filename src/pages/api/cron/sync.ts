@@ -53,7 +53,7 @@ interface MergedPrApiItem {
   html_url: string;
   body: string | null;
   merged_at: string | null;
-  pull_request?: { html_url?: string };
+  pull_request?: { html_url?: string; merged_at?: string | null };
 }
 
 interface RepoFetchResult {
@@ -95,7 +95,7 @@ async function fetchActiveRepoContribution(
   const searchJson = (await searchRes.json()) as { items?: MergedPrApiItem[] };
   const items = Array.isArray(searchJson?.items) ? searchJson.items : [];
   // Keep only PRs that actually merged (defensive — search should already filter).
-  const merged = items.filter((it) => it.merged_at);
+  const merged = items.filter((it) => it.pull_request?.merged_at);
   return { stars, prs: merged };
 }
 
@@ -323,7 +323,7 @@ export const GET: APIRoute = async ({ request }) => {
     const autoRefreshTargets = getAutoRefreshProjects(projects).filter(p => p.specs?.repoSlug && !p.isPrivate);
     for (const p of autoRefreshTargets) {
       const slug = p.specs?.repoSlug;
-      if (!slug) continue;
+      if (!slug || typeof slug !== 'string') continue;
       
       try {
         const details = await getRepoDetails(slug);

@@ -40,3 +40,5 @@ pnpm-debug.log*
 # Temporary and backups
 .git-corrupt-bak/
 dev-output.html
+.vercel
+.env*
