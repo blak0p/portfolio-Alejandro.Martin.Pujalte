@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-23T19:11:06.593Z",
-  "totalMerged": 0,
+  "generatedAt": "2026-07-23T19:13:26.297Z",
+  "totalMerged": 1,
   "projects": [
     {
       "slug": "Gentleman-Programming-engram",
@@ -11,8 +11,16 @@
       "stars": 5656,
       "active": true,
       "addedAt": "2026-07-23T18:52:28.718Z",
-      "lastSyncedAt": "2026-07-23T19:11:06.593Z",
-      "prs": []
+      "lastSyncedAt": "2026-07-23T19:13:26.297Z",
+      "prs": [
+        {
+          "number": 586,
+          "title": "fix(store): escape interior double-quotes in sanitizeFTS to prevent FTS5 crash",
+          "url": "https://github.com/Gentleman-Programming/engram/pull/586",
+          "mergedAt": "2026-07-23T19:13:26.297Z",
+          "summary": "Este pull request corrige un bug"
+        }
+      ]
     }
   ]
 }
