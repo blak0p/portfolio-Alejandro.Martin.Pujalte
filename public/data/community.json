@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "generatedAt": "2026-07-23T19:49:10.201Z",
+  "totalMerged": 1,
+  "projects": [
+    {
+      "slug": "Gentleman-Programming-engram",
+      "owner": "Gentleman-Programming",
+      "name": "engram",
+      "url": "https://github.com/Gentleman-Programming/engram",
+      "stars": 5656,
+      "active": true,
+      "addedAt": "2026-07-23T18:52:28.718Z",
+      "lastSyncedAt": "2026-07-23T19:49:10.201Z",
+      "prs": [
+        {
+          "number": 586,
+          "title": "fix(store): escape interior double-quotes in sanitizeFTS to prevent FTS5 crash",
+          "url": "https://github.com/Gentleman-Programming/engram/pull/586",
+          "mergedAt": "2026-07-23T19:49:10.201Z",
+          "summary": "Corregí un fallo en el motor de búsqueda FTS5 implementando un mecanismo de escape para comillas dobles internas en las consultas. Esto asegura la estabilidad del sistema y mejora significativamente la fiabilidad de las búsquedas para los usuarios.",
+          "type": "fix"
+        }
+      ]
+    }
+  ]
+}
