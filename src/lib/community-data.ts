@@ -4,60 +4,28 @@
 // (before the user adds any repo via the admin panel). Every accessor here
 // treats a missing/invalid file as the empty state and never throws.
 
-import { existsSync, readFileSync, statSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
-
 import type { CommunityData, CommunityProject } from './community';
 import { EMPTY_COMMUNITY_DATA } from './community';
 
-// Resolve public/data/community.json relative to this file so it works
-// regardless of the server's cwd (local dev, Vercel SSR, build).
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const COMMUNITY_JSON_PATH = join(__dirname, '..', '..', 'public', 'data', 'community.json');
-
 let cachedData: CommunityData | null = null;
-let cachedMtime: number | null = null;
 
 /**
- * Read community.json from disk. Returns the empty shape when the file is
- * absent or invalid. Re-reads on mtime change so the cron's writes are picked
- * up within the same long-lived serverless instance.
+ * Fetch community.json from the public URL. Falls back to empty shape on any
+ * failure. Caches in-memory for the lifetime of the serverless instance.
  */
-function readCommunityJson(): CommunityData {
+async function fetchCommunityJson(): Promise<CommunityData> {
+  if (cachedData) return cachedData;
   try {
-    if (!existsSync(COMMUNITY_JSON_PATH)) {
-      cachedData = { ...EMPTY_COMMUNITY_DATA };
-      cachedMtime = null;
-      return cachedData;
-    }
-    const stat = statMtime(COMMUNITY_JSON_PATH);
-    if (cachedData && cachedMtime === stat) {
-      return cachedData;
-    }
-    const raw = readFileSync(COMMUNITY_JSON_PATH, 'utf-8');
-    const parsed = JSON.parse(raw) as CommunityData;
+    const res = await fetch('https://www.alejandro-m-p.com/data/community.json');
+    if (!res.ok) return { ...EMPTY_COMMUNITY_DATA };
+    const parsed = (await res.json()) as CommunityData;
     if (!parsed || typeof parsed !== 'object' || !Array.isArray(parsed.projects)) {
-      cachedData = { ...EMPTY_COMMUNITY_DATA };
-      cachedMtime = null;
-      return cachedData;
+      return { ...EMPTY_COMMUNITY_DATA };
     }
     cachedData = parsed;
-    cachedMtime = stat;
     return cachedData;
   } catch {
-    cachedData = { ...EMPTY_COMMUNITY_DATA };
-    cachedMtime = null;
-    return cachedData;
-  }
-}
-
-// Thin wrapper so the mtime read is also guarded.
-function statMtime(path: string): number {
-  try {
-    return statSync(path).mtimeMs;
-  } catch {
-    return 0;
+    return { ...EMPTY_COMMUNITY_DATA };
   }
 }
 
@@ -65,21 +33,21 @@ function statMtime(path: string): number {
  * Load community data. Returns the empty shape when `public/data/community.json`
  * is absent, empty, or invalid. Never throws.
  */
-export function loadCommunity(): CommunityData {
-  return readCommunityJson();
+export async function loadCommunity(): Promise<CommunityData> {
+  return fetchCommunityJson();
 }
 
 /**
  * Total merged PR count across all projects. 0 when the file is absent.
  */
-export function getTotalMerged(): number {
-  const data = loadCommunity();
+export async function getTotalMerged(): Promise<number> {
+  const data = await loadCommunity();
   return data.totalMerged ?? data.projects.reduce((sum, p) => sum + p.prs.length, 0);
 }
 
 /**
  * Find a single project by its slug (`owner-name`). Undefined when absent.
  */
-export function getProjectBySlug(slug: string): CommunityProject | undefined {
-  return loadCommunity().projects.find((p) => p.slug === slug);
+export async function getProjectBySlug(slug: string): Promise<CommunityProject | undefined> {
+  return (await loadCommunity()).projects.find((p) => p.slug === slug);
 }

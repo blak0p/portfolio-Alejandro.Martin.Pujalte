@@ -32,7 +32,7 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
 // Community nav: recruiter face anchors to #comunidad (smooth scroll); dev face
 // routes to /dev/comunidad. Badge shows total merged PRs; hidden when 0 so the
 // nav doesn't advertise an empty section on first deploys.
-const totalMerged = getTotalMerged();
+const totalMerged = await getTotalMerged();
 const communityHref = navStyle === 'recruiter' ? '/#comunidad' : '/dev/comunidad';
 const showCommunityBadge = totalMerged > 0;
 ---

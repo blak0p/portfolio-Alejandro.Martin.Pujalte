@@ -16,7 +16,7 @@ import { loadCommunity } from '../../../lib/community-data';
 import type { CommunityProject } from '../../../lib/community';
 import RecruiterCommunitySection from './RecruiterCommunitySection';
 
-const data = loadCommunity();
+const data = await loadCommunity();
 const projects: CommunityProject[] = data.projects;
 const isEmpty = projects.length === 0;
 ---

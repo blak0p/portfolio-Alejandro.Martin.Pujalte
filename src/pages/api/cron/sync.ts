@@ -130,7 +130,7 @@ async function runCommunityStep(): Promise<void> {
   }
 
   // Existing data: prefer on-disk community.json, fall back to last-known-good KV.
-  const existingOnDisk = loadCommunity();
+  const existingOnDisk = await loadCommunity();
   const lastGood: CommunityData | null = existingOnDisk.projects.length > 0
     ? existingOnDisk
     : await getLastGoodCommunity();
