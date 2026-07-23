@@ -19,7 +19,7 @@ interface SummarizePrResult {
 const GEMINI_ENDPOINT =
   'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
-const MAX_OUTPUT_TOKENS = 200; // ~280 chars of Spanish prose fits comfortably
+const MAX_OUTPUT_TOKENS = 600;
 const REQUEST_TIMEOUT_MS = 30_000;
 
 function buildPrompt(input: SummarizePrInput): string {
