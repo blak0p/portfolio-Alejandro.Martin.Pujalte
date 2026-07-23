@@ -104,14 +104,18 @@ function diffNewPrs(existingPrs: CommunityPR[], fetched: MergedPrApiItem[]): Mer
   return fetched.filter((it) => !seen.has(it.number));
 }
 
-function toCommunityPr(it: MergedPrApiItem, summary: string | null, summaryError?: string): CommunityPR {
+function toCommunityPr(it: MergedPrApiItem, summary: string | null, type?: string, summaryError?: string): CommunityPR {
   const url = it.pull_request?.html_url || it.html_url;
+  const validTypes = ['feature', 'fix', 'refactor', 'docs', 'perf', 'other'] as const;
   return {
     number: it.number,
     title: it.title,
     url,
     mergedAt: it.merged_at ?? new Date().toISOString(),
     summary,
+    type: type && validTypes.includes(type as typeof validTypes[number])
+      ? (type as CommunityPR['type'])
+      : undefined,
     ...(summaryError ? { summaryError } : {}),
   };
 }
@@ -152,8 +156,8 @@ async function runCommunityStep(): Promise<void> {
       const summarizedNew: CommunityPR[] = [];
       for (const it of newItems) {
         // linkedIssueTitle is not cheaply available here; Gemini prompt handles its absence.
-        const { summary, error } = await summarizePr({ title: it.title, body: it.body ?? '' });
-        summarizedNew.push(toCommunityPr(it, summary, error));
+        const { summary, type, error } = await summarizePr({ title: it.title, body: it.body ?? '' });
+        summarizedNew.push(toCommunityPr(it, summary, type, error));
       }
 
       // Merge: keep prev summaries for already-known PRs, add new ones, sort oldest→newest.

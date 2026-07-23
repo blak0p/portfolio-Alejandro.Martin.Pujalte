@@ -11,6 +11,7 @@ export interface CommunityPR {
   mergedAt: string;       // ISO 8601
   summary: string | null; // null => Gemini failed; UI renders "no se pudo hacer el resumen"
   summaryError?: string;  // only present when summary is null
+  type?: 'feature' | 'fix' | 'refactor' | 'docs' | 'perf' | 'other';
 }
 
 export interface CommunityProject {
