@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import type { CommunityData, CommunityProject } from '../../../lib/community';
 import {
   inputClass,
   cardClass,
@@ -18,13 +19,18 @@ interface RepoRow {
   lastSyncedAt?: string | null;
 }
 
+interface AddResponse extends RepoRow {
+  stars: number;
+  url: string;
+}
+
 interface CommunityTabProps {
   onLog: (msg: string) => void;
 }
 
 export default function CommunityTab({ onLog }: CommunityTabProps) {
   const [repos, setRepos] = useState<RepoRow[]>([]);
-  const [communityData, setCommunityData] = useState<{ projects: Array<{ slug: string; stars: number; lastSyncedAt: string | null }> } | null>(null);
+  const [communityData, setCommunityData] = useState<CommunityData | null>(null);
   const [newUrl, setNewUrl] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
@@ -84,6 +90,40 @@ export default function CommunityTab({ onLog }: CommunityTabProps) {
     };
   }
 
+  function saveCommunityDraft(nextRepos: RepoRow[], added?: AddResponse) {
+    const existingBySlug = new Map(
+      (communityData?.projects ?? []).map((project) => [project.slug, project]),
+    );
+    const projects: CommunityProject[] = nextRepos.map((repo) => {
+      const slug = `${repo.owner}-${repo.name}`;
+      const existing = existingBySlug.get(slug);
+      if (existing) return { ...existing, active: repo.active, addedAt: repo.addedAt };
+
+      return {
+        slug,
+        owner: repo.owner,
+        name: repo.name,
+        url: added?.owner === repo.owner && added.name === repo.name
+          ? added.url
+          : `https://github.com/${repo.owner}/${repo.name}`,
+        stars: added?.owner === repo.owner && added.name === repo.name ? added.stars : 0,
+        active: repo.active,
+        addedAt: repo.addedAt,
+        lastSyncedAt: null,
+        prs: [],
+      };
+    });
+    const next: CommunityData = {
+      version: 1,
+      generatedAt: communityData?.generatedAt ?? null,
+      totalMerged: projects.reduce((total, project) => total + project.prs.length, 0),
+      projects,
+    };
+
+    setCommunityData(next);
+    localStorage.setItem('portfolioCommunity', JSON.stringify(next));
+  }
+
   async function addRepo() {
     const url = newUrl.trim();
     if (!url) {
@@ -111,10 +151,9 @@ export default function CommunityTab({ onLog }: CommunityTabProps) {
       const list: RepoRow[] = Array.isArray(body.repos) ? body.repos : [];
       list.sort((a, b) => `${a.owner}/${a.name}`.localeCompare(`${b.owner}/${b.name}`));
       setRepos(list);
+      saveCommunityDraft(list, body.added as AddResponse | undefined);
       setNewUrl('');
       onLog(`COMMUNITY_ADDED: ${url}`);
-      // Reload to pick up the joined stars from a fresh community.json read.
-      load();
     } catch {
       setError('No se pudo agregar');
     } finally {
@@ -138,6 +177,7 @@ export default function CommunityTab({ onLog }: CommunityTabProps) {
       const list: RepoRow[] = Array.isArray(body.repos) ? body.repos : [];
       list.sort((a, b) => `${a.owner}/${a.name}`.localeCompare(`${b.owner}/${b.name}`));
       setRepos(list);
+      saveCommunityDraft(list);
       onLog(`COMMUNITY_TOGGLE: ${owner}/${name}`);
     } catch {
       setError('No se pudo guardar el cambio');

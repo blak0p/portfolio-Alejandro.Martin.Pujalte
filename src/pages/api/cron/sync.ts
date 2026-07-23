@@ -140,7 +140,7 @@ async function runCommunityStep(): Promise<void> {
   );
 
   const newProjects: CommunityProject[] = [];
-  for (const repo of repos) {
+  for (const repo of repos.filter((repo) => repo.active)) {
     const slug = `${repo.owner}-${repo.name}`;
     const prev = existingBySlug.get(slug);
     try {

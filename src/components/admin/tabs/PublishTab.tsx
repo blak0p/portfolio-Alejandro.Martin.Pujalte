@@ -23,7 +23,7 @@ export default function PublishTab({ onLog }: PublishTabProps) {
     onLog('INIT_GLOBAL_SYNC...');
     try {
       // Identity data is included in keys to sync from local data editor if changed
-      const keys = ['portfolioProjects', 'portfolioSettings', 'portfolioAmbitions', 'portfolioTechstack', 'portfolioIdentity'];
+      const keys = ['portfolioProjects', 'portfolioSettings', 'portfolioAmbitions', 'portfolioTechstack', 'portfolioIdentity', 'portfolioCommunity'];
       const files = keys
         .filter(k => !!localStorage.getItem(k))
         .map(k => ({ 
@@ -44,6 +44,7 @@ export default function PublishTab({ onLog }: PublishTabProps) {
         if (name === 'ambitions') return 'roadmap';
         if (name === 'techstack') return 'techstack';
         if (name === 'identity') return 'identity';
+        if (name === 'community') return 'community';
         return name;
       }).join(' + ').replace(' + ', ', ').replace(/, ([^,]*)$/, ' and $1');
       

@@ -75,14 +75,14 @@ export async function addCommunityRepo(entry: Omit<CommunityRepoState, 'addedAt'
     addedAt: entry.addedAt ?? new Date().toISOString(),
   };
   const updated = [...repos, next];
-  await setCommunityRepos(updated);
+  if (!await setCommunityRepos(updated)) throw new Error('Could not persist community repos');
   return updated;
 }
 
 export async function removeCommunityRepo({ owner, name }: { owner: string; name: string }): Promise<CommunityRepoState[]> {
   const repos = await getCommunityRepos();
   const updated = repos.filter((r) => !(r.owner === owner && r.name === name));
-  await setCommunityRepos(updated);
+  if (!await setCommunityRepos(updated)) throw new Error('Could not persist community repos');
   return updated;
 }
 
@@ -91,7 +91,7 @@ export async function toggleCommunityRepoActive({ owner, name }: { owner: string
   const updated = repos.map((r) =>
     r.owner === owner && r.name === name ? { ...r, active: !r.active } : r,
   );
-  await setCommunityRepos(updated);
+  if (!await setCommunityRepos(updated)) throw new Error('Could not persist community repos');
   return updated;
 }
 
