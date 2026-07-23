@@ -30,7 +30,7 @@ function buildPrompt(input: SummarizePrInput): string {
     'Resumí este pull request en 2-3 oraciones en español, para un recruiter técnico o colega desarrollador.',
     'No inventes detalles técnicos que no estén en el texto. Sé conciso y claro.',
     'Mencioná el problema que resuelve si está en el body. No incluyas el link en el resumen (lo agregamos nosotros después).',
-    'IMPORTANTE: sé específico sobre el problema técnico y la solución. No te quedes en "corrige un bug" genérico — explicá QUÉ bug y CÓMO se soluciona.',
+    'IMPORTANTE: sé específico sobre el problema y la solución, pero explicálo de forma que lo entienda alguien que NO sigue el proyecto. Evitá acrónimos oscuros o nombres de funciones internas. Si usás un término técnico, contextualizalo.',
     '',
     `Título: ${input.title}`,
     `Body: ${input.body || '(sin descripción)'}${issueLine}`,
