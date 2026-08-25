@@ -19,9 +19,13 @@ async function getKv(): Promise<{ get: (k: string) => Promise<unknown>; set: (k:
   try {
     const mod = await import('@vercel/kv');
     const kv = (mod as { kv?: { get: (k: string) => Promise<unknown>; set: (k: string, v: unknown) => Promise<unknown> } }).kv;
-    if (!kv || typeof kv.get !== 'function' || typeof kv.set !== 'function') return null;
+    if (!kv || typeof kv.get !== 'function' || typeof kv.set !== 'function') {
+      console.error('[KV] @vercel/kv imported but kv object invalid');
+      return null;
+    }
     return kv;
-  } catch {
+  } catch (e: any) {
+    console.error('[KV] Failed to import @vercel/kv:', e?.message ?? e);
     return null;
   }
 }
@@ -54,11 +58,15 @@ export async function getCommunityRepos(): Promise<CommunityRepoState[]> {
 
 export async function setCommunityRepos(repos: CommunityRepoState[]): Promise<boolean> {
   const kv = await getKv();
-  if (!kv) return false;
+  if (!kv) {
+    console.error('[KV] setCommunityRepos: KV not available');
+    return false;
+  }
   try {
     await kv.set(REPOS_KEY, JSON.stringify(repos));
     return true;
-  } catch {
+  } catch (e: any) {
+    console.error('[KV] setCommunityRepos failed:', e?.message ?? e);
     return false;
   }
 }
