@@ -1,1 +1,85 @@
-[{"id":"1776894498166","name":"GIT-COURER","photo":"https://github.com/user-attachments/assets/2e9c0e64-b0de-4b83-9159-3a5906f9f3f4","stack":["GO","C","PYTHON","SHELL","MAKEFILE"],"stackWithUsage":[],"architecture":"","initSequence":"curl -fsSL https://raw.githubusercontent.com/blak0p/git-courer/main/scripts/install.sh | sh","description":"MCP server for Git with local Ollama — zero tokens for git operations","businessImpact":"","recruiterDescription":"","recruiterStack":["mcp"],"readmeContent":"","specs":{"status":"ARCHIVED","stars":"45","language":"GO","license":"MIT","description":"MCP server for Git with local Ollama — zero tokens for git operations","repo":"https://github.com/blak0p/git-courer","repoSlug":"blak0p/git-courer","demo":"","tags":["mcp"],"video":"","stackWithUsage":[]},"isHighlighted":false,"isFavorite":false,"isPrivate":false,"pushedAt":"2026-07-17T19:23:55Z","order":0},{"id":"1776951821293","name":"HITRO.ES","photo":"https://raw.githubusercontent.com/blak0p/assets/main/hitro.es.png","stack":["ASTRO","TYPESCRIPT","GO","JAVASCRIPT","CSS"],"stackWithUsage":[],"architecture":"","initSequence":"","description":"","businessImpact":"","recruiterDescription":"","recruiterStack":["Backend","frontend"],"readmeContent":"# HITRO.ES\n\nPlataforma web full-stack (frontend y backend) para un negocio de formación que combina venta de cursos, vídeos a la carta y productos físicos en un único sitio.\n\n## El problema\n\nEl negocio tenía tres líneas distintas — tienda física, vídeos individuales y cursos presenciales — gestionadas de forma separada, sin un punto central que las conectara. El objetivo era unificarlas en una sola plataforma, manteniendo cada línea simple de operar para un propietario sin perfil técnico.\n\n## Decisiones clave\n\n- **Dos sistemas de pago, un solo flujo**: las compras online se procesan con Stripe, mientras que la venta presencial usa un datáfono físico (SumUp). En vez de forzar una única pasarela para todo, cada canal usa la herramienta que mejor se adapta a su contexto, sin complicar la experiencia de compra para el cliente final.\n- **Vídeos con acceso controlado**: el contenido de pago se entrega mediante enlaces temporales que expiran, evitando que se compartan o queden accesibles indefinidamente.\n- **Pensado para un propietario no técnico**: las decisiones de producto giran en torno a \"esto lo tiene que poder gestionar alguien que no programa\", no alrededor de la complejidad técnica.\n\n## Estado actual\n\nProyecto en pausa mientras se termina de definir el alcance con el cliente. La arquitectura y las integraciones de pago ya están decididas; queda por concretar el calendario de lanzamiento.\n\n## Stack\n\nProyecto desarrollado de extremo a extremo: frontend en Astro y backend en Go, con base de datos PostgreSQL y vídeos servidos desde un CDN especializado. Desplegado en infraestructura de bajo coste, adecuada para el volumen actual del negocio.","specs":{"status":"PAUSED","stars":"1","language":"Astro,go","license":"","description":"","repo":"https://github.com/blak0p/hitro.es","repoSlug":"blak0p/hitro.es","demo":"","tags":[],"video":"","stackWithUsage":[]},"isHighlighted":false,"isFavorite":false,"isPrivate":true,"pushedAt":"2026-03-11T20:24:14Z","order":0},{"id":"1785312096001","name":"RELAY-MCP","photo":"https://opengraph.githubassets.com/1/blak0p/relay-mcp","stack":["GO"],"stackWithUsage":[],"architecture":"","initSequence":"","description":"Interactive terminal MCP server for AI agents","businessImpact":"Interactive terminal MCP server for AI agents","recruiterDescription":"","recruiterStack":[],"readmeContent":"","specs":{"status":"IN_PROGRESS","stars":2,"language":"Go","license":"MIT","description":"","repo":"https://github.com/blak0p/relay-mcp","repoSlug":"blak0p/relay-mcp","demo":"","tags":[],"video":"","stackWithUsage":[]},"isHighlighted":false,"isFavorite":false,"isPrivate":false,"pushedAt":"2026-07-28T11:32:40Z","order":0},{"id":"1787644853346","name":"ATTACK-SHARK-LINUX","photo":"https://opengraph.githubassets.com/1/blak0p/attack-shark-linux","stack":["go","wails"],"stackWithUsage":[],"architecture":"","initSequence":"","description":"","businessImpact":"","recruiterDescription":"","recruiterStack":[],"readmeContent":"","specs":{"status":"IN_PROGRESS","stars":2,"language":"go","license":"","description":"","repo":"https://github.com/blak0p/attack-shark-linux","repoSlug":"blak0p/attack-shark-linux","demo":"","tags":[],"video":"","stackWithUsage":[]},"isHighlighted":false,"isFavorite":false,"isPrivate":false,"pushedAt":"2026-08-25T08:00:38Z","order":0}]
+[
+  {
+    "id": "1776894498166",
+    "name": "GIT-COURER",
+    "photo": "https://github.com/user-attachments/assets/2e9c0e64-b0de-4b83-9159-3a5906f9f3f4",
+    "stack": [
+      "GO",
+      "C",
+      "PYTHON",
+      "SHELL",
+      "MAKEFILE"
+    ],
+    "stackWithUsage": [],
+    "architecture": "",
+    "initSequence": "curl -fsSL https://raw.githubusercontent.com/blak0p/git-courer/main/scripts/install.sh | sh",
+    "description": "MCP server for Git with local Ollama — zero tokens for git operations",
+    "businessImpact": "",
+    "recruiterDescription": "",
+    "recruiterStack": [
+      "mcp"
+    ],
+    "readmeContent": "",
+    "specs": {
+      "status": "IN_PROGRESS",
+      "stars": "44",
+      "language": "GO",
+      "license": "MIT",
+      "description": "MCP server for Git with local Ollama — zero tokens for git operations",
+      "repo": "https://github.com/blak0p/git-courer",
+      "repoSlug": "blak0p/git-courer",
+      "demo": "",
+      "tags": [
+        "mcp"
+      ],
+      "video": "",
+      "stackWithUsage": []
+    },
+    "isHighlighted": false,
+    "isFavorite": false,
+    "isPrivate": false,
+    "pushedAt": "2026-08-21T19:23:47Z",
+    "order": 0
+  },
+  {
+    "id": "1776951821293",
+    "name": "HITRO.ES",
+    "photo": "https://raw.githubusercontent.com/blak0p/assets/main/hitro.es.png",
+    "stack": [
+      "ASTRO",
+      "TYPESCRIPT",
+      "GO",
+      "JAVASCRIPT",
+      "CSS"
+    ],
+    "stackWithUsage": [],
+    "architecture": "",
+    "initSequence": "",
+    "description": "",
+    "businessImpact": "",
+    "recruiterDescription": "",
+    "recruiterStack": [
+      "Backend",
+      "frontend"
+    ],
+    "readmeContent": "# HITRO.ES\n\nPlataforma web full-stack (frontend y backend) para un negocio de formación que combina venta de cursos, vídeos a la carta y productos físicos en un único sitio.\n\n## El problema\n\nEl negocio tenía tres líneas distintas — tienda física, vídeos individuales y cursos presenciales — gestionadas de forma separada, sin un punto central que las conectara. El objetivo era unificarlas en una sola plataforma, manteniendo cada línea simple de operar para un propietario sin perfil técnico.\n\n## Decisiones clave\n\n- **Dos sistemas de pago, un solo flujo**: las compras online se procesan con Stripe, mientras que la venta presencial usa un datáfono físico (SumUp). En vez de forzar una única pasarela para todo, cada canal usa la herramienta que mejor se adapta a su contexto, sin complicar la experiencia de compra para el cliente final.\n- **Vídeos con acceso controlado**: el contenido de pago se entrega mediante enlaces temporales que expiran, evitando que se compartan o queden accesibles indefinidamente.\n- **Pensado para un propietario no técnico**: las decisiones de producto giran en torno a \"esto lo tiene que poder gestionar alguien que no programa\", no alrededor de la complejidad técnica.\n\n## Estado actual\n\nProyecto en pausa mientras se termina de definir el alcance con el cliente. La arquitectura y las integraciones de pago ya están decididas; queda por concretar el calendario de lanzamiento.\n\n## Stack\n\nProyecto desarrollado de extremo a extremo: frontend en Astro y backend en Go, con base de datos PostgreSQL y vídeos servidos desde un CDN especializado. Desplegado en infraestructura de bajo coste, adecuada para el volumen actual del negocio.",
+    "specs": {
+      "status": "PAUSED",
+      "stars": "1",
+      "language": "Astro,go",
+      "license": "",
+      "description": "",
+      "repo": "https://github.com/blak0p/hitro.es",
+      "repoSlug": "blak0p/hitro.es",
+      "demo": "",
+      "tags": [],
+      "video": "",
+      "stackWithUsage": []
+    },
+    "isHighlighted": false,
+    "isFavorite": false,
+    "isPrivate": true,
+    "pushedAt": "2026-03-11T20:24:14Z",
+    "order": 0
+  }
+]
