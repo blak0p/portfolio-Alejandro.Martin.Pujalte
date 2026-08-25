@@ -95,7 +95,7 @@
     "stackWithUsage": [],
     "architecture": "",
     "initSequence": "",
-    "description": "Linux desktop configurator for the Attack Shark X6 gaming mouse — reverse-engineered from the Windows app",
+    "description": "Configurador de escritorio Linux para el mouse gaming Attack Shark X6 — invertido desde la aplicación de Windows",
     "businessImpact": "",
     "recruiterDescription": "Proyecto de ingeniería inversa: decodificación del protocolo HID desde la app oficial de Windows, validación en el dongle del mouse, y desarrollo de un configurador completo en Linux con Go + Wails v3. Demuestra capacidad de análisis de protocolos, reverse engineering de hardware y desarrollo full-stack.",
     "recruiterStack": [
@@ -110,7 +110,7 @@
       "stars": "2",
       "language": "Go",
       "license": "MIT",
-      "description": "Linux desktop configurator for the Attack Shark X6 gaming mouse — reverse-engineered from the Windows app",
+"description": "Configurador de escritorio Linux para el mouse gaming Attack Shark X6 — invertido desde la aplicación de Windows",
       "repo": "https://github.com/blak0p/attack-shark-linux",
       "repoSlug": "blak0p/attack-shark-linux",
       "demo": "",
