@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-25T09:12:45.163Z",
-  "totalMerged": 16,
+  "generatedAt": "2026-08-25T09:18:46.707Z",
+  "totalMerged": 1,
   "projects": [
     {
       "slug": "Gentleman-Programming-engram",
@@ -11,131 +11,14 @@
       "stars": 6157,
       "active": true,
       "addedAt": "2026-08-25T09:10:18.467Z",
-      "lastSyncedAt": "2026-08-25T09:12:44.674Z",
+      "lastSyncedAt": "2026-08-25T09:18:46.707Z",
       "prs": [
         {
           "number": 586,
           "title": "fix(store): escape interior double-quotes in sanitizeFTS to prevent FTS5 crash",
           "url": "https://github.com/Gentleman-Programming/engram/pull/586",
-          "mergedAt": "2026-08-25T09:12:44.674Z",
+          "mergedAt": "2026-08-25T09:18:46.707Z",
           "summary": "Implementé una corrección en la función `sanitizeFTS` para escapar correctamente las comillas dobles internas, evitando un fallo crítico en el motor de búsqueda FTS5. Con esto, aseguré la estabilidad y fiabilidad de las búsquedas, permitiendo a los usuarios realizar consultas complejas sin interrupciones."
-        }
-      ]
-    },
-    {
-      "slug": "blak0p-attack-shark-linux",
-      "owner": "blak0p",
-      "name": "attack-shark-linux",
-      "url": "https://github.com/blak0p/attack-shark-linux",
-      "stars": 2,
-      "active": true,
-      "addedAt": "2026-08-25T09:11:42.144Z",
-      "lastSyncedAt": "2026-08-25T09:12:45.163Z",
-      "prs": [
-        {
-          "number": 45,
-          "title": "chore(deps): bump vite from 8.2.1 to 8.2.2 in /frontend",
-          "url": "https://github.com/blak0p/attack-shark-linux/pull/45",
-          "mergedAt": "2026-08-25T09:12:45.162Z",
-          "summary": "{ \"summary\": \"Actualicé la dependencia de Vite a su versión 8.2.2 en el módulo `frontend`. Resolví conflictos de fusión previos y aseguré la integración de las"
-        },
-        {
-          "number": 44,
-          "title": "chore(docs): remove stale briefing already superseded by ADR-001",
-          "url": "https://github.com/blak0p/attack-shark-linux/pull/44",
-          "mergedAt": "2026-08-25T09:12:45.162Z",
-          "summary": "Eliminé un documento de briefing obsoleto sobre identidad duradera sin serie. Esto asegura que la documentación del proyecto se mantenga actualizada y consistente con las decisiones arquitectónicas aprobadas."
-        },
-        {
-          "number": 42,
-          "title": "feat(lighting): add lighting UI over staged apply",
-          "url": "https://github.com/blak0p/attack-shark-linux/pull/42",
-          "mergedAt": "2026-08-25T09:12:45.162Z",
-          "summary": "Implementé una nueva interfaz de usuario para el control de iluminación, ofreciendo tres modos (Off, Fixed/Steady, Breathing) con opciones de color validadas y un proceso de aplicación por etapas. Esto mejora significativamente la capacidad de los usuarios para personalizar la iluminación del dispositivo, asegurando una experiencia de configuración robusta y validada físicamente."
-        },
-        {
-          "number": 34,
-          "title": "feat(polling): add X6 polling rate configuration",
-          "url": "https://github.com/blak0p/attack-shark-linux/pull/34",
-          "mergedAt": "2026-08-25T09:12:45.162Z",
-          "summary": "Implementé la configuración completa de la tasa de polling X6, incluyendo su persistencia duradera, controles de escritorio y la integración de todos los componentes necesarios. Esto permite a los usuarios gestionar y aplicar de forma duradera las tasas de polling, mejorando la capacidad de configuración y la experiencia general del sistema."
-        },
-        {
-          "number": 33,
-          "title": "feat(polling): add desktop rate controls",
-          "url": "https://github.com/blak0p/attack-shark-linux/pull/33",
-          "mergedAt": "2026-08-25T09:12:45.162Z",
-          "summary": "Implementé controles de tasa de sondeo accesibles para escritorio (125/250/500/1000 Hz) con retroalimentación persistente y debounced. Esto mejora la configuración del rendimiento para los usuarios y asegura la coherencia del sistema al regenerar los bindings de Wails y actualizar la documentación relevante."
-        },
-        {
-          "number": 32,
-          "title": "feat(polling): persist desktop polling state",
-          "url": "https://github.com/blak0p/attack-shark-linux/pull/32",
-          "mergedAt": "2026-08-25T09:12:45.162Z",
-          "summary": "Implementé un estado de polling de escritorio independiente y con debounce, asegurando su persistencia por dispositivo y estableciendo un valor predeterminado para registros heredados. Esto permite que la configuración de la tasa de polling se mantenga entre sesiones para cada dispositivo, mejorando la experiencia del usuario y la fiabilidad del sistema."
-        },
-        {
-          "number": 31,
-          "title": "feat(polling): add protocol transport support",
-          "url": "https://github.com/blak0p/attack-shark-linux/pull/31",
-          "mergedAt": "2026-08-25T09:12:45.162Z",
-          "summary": null
-        },
-        {
-          "number": 29,
-          "title": "ci(release): add Makefile and annotated-tag Linux releases",
-          "url": "https://github.com/blak0p/attack-shark-linux/pull/29",
-          "mergedAt": "2026-08-25T09:12:45.162Z",
-          "summary": null
-        },
-        {
-          "number": 27,
-          "title": "feat(x6): finalize serialless persistence integration",
-          "url": "https://github.com/blak0p/attack-shark-linux/pull/27",
-          "mergedAt": "2026-08-25T09:12:45.162Z",
-          "summary": null
-        },
-        {
-          "number": 12,
-          "title": "chore: set up repository governance and community layer",
-          "url": "https://github.com/blak0p/attack-shark-linux/pull/12",
-          "mergedAt": "2026-08-25T09:12:45.162Z",
-          "summary": null
-        },
-        {
-          "number": 10,
-          "title": "feat(desktop): add DPI service adapter",
-          "url": "https://github.com/blak0p/attack-shark-linux/pull/10",
-          "mergedAt": "2026-08-25T09:12:45.162Z",
-          "summary": null
-        },
-        {
-          "number": 8,
-          "title": "feat(dpi): add atomic applied-state backend",
-          "url": "https://github.com/blak0p/attack-shark-linux/pull/8",
-          "mergedAt": "2026-08-25T09:12:45.162Z",
-          "summary": null
-        },
-        {
-          "number": 6,
-          "title": "feat(desktop): add Wails prerequisites and HID probe",
-          "url": "https://github.com/blak0p/attack-shark-linux/pull/6",
-          "mergedAt": "2026-08-25T09:12:45.162Z",
-          "summary": null
-        },
-        {
-          "number": 5,
-          "title": "docs(captures): publish X6 protocol evidence",
-          "url": "https://github.com/blak0p/attack-shark-linux/pull/5",
-          "mergedAt": "2026-08-25T09:12:45.162Z",
-          "summary": null
-        },
-        {
-          "number": 2,
-          "title": "feat(x6): add read-only status CLI",
-          "url": "https://github.com/blak0p/attack-shark-linux/pull/2",
-          "mergedAt": "2026-08-25T09:12:45.162Z",
-          "summary": null
         }
       ]
     }
