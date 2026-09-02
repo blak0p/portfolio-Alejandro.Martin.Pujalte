@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-01T00:00:49.231Z",
+  "generatedAt": "2026-09-02T00:00:46.291Z",
   "totalMerged": 1,
   "projects": [
     {
@@ -8,16 +8,16 @@
       "owner": "Gentleman-Programming",
       "name": "engram",
       "url": "https://github.com/Gentleman-Programming/engram",
-      "stars": 6249,
+      "stars": 6266,
       "active": true,
       "addedAt": "2026-08-25T09:10:18.467Z",
-      "lastSyncedAt": "2026-09-01T00:00:49.230Z",
+      "lastSyncedAt": "2026-09-02T00:00:46.291Z",
       "prs": [
         {
           "number": 586,
           "title": "fix(store): escape interior double-quotes in sanitizeFTS to prevent FTS5 crash",
           "url": "https://github.com/Gentleman-Programming/engram/pull/586",
-          "mergedAt": "2026-09-01T00:00:49.230Z",
+          "mergedAt": "2026-09-02T00:00:46.291Z",
           "summary": "Implementé una corrección en la función `sanitizeFTS` para escapar correctamente las comillas dobles internas, evitando un fallo crítico en el motor de búsqueda FTS5. Con esto, aseguré la estabilidad y fiabilidad de las búsquedas, permitiendo a los usuarios realizar consultas complejas sin interrupciones."
         }
       ]
