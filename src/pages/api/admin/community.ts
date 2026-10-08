@@ -18,6 +18,7 @@ import {
   removeCommunityRepo,
   toggleCommunityRepoActive,
 } from '../../../lib/community-kv';
+import { verifyAdminSession } from '../../../lib/auth-server';
 
 export const prerender = false;
 
@@ -67,6 +68,12 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const action = body.action as string;
+
+  if (action === 'add' || action === 'toggle' || action === 'remove') {
+    if (!verifyAdminSession(request)) {
+      return json({ error: 'UNAUTHORIZED' }, 401);
+    }
+  }
 
   try {
     // ---- list ---------------------------------------------------------

@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { createAdminSessionCookie } from '../../lib/auth-server';
 
 export const prerender = false;
 
@@ -82,7 +83,13 @@ export const POST: APIRoute = async ({ request }) => {
       success: true,
       login: user.login,
       name: user.name
-    }), { status: 200 });
+    }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Set-Cookie': createAdminSessionCookie()
+      }
+    });
   } catch {
     return new Response(JSON.stringify({ error: 'OAuth flow failed' }), { status: 500 });
   }

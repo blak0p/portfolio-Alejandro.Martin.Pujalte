@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { createAdminSessionCookie } from '../../lib/auth-server';
 
 export const prerender = false;
 
@@ -20,7 +21,13 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     if (password === ADMIN_PASSWORD) {
-      return new Response(JSON.stringify({ success: true }), { status: 200 });
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Set-Cookie': createAdminSessionCookie()
+        }
+      });
     }
 
     return new Response(JSON.stringify({ error: 'INVALID_CREDENTIALS' }), { status: 401 });

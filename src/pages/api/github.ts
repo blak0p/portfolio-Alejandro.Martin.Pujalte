@@ -5,6 +5,7 @@ import {
   getRepoDetails, 
   decodeBase64 
 } from '../../lib/github-server';
+import { verifyAdminSession } from '../../lib/auth-server';
 
 export const prerender = false;
 
@@ -193,6 +194,16 @@ export const POST: APIRoute = async ({ request }) => {
 
   try {
     const action = body.action as string;
+
+    if (action === 'publish' || action === 'uploadCv') {
+      if (!verifyAdminSession(request)) {
+        return new Response(JSON.stringify({ error: 'UNAUTHORIZED' }), {
+          status: 401,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+    }
+
     if (action === 'publish') return await handlePublish(body);
     if (action === 'uploadCv') return await handleUploadCv(body);
     if (action === 'getRepoDetails') return await handleGetRepoDetails(body);
