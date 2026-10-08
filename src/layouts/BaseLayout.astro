@@ -40,6 +40,15 @@ const showCommunityBadge = totalMerged > 0;
 <!doctype html>
 <html lang="es">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-C6NTHF89EC"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-C6NTHF89EC');
+    </script>
     <script is:inline>
       // Prevent React from crashing when Google Translate mutates the DOM
       if (typeof Node !== 'undefined' && Node.prototype) {
