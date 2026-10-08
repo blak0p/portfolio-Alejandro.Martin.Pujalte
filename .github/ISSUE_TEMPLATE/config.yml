@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: GitHub Discussions / Questions
+    url: https://github.com/blak0p/portfolio-Alejandro.Martin.Pujalte/discussions
+    about: Please ask questions or discuss ideas that are not bug reports or feature requests.
+  - name: Portfolio Website Contact
+    url: https://alejandromp.dev
+    about: Get in touch directly via portfolio contact channels.
