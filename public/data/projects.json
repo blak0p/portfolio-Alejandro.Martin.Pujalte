@@ -107,7 +107,7 @@
     "readmeContent": "",
     "specs": {
       "status": "IN_PROGRESS",
-      "stars": "13",
+      "stars": "14",
       "language": "Go",
       "license": "MIT",
       "description": "Configurador de escritorio Linux para el mouse gaming Attack Shark X6 — invertido desde la aplicación de Windows",
@@ -126,7 +126,7 @@
     "isHighlighted": true,
     "isFavorite": false,
     "isPrivate": false,
-    "pushedAt": "2026-10-29T16:12:27Z",
+    "pushedAt": "2026-11-01T21:46:50Z",
     "order": 0
   }
 ]
