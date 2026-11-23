@@ -309,11 +309,7 @@ export const GET: APIRoute = async ({ request }) => {
         p.specs.stars = details.specsStars;
         p.pushedAt = details.pushedAt;
         
-        // Update stack/languages if daily - disabled: stack is 100% manually controlled
-        // if (isDailyUpdate && details.stackWithUsage?.length) {
-        //   p.stack = details.stack;
-        //   p.stackWithUsage = details.stackWithUsage;
-        // }
+        // El stack es 100% manual: el cron solo actualiza estrellas y pushedAt.
         
         console.log(`[CRON] Synced ${slug}: ${details.specsStars} stars`);
       } catch (e: any) {

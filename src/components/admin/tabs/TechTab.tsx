@@ -41,9 +41,10 @@ export default function TechTab({ onLog }: TechTabProps) {
 
   function save() {
     if (!form.name) return;
+    const version = form.version.trim();
     const tool: TechTool = { 
       name: form.name.trim(), 
-      version: form.version,
+      ...(version ? { version } : {}),
       group: form.group.trim() || 'Otros'
     };
     const next = editing !== null ? tools.map((t, i) => i === editing ? tool : t) : [...tools, tool];

@@ -11,12 +11,6 @@ import {
 } from '../components/UI';
 import { InteractiveTags } from '../components/InteractiveTags';
 
-interface StackUsage {
-  name: string;
-  color: string;
-  usageLevel: number;
-}
-
 interface GitHubDetails {
   id: string;
   name: string;
@@ -29,14 +23,19 @@ interface GitHubDetails {
   specsStatus: string;
   pushedAt: string;
   stack: string;
-  stackWithUsage?: StackUsage[];
   architecture: string;
+}
+
+// El sitio pinta los proyectos en el orden del array; `order` se mantiene
+// igual a la posición para que /dev (que ordena por `order`) coincida.
+function withOrder(list: Project[]): Project[] {
+  return list.map((p, i) => ({ ...p, order: i }));
 }
 
 const emptyProject = {
   name: '', gitUrl: '', photo: '', video: '', stack: '', architecture: '', initSequence: '', description: '', businessImpact: '',
-  specsStatus: '', specsStars: '', specsLanguage: '', specsLicense: '', specsDescription: '', specsRepo: '', specsRepoSlug: '', specsDemo: '', specsTags: '', stackWithUsage: '',
-  isHighlighted: false, isPrivate: false, isFavorite: false, pushedAt: '', order: 0,
+  specsStatus: '', specsStars: '', specsLanguage: '', specsLicense: '', specsDescription: '', specsRepo: '', specsRepoSlug: '', specsDemo: '', specsTags: '',
+  isPrivate: false, pushedAt: '', order: 0, problem: '', solution: '',
   recruiterDescription: '', recruiterStack: '', readmeContent: ''
 };
 
@@ -78,14 +77,12 @@ function RepoImportModal({ onClose, onImport, existingSlugs }: RepoImportModalPr
       
       onImport({
         ...repo,
-        stackWithUsage: details.stackWithUsage || [],
         specs: {
           status: 'STABLE',
           stars: details.specsStars || repo.stars,
           language: details.specsLanguage || repo.language,
           repo: details.specsRepo || repo.url,
-          repoSlug: details.specsRepoSlug || repo.fullName,
-          stackWithUsage: details.stackWithUsage || []
+          repoSlug: details.specsRepoSlug || repo.fullName
         },
         isPrivate: details.isPrivate || repo.private
       });
@@ -108,7 +105,7 @@ function RepoImportModal({ onClose, onImport, existingSlugs }: RepoImportModalPr
         <div className="p-6 border-b border-zinc-800">
           <input 
             type="text" 
-            placeholder="Filter repositories..." 
+            placeholder="Filtrar repositorios..." 
             value={filter}
             onChange={e => setFilter(e.target.value)}
             className={inputClass}
@@ -119,10 +116,10 @@ function RepoImportModal({ onClose, onImport, existingSlugs }: RepoImportModalPr
           {loading ? (
             <div className="h-60 flex flex-col gap-4 items-center justify-center text-xs tracking-widest text-zinc-500 uppercase">
               <div className="w-8 h-8 border-2 border-sky-500 border-t-transparent rounded-full animate-spin" />
-              Scanning_Uplink...
+              Buscando_repositorios...
             </div>
           ) : filtered.length === 0 ? (
-            <div className="h-60 flex items-center justify-center text-xs tracking-widest text-zinc-600 uppercase">No_Available_Modules</div>
+            <div className="h-60 flex items-center justify-center text-xs tracking-widest text-zinc-600 uppercase">Sin_repositorios_disponibles</div>
           ) : (
             <div className="grid grid-cols-1 gap-2">
               {filtered.map(r => (
@@ -136,7 +133,7 @@ function RepoImportModal({ onClose, onImport, existingSlugs }: RepoImportModalPr
                     disabled={importing === r.fullName}
                     className={buttonPrimaryClass}
                   >
-                    {importing === r.fullName ? '...' : 'Import'}
+                    {importing === r.fullName ? '...' : 'Importar'}
                   </button>
                 </div>
               ))}
@@ -184,15 +181,12 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
   useEffect(() => { load(); }, [load]);
 
   const handleImport = (r: any) => {
-    const stackWithUsage = r.stackWithUsage || r.specs?.stackWithUsage || [];
-    
     const newProj: Project = {
       id: String(Date.now()),
       name: r.name.toUpperCase(),
       description: r.description || '',
       photo: r.photo || '',
-      stack: (r.stackWithUsage || r.language || '').split(',').map((s: string) => s.trim().toUpperCase()).filter(Boolean),
-      stackWithUsage,
+      stack: (r.specs?.language || r.language || '').split(',').map((s: string) => s.trim().toUpperCase()).filter(Boolean),
       architecture: '',
       initSequence: '',
       specs: {
@@ -200,16 +194,13 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
         stars: r.specs?.stars || r.stars || 0,
         language: r.specs?.language || r.language || '',
         repo: r.specs?.repo || r.url || '',
-        repoSlug: r.specs?.repoSlug || r.fullName || '',
-        stackWithUsage
+        repoSlug: r.specs?.repoSlug || r.fullName || ''
       },
       pushedAt: r.pushedAt,
-      isPrivate: r.isPrivate || r.private || false,
-      isFavorite: false,
-      isHighlighted: false
+      isPrivate: r.isPrivate || r.private || false
     };
     
-    const next = [...projects, newProj];
+    const next = withOrder([...projects, newProj]);
     setProjects(next);
     localStorage.setItem('portfolioProjects', JSON.stringify(next));
     onLog(`MODULE_IMPORTED: ${r.name}`);
@@ -218,7 +209,7 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
 
   async function fetchGitHub() {
     const urlMatch = form.gitUrl.trim().match(/github\.com\/([^/]+)\/([^/\s]+)/);
-    if (!urlMatch) { onLog('ERROR: INVALID_URL'); return; }
+    if (!urlMatch) { onLog('ERROR: URL_NO_VÁLIDA'); return; }
     const repoSlug = `${urlMatch[1]}/${urlMatch[2].replace(/\.git$/, '')}`;
     setScanLoading(true); onLog(`SCANNING: ${repoSlug}...`);
     try {
@@ -229,8 +220,6 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
       });
       if (!res.ok) throw new Error(`GH_${res.status}`);
       const r = await res.json() as GitHubDetails;
-      
-      const stackWithUsageStr = r.stackWithUsage ? JSON.stringify(r.stackWithUsage) : '';
       
       setForm(f => ({
         ...f,
@@ -244,7 +233,6 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
         specsStatus: r.specsStatus,
         pushedAt: r.pushedAt,
         stack: r.stack,
-        stackWithUsage: stackWithUsageStr,
         architecture: r.architecture || f.architecture
       }));
       onLog(`SYNC_SUCCESS: ${repoSlug}`);
@@ -260,21 +248,13 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
   }
 
   function save() {
-    if (!form.name.trim()) { onLog('ERROR: NAME_REQUIRED'); return; }
-    
-    let savedStackWithUsage: StackUsage[] = [];
-    try {
-      if (form.stackWithUsage) {
-        savedStackWithUsage = JSON.parse(form.stackWithUsage);
-      }
-    } catch {}
+    if (!form.name.trim()) { onLog('ERROR: NOMBRE_OBLIGATORIO'); return; }
     
     const p: Project = { 
       id: projects[editingIdx ?? -1]?.id || String(Date.now()), 
       name: form.name.toUpperCase(), 
       photo: form.photo, 
       stack: form.stack.split(',').map(s => s.trim()).filter(Boolean),
-      stackWithUsage: savedStackWithUsage,
       architecture: form.architecture, 
       initSequence: form.initSequence, 
       description: form.description, 
@@ -292,18 +272,29 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
         repoSlug: form.specsRepoSlug, 
         demo: form.specsDemo, 
         tags: form.specsTags.split(',').filter(Boolean), 
-        video: form.video,
-        stackWithUsage: savedStackWithUsage
+        video: form.video
       }, 
-      isHighlighted: form.isHighlighted, 
-      isFavorite: form.isFavorite, 
+      problem: form.problem.trim() || undefined,
+      solution: form.solution.trim() || undefined,
       isPrivate: form.isPrivate, 
       pushedAt: form.pushedAt || undefined, 
-      order: Number(form.order) || 0 
     };
-    const next = editingIdx !== null ? projects.map((x, i) => i === editingIdx ? p : x) : [...projects, p];
+    const next = withOrder(editingIdx !== null ? projects.map((x, i) => i === editingIdx ? p : x) : [...projects, p]);
     localStorage.setItem('portfolioProjects', JSON.stringify(next));
     setProjects(next); onLog(`MODULE_COMMITTED: ${p.name}`);
+  }
+
+  function move(idx: number, dir: -1 | 1) {
+    const to = idx + dir;
+    if (to < 0 || to >= projects.length) return;
+    const arr = [...projects];
+    [arr[idx], arr[to]] = [arr[to], arr[idx]];
+    const next = withOrder(arr);
+    localStorage.setItem('portfolioProjects', JSON.stringify(next));
+    setProjects(next);
+    if (editingIdx === idx) setEditingIdx(to);
+    else if (editingIdx === to) setEditingIdx(idx);
+    onLog(`ORDEN_CAMBIADO: ${next[to].name} → ${to + 1}`);
   }
 
   function select(idx: number) {
@@ -331,8 +322,8 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
       specsRepoSlug: (p.specs?.repoSlug as string) || '', 
       specsDemo: (p.specs?.demo as string) || '', 
       specsTags: Array.isArray(p.specs?.tags) ? p.specs.tags.join(', ') : '', 
-      isHighlighted: !!p.isHighlighted, 
-      isFavorite: !!p.isFavorite, 
+      problem: p.problem ?? '',
+      solution: p.solution ?? '',
       isPrivate: !!p.isPrivate, 
       pushedAt: p.pushedAt || '', 
       order: p.order || 0,
@@ -358,10 +349,10 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
           </div>
         </header>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+ <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
           {projects.map((p, i) => (
+            <div key={p.id ?? i} className="flex flex-col gap-1">
             <button 
-              key={i} 
               onClick={() => select(i)} 
               className={`p-4 border text-left transition-all duration-300 rounded-xl ${
                 editingIdx === i 
@@ -371,10 +362,14 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
             >
               <p className="text-xs font-bold uppercase truncate leading-tight">{p.name}</p>
               <div className="flex justify-between items-center opacity-30 mt-3 text-[10px]">
-                <p className="tracking-widest uppercase">ORDER_{p.order}</p>
-                {p.isFavorite && <span className="text-sky-400">★</span>}
+                <p className="tracking-widest uppercase">POS_{i + 1}</p>
               </div>
             </button>
+            <div className="flex justify-center gap-2 text-[10px] text-zinc-500">
+              <button onClick={() => move(i, -1)} disabled={i === 0} aria-label="Subir" className="px-2 hover:text-white disabled:opacity-20">▲</button>
+              <button onClick={() => move(i, 1)} disabled={i === projects.length - 1} aria-label="Bajar" className="px-2 hover:text-white disabled:opacity-20">▼</button>
+            </div>
+            </div>
           ))}
         </div>
       </div>
@@ -401,8 +396,6 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
           )}
 
           <div className="col-span-1 md:col-span-2 flex flex-wrap gap-x-10 gap-y-4 border-y border-zinc-800 py-6 my-2">
-            <CheckField label="DESTACADO" value={form.isHighlighted} onChange={v => setForm(f => ({ ...f, isHighlighted: v }))} />
-            <CheckField label="FIJADO" value={form.isFavorite} onChange={v => setForm(f => ({ ...f, isFavorite: v }))} />
             <CheckField label="PRIVADO" value={form.isPrivate} onChange={v => setForm(f => ({ ...f, isPrivate: v }))} />
           </div>
 
@@ -413,12 +406,21 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
             <input value={form.businessImpact} onChange={e => setForm(f => ({ ...f, businessImpact: e.target.value }))} className={inputClass} />
           </Field>
 
+          <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Field label="PROBLEMA (opcional, se muestra en la home)">
+              <textarea value={form.problem} onChange={e => setForm(f => ({ ...f, problem: e.target.value }))} className={`${inputClass} h-24 resize-none`} placeholder="¿Qué problema resuelve?" />
+            </Field>
+            <Field label="SOLUCIÓN (opcional, se muestra en la home)">
+              <textarea value={form.solution} onChange={e => setForm(f => ({ ...f, solution: e.target.value }))} className={`${inputClass} h-24 resize-none`} placeholder="¿Cómo lo resuelve?" />
+            </Field>
+          </div>
+
           <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-zinc-800/50 pt-6 my-2">
             <Field label="RECRUITER_DESCRIPTION">
-              <textarea value={form.recruiterDescription} onChange={e => setForm(f => ({ ...f, recruiterDescription: e.target.value }))} className={`${inputClass} h-24 resize-none`} placeholder="Recruiter-tailored project summary..." />
+              <textarea value={form.recruiterDescription} onChange={e => setForm(f => ({ ...f, recruiterDescription: e.target.value }))} className={`${inputClass} h-24 resize-none`} placeholder="Descripción pensada para reclutadores..." />
             </Field>
             <Field label="RECRUITER_STACK">
-              <InteractiveTags value={form.recruiterStack} onChange={v => setForm(f => ({ ...f, recruiterStack: v }))} placeholder="Add recruiter stack tag..." />
+              <InteractiveTags value={form.recruiterStack} onChange={v => setForm(f => ({ ...f, recruiterStack: v }))} placeholder="Añade una etiqueta..." />
             </Field>
           </div>
           
@@ -459,25 +461,25 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
           </div>
 
           <div className="col-span-1 md:col-span-2">
-            <Field label="MANUAL README / DOCUMENTATION">
-              <textarea value={form.readmeContent} onChange={e => setForm(f => ({ ...f, readmeContent: e.target.value }))} className={`${inputClass} h-40 resize-y`} placeholder="Markdown documentation for private projects or custom readme overrides..." />
+            <Field label="README / DOCUMENTACIÓN MANUAL">
+              <textarea value={form.readmeContent} onChange={e => setForm(f => ({ ...f, readmeContent: e.target.value }))} className={`${inputClass} h-40 resize-y`} placeholder="Documentación en Markdown para proyectos privados o README personalizado..." />
             </Field>
           </div>
 
           <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
             <Field label="TECH_STACK">
-              <InteractiveTags value={form.stack} onChange={v => setForm(f => ({ ...f, stack: v }))} placeholder="Add tech stack tag..." />
+              <InteractiveTags value={form.stack} onChange={v => setForm(f => ({ ...f, stack: v }))} placeholder="Añade una tecnología..." />
             </Field>
             {!form.isPrivate && (
               <Field label="SPECIFICATIONS_TAGS">
-                <InteractiveTags value={form.specsTags} onChange={v => setForm(f => ({ ...f, specsTags: v }))} placeholder="Add spec tag..." />
+                <InteractiveTags value={form.specsTags} onChange={v => setForm(f => ({ ...f, specsTags: v }))} placeholder="Añade una etiqueta..." />
               </Field>
             )}
           </div>
 
-          <Field label="STATUS">
+          <Field label="ESTADO">
             <select value={form.specsStatus} onChange={e => setForm(f => ({ ...f, specsStatus: e.target.value }))} className={inputClass}>
-              <option value="">— SELECT_STATUS —</option>
+              <option value="">— SELECCIONA ESTADO —</option>
               <option value="IN_PROGRESS">IN_PROGRESS</option>
               <option value="COMPLETED">COMPLETED</option>
               <option value="PAUSED">PAUSED</option>
@@ -508,13 +510,13 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
 
         <div className="mt-8 flex flex-col sm:flex-row items-center gap-6 border-t border-zinc-800 pt-6">
           <button onClick={save} className={buttonPrimaryClass}>
-            COMMIT_CHANGES [CTRL+S]
+            GUARDAR CAMBIOS
           </button>
           {editingIdx !== null && (
             <button 
               onClick={() => { 
-                if (confirm('DECOMMISSION?')) { 
-                  const n = projects.filter((_, i) => i !== editingIdx); 
+                if (confirm('¿Eliminar este proyecto?')) { 
+                  const n = withOrder(projects.filter((_, i) => i !== editingIdx)); 
                   localStorage.setItem('portfolioProjects', JSON.stringify(n)); 
                   load(); 
                   setEditingIdx(null); 
@@ -523,7 +525,7 @@ export default function ProjectsTab({ onLog }: ProjectsTabProps) {
               }} 
               className="text-xs text-red-500 hover:text-red-400 font-bold uppercase transition-colors"
             >
-              DECOMMISSION
+              ELIMINAR
             </button>
           )}
         </div>

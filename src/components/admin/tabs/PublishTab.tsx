@@ -18,6 +18,25 @@ export default function PublishTab({ onLog }: PublishTabProps) {
     if (s) setBuilds(JSON.parse(s)); 
   }, []);
 
+  // Descarta claves obsoletas que pudieran seguir en la caché local del navegador.
+  function sanitize(key: string, raw: string): string {
+    try {
+      const data = JSON.parse(raw);
+      if (key === 'portfolioProjects' && Array.isArray(data)) {
+        return JSON.stringify(data.map((p: any, i: number) => {
+          const { stackWithUsage, isHighlighted, isFavorite, ...rest } = p;
+          if (rest.specs) { const { stackWithUsage: _s, ...specs } = rest.specs; rest.specs = specs; }
+          return { ...rest, order: i };
+        }));
+      }
+      if (key === 'portfolioSettings' && data && typeof data === 'object') {
+        const { logLimit, ...rest } = data;
+        return JSON.stringify(rest);
+      }
+    } catch {}
+    return raw;
+  }
+
   async function publish() {
     setPublishing(true); 
     onLog('INIT_GLOBAL_SYNC...');
@@ -28,11 +47,11 @@ export default function PublishTab({ onLog }: PublishTabProps) {
         .filter(k => !!localStorage.getItem(k))
         .map(k => ({ 
           path: `public/data/${k.replace('portfolio', '').toLowerCase()}.json`, 
-          content: localStorage.getItem(k)! 
+          content: sanitize(k, localStorage.getItem(k)!) 
         }));
       
       if (files.length === 0) {
-        onLog('SYNC_ABORTED: NO_LOCAL_CHANGES');
+        onLog('PUBLICACIÓN_CANCELADA: SIN_CAMBIOS_LOCALES');
         setPublishing(false);
         return;
       }

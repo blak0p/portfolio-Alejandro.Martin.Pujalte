@@ -1,25 +1,16 @@
-export interface ProjectSpecStackUsage {
-  name: string;
-  color?: string;
-  usageLevel: number;
-}
-
 export interface Project {
   id: string;
   name: string;
   photo: string;
   stack: string[];
-  stackWithUsage?: ProjectSpecStackUsage[];
   architecture: string;
   initSequence: string;
   description?: string;
   businessImpact?: string;
   problem?: string;
   solution?: string;
-  specs: Record<string, string | string[] | ProjectSpecStackUsage[]>;
-  isHighlighted?: boolean;
+  specs: Record<string, string | string[]>;
   isPrivate?: boolean;
-  isFavorite?: boolean;
   pushedAt?: string;
   order?: number;
   recruiterDescription?: string;
@@ -61,7 +52,6 @@ export interface Experience {
 }
 
 export interface SiteSettings {
-  logLimit?: number;
   cvUrl?: string;
   linkedinUrl?: string;
   contactEmail?: string;

@@ -76,8 +76,7 @@ export async function getRepoDetails(repoSlug: string) {
         isPrivate
         languages(first: 15, orderBy: {field: SIZE, direction: DESC}) {
           edges {
-            node { name color }
-            size
+            node { name }
           }
         }
         object(expression: "HEAD:README.md") { ... on Blob { text } }
@@ -110,14 +109,7 @@ export async function getRepoDetails(repoSlug: string) {
     readme = r.object.text;
   }
 
-  // Calcular percentages desde los sizes de languages
-  const totalBytes = r.languages?.edges?.reduce((acc: number, e: any) => acc + (e.size || 0), 0) || 0;
   const stack = r.languages?.edges?.map((e: any) => e.node?.name?.toUpperCase())?.filter(Boolean) || [];
-  const stackWithUsage = r.languages?.edges?.map((e: any) => ({
-    name: e.node?.name?.toUpperCase(),
-    color: e.node?.color,
-    usageLevel: totalBytes > 0 ? Math.round((e.size / totalBytes) * 100) : 0,
-  })) || [];
 
   return {
     id: r.name.toUpperCase().replace(/-/g, '_'),
@@ -131,7 +123,6 @@ export async function getRepoDetails(repoSlug: string) {
     specsStatus: 'PROD',
     pushedAt: r.pushedAt,
     stack,
-    stackWithUsage,
     architecture: '',
     isPrivate: r.isPrivate || false,
     readme, // README incluido en la misma query!

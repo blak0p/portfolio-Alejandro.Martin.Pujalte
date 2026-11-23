@@ -1,4 +1,5 @@
-import React, { useState, KeyboardEvent } from 'react';
+import React, { useState } from 'react';
+import type { KeyboardEvent } from 'react';
 
 interface InteractiveTagsProps {
   value: string; // comma-separated values

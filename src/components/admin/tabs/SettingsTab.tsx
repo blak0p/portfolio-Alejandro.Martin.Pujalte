@@ -15,18 +15,39 @@ interface SettingsTabProps {
 
 export default function SettingsTab({ onLog }: SettingsTabProps) {
   const [settings, setSettings] = useState<SiteSettings>({ 
-    logLimit: 10, 
     cvUrl: '',
     linkedinUrl: '',
     bio: '',
     photoUrl: '/profile.jpg'
   });
+  const [identity, setIdentity] = useState<Record<string, any>>({});
   const [cvLoading, setCvLoading] = useState(false);
+
+  const loadIdentity = useCallback(async () => {
+    const stored = localStorage.getItem('portfolioIdentity');
+    if (stored) {
+      try { setIdentity(JSON.parse(stored)); return; } catch {}
+    }
+    try {
+      const res = await fetch('/data/identity.json');
+      if (res.ok) setIdentity(await res.json());
+    } catch {
+      console.warn('Identity load: JSON fallback');
+    }
+  }, []);
+
+  function updateIdentity(partial: Record<string, any>) {
+    const next = { ...identity, ...partial };
+    setIdentity(next);
+    localStorage.setItem('portfolioIdentity', JSON.stringify(next, null, 2));
+    onLog(`PARAM_MODIFIED: ${Object.keys(partial)[0].toUpperCase()}`);
+  }
 
   const load = useCallback(async () => {
     const stored = localStorage.getItem('portfolioSettings');
     if (stored) {
-      setSettings(JSON.parse(stored));
+      const { logLimit: _legacy, ...clean } = JSON.parse(stored);
+      setSettings(clean);
       return;
     }
     try {
@@ -40,7 +61,7 @@ export default function SettingsTab({ onLog }: SettingsTabProps) {
     }
   }, []);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => { load(); loadIdentity(); }, [load, loadIdentity]);
 
   function update(partial: Partial<SiteSettings>) {
     const next = { ...settings, ...partial };
@@ -77,19 +98,17 @@ export default function SettingsTab({ onLog }: SettingsTabProps) {
     <div className="flex flex-col gap-10 font-mono">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         
-        {/* Master Controls */}
-        <div className={cardClass}>
-          <SectionHeader title="MASTER_CONTROLS" />
-          <div className="space-y-6">
-            <Field label="LOG_LIMIT">
-              <input 
-                type="number" 
-                value={settings.logLimit ?? 10} 
-                onChange={e => update({ logLimit: Number(e.target.value) })} 
-                className={inputClass} 
-              />
-            </Field>
-          </div>
+        {/* Identidad */}
+        <div className={`${cardClass} md:col-span-2`}>
+          <SectionHeader title="IDENTIDAD" />
+          <Field label="UBICACIÓN">
+            <input 
+              value={identity.location ?? ''} 
+              onChange={e => updateIdentity({ location: e.target.value })} 
+              className={inputClass} 
+              placeholder="Valencia"
+            />
+          </Field>
         </div>
 
         {/* Recruiter / Profile Settings */}
@@ -152,9 +171,10 @@ export default function SettingsTab({ onLog }: SettingsTabProps) {
             <div className="pt-6 border-t border-zinc-800 flex justify-between items-center">
               <button 
                 onClick={() => { 
-                  if (confirm('Are you sure you want to reset all local changes? This will reload settings from original files.')) { 
+                  if (confirm('¿Seguro que quieres descartar los cambios locales? Se recargarán los ajustes desde los archivos originales.')) { 
                     localStorage.removeItem('portfolioSettings'); 
-                    load(); 
+                    localStorage.removeItem('portfolioIdentity'); 
+                    load(); loadIdentity(); 
                     onLog('SETTINGS_RELOADED_FROM_DISK');
                   } 
                 }} 
@@ -165,7 +185,7 @@ export default function SettingsTab({ onLog }: SettingsTabProps) {
 
               <button 
                 onClick={() => { 
-                  if (confirm('FACTORY_RESET? This will clear ALL modifications stored in local cache.')) { 
+                  if (confirm('¿Restablecer todo? Se borrarán TODAS las modificaciones guardadas en la caché local.')) { 
                     localStorage.clear(); 
                     window.location.reload(); 
                   } 
