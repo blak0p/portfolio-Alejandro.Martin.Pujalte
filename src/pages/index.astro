@@ -59,6 +59,7 @@ const prs = (community.projects as any[])
   .filter((c) => c.active !== false)
   .flatMap((c) => (c.prs ?? []).map((pr: any) => ({ ...pr, repo: `${c.owner}/${c.name}`, repoUrl: c.url, stars: c.stars })))
   .sort((a, b) => String(b.mergedAt).localeCompare(String(a.mergedAt)));
+const PR_VISIBLE = 3;
 
 const groups = new Map<string, string[]>();
 for (const t of techStack as any[]) {
@@ -154,7 +155,8 @@ const toc = [
         <section id="open-source" aria-labelledby="h-oss">
           <h2 id="h-oss">Open source</h2>
           {prs.length === 0 && <p>Sin contribuciones para mostrar todavía.</p>}
-          {prs.map((pr) => (
+          {(() => {
+            const card = (pr: any) => (
             <div class="oss">
               <span class="repo"><span translate="no" class="notranslate">{pr.repo}</span>{pr.stars ? ` · ${num(pr.stars)} ★` : ''} · mergeado {fmtDate(pr.mergedAt)}</span>
               <h3 translate="no" class="notranslate">{pr.title}</h3>
@@ -163,7 +165,20 @@ const toc = [
                 <a href={pr.repoUrl} target="_blank" rel="noopener noreferrer">Ver repositorio →</a>
               </div>
             </div>
-          ))}
+            );
+            const rest = prs.slice(PR_VISIBLE);
+            return (
+              <>
+                {prs.slice(0, PR_VISIBLE).map(card)}
+                {rest.length > 0 && (
+                  <details class="oss-more">
+                    <summary>Ver {rest.length} {rest.length === 1 ? 'PR más' : 'PRs más'}</summary>
+                    {rest.map(card)}
+                  </details>
+                )}
+              </>
+            );
+          })()}
         </section>
 
         <section id="stack" aria-labelledby="h-stack">

@@ -63,6 +63,7 @@ const fmtNum = (n: number) => new Intl.NumberFormat('es-ES', { useGrouping: 'alw
 const prs = (community.projects ?? []).flatMap((cp: any) =>
   (cp.prs ?? []).map((pr: any) => ({ ...pr, repo: `${cp.owner}/${cp.name}`, repoUrl: cp.url, stars: cp.stars })),
 ).sort((a: any, b: any) => +new Date(b.mergedAt) - +new Date(a.mergedAt));
+const PR_VISIBLE = 3;
 
 // ── Stack agrupado ──────────────────────────────────────────────────────────
 const groups: { group: string; items: string[] }[] = [];
@@ -168,7 +169,8 @@ const termData: TermData = {
           <h2 id="h-oss"><span class="t">// OPEN_SOURCE</span><small>{prs.length} {prs.length === 1 ? 'PR mergeado' : 'PRs mergeados'}</small></h2>
           <div class="body">
             {prs.length === 0 && <p class="empty">Todavía no hay PRs mergeados que mostrar.</p>}
-            {prs.map((pr: any) => (
+            {(() => {
+              const card = (pr: any) => (
               <div class="pr">
                 <p class="pr-head notranslate" translate="no">{pr.repo} <span class="stars"><span aria-hidden="true">★</span> {fmtNum(pr.stars)}</span> · PR #{pr.number} · mergeado {fmtDate(pr.mergedAt)}</p>
                 <p class="pr-title notranslate" translate="no">{pr.title}</p>
@@ -177,7 +179,20 @@ const termData: TermData = {
                   <a href={pr.repoUrl} target="_blank" rel="noopener noreferrer">Ver repositorio ↗</a>
                 </p>
               </div>
-            ))}
+              );
+              const rest = prs.slice(PR_VISIBLE);
+              return (
+                <>
+                  {prs.slice(0, PR_VISIBLE).map(card)}
+                  {rest.length > 0 && (
+                    <details class="pr-more">
+                      <summary>ver {rest.length} {rest.length === 1 ? 'PR más' : 'PRs más'}</summary>
+                      {rest.map(card)}
+                    </details>
+                  )}
+                </>
+              );
+            })()}
           </div>
         </section>
 
@@ -262,6 +277,10 @@ const termData: TermData = {
 
   .devpage .pr { margin-bottom: 16px; }
   .devpage .pr:last-child { margin-bottom: 0; }
+  .devpage .pr-more { margin-top: 16px; }
+  .devpage .pr-more > summary { cursor: pointer; color: var(--d-text); font-family: inherit; }
+  .devpage .pr-more > summary:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+  .devpage .pr-more[open] > summary { margin-bottom: 16px; }
   .devpage .pr p { margin: 0; }
   .devpage .pr-head { color: var(--d-text); margin-bottom: 4px !important; }
   .devpage .pr-title { margin-bottom: 12px !important; }
