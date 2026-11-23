@@ -359,11 +359,10 @@ export default function LogStream({ logs, logLimit = 10, hideHeader = false }: L
           </div>
         ) : (
           combined.map((entry) => {
-            const isGold = entry.message.includes('GOLD');
             const isGuest = entry.message.includes('[GUEST]');
             const isCommand = entry.level === 'INFO' && !entry.message.startsWith('[GH]') && !entry.message.startsWith('[SYS]');
             
-            const colorClass = isGold ? 'text-bronze-light' : (isGuest || isCommand ? 'text-[#00ff41]' : levelColors[entry.level]);
+            const colorClass = isGuest || isCommand ? 'text-[#00ff41]' : levelColors[entry.level];
 
             return (
               <div key={entry.id} className={`text-xs leading-relaxed px-2 py-1 ${levelBg[entry.level]} crt-flicker`}>

@@ -26,7 +26,7 @@ const VFS_BASE: any = {
             type: 'file', 
             content: 'environment:\n  provider: Vercel\n  runtime: Node.js 22.x\n  framework: Astro v5.18\n  deployment: Edge Network\n\nsecurity:\n  handshake: RecruiterSync-v1\n  access: GUEST_ROOT\n  encryption: RSA-4096'
           },
-          'env.local': { type: 'file', content: 'STATION_NAME=Core-01\nOPERATOR=AlejandroMP\nSESSION_TYPE=RECRUITER_SYNC\nSTATUS=ONLINE' }
+          'env.local': { type: 'file', content: 'STATION_NAME=Core-01\nOPERATOR=AlejandroMP\nSESSION_TYPE=RECRUITER_SYNC' }
         }
       },
       'README.md': { type: 'file', content: '# ACCESO AL SISTEMA CORE\n\nEstás dentro de mi entorno de desarrollo. Este es un espacio compartido para explorar mi trabajo.\nUsa "help" para ver los protocolos disponibles.\nPuedes navegar usando "cd" y "ls".' }
@@ -182,7 +182,6 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
   switch (cmd) {
     case 'help': {
       const isFull = args.includes('-a');
-      const publicCmds = ['ls', 'cd', 'cat', 'pwd', 'tree', 'wget', 'scan', 'whoami', 'neofetch', 'clear', 'exit'];
       const secretCmds = ['sudo', 'approve', 'hire-me', 'matrix', 'glitch', 'rm', 'rm -rf', 'regen module', 'top', 'coffee', 'ssh', 'stars'];
       
       if (isFull) {
