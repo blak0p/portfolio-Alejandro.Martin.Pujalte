@@ -51,13 +51,25 @@ const techHref = isDevPage ? '#tech' : '/dev#tech';
     </script>
     <ClientRouter />
     <script is:inline>
+      // The site is written in Spanish. A leftover "translate to Spanish" cookie
+      // (e.g. googtrans=/auto/es) makes Google re-translate English-looking
+      // labels (WHOAMI, stack, merged...), so drop it before element.js reads it.
+      (function () {
+        if (!/(?:^|;\s*)googtrans=\/[^/;]*\/es(?:;|$)/.test(document.cookie)) return;
+        var expired = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;';
+        var host = window.location.hostname;
+        document.cookie = expired;
+        document.cookie = expired + ' domain=' + host;
+        document.cookie = expired + ' domain=.' + host;
+      })();
+
       window.googleTranslateElementInit = function() {
         const el = document.getElementById('google_translate_element');
         if (!el) return;
         if (el.querySelector('.goog-te-combo')) return;
         
         new google.translate.TranslateElement({
-          pageLanguage: 'auto',
+          pageLanguage: 'es',
           includedLanguages: 'es,en',
           layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
           autoDisplay: false
