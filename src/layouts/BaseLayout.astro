@@ -1,13 +1,12 @@
 ---
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
-import { getTotalMerged } from '../lib/community-data';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
   title?: string;
   description?: string;
   handle?: string;
-  status?: string;
   navStyle?: 'dev' | 'recruiter';
 }
 
@@ -15,7 +14,6 @@ const {
   title = 'ALEJANDRO MARTIN PUJALTE \u2014 Desarrollador Backend',
   description = 'Desarrollador Backend construyendo infraestructura de alta disponibilidad, herramientas de IA local y arquitecturas estructuralmente honestas.',
   handle = 'blak0p',
-  status = 'ONLINE',
   navStyle = 'dev',
 } = Astro.props;
 
@@ -24,31 +22,15 @@ const siteUrl = Astro.site ?? 'https://alejandro-mp.dev';
 
 const pathname = Astro.url.pathname.replace(/\/$/, '');
 const isDevPage = pathname === '/dev';
-const isDevComunidad = pathname === '/dev/comunidad';
 const deploymentsHref = isDevPage ? '#deployments' : '/dev#deployments';
 const techHref = isDevPage ? '#tech' : '/dev#tech';
 const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
 
-// Community nav: recruiter face anchors to #comunidad (smooth scroll); dev face
-// routes to /dev/comunidad. Badge shows total merged PRs; hidden when 0 so the
-// nav doesn't advertise an empty section on first deploys.
-const totalMerged = await getTotalMerged();
-const communityHref = navStyle === 'recruiter' ? '/#comunidad' : '/dev/comunidad';
-const showCommunityBadge = totalMerged > 0;
 ---
 
 <!doctype html>
 <html lang="es">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-C6NTHF89EC"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-C6NTHF89EC');
-    </script>
     <script is:inline>
       // Prevent React from crashing when Google Translate mutates the DOM
       if (typeof Node !== 'undefined' && Node.prototype) {
@@ -111,6 +93,7 @@ const showCommunityBadge = totalMerged > 0;
         background-color: var(--bgPage) !important;
       }
     </style>
+    <Analytics />
   </head>
   <body class={navStyle === 'recruiter' ? 'bg-[#080c14] text-white font-sans' : 'bg-carbono text-text-primary font-mono'}>
 
@@ -126,18 +109,9 @@ const showCommunityBadge = totalMerged > 0;
           <div class="hidden md:flex items-center gap-6 text-sm text-white/70 font-medium">
             <a href="/#about" class="hover:text-recruiter-accent-light transition-colors">Sobre mí</a>
             <a href="/#projects" class="hover:text-recruiter-accent-light transition-colors">Proyectos</a>
-            <a href="/#comunidad" class="hover:text-recruiter-accent-light transition-colors inline-flex items-center gap-1.5">
-              Comunidad
-              {showCommunityBadge && (
-                <span class="inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1.5 text-[10px] font-bold tracking-wider text-recruiter-accent-light bg-recruiter-accent/15 border border-recruiter-accent/40 rounded-full">
-                  • {totalMerged}
-                </span>
-              )}
-            </a>
             <a href="/#tech" class="hover:text-recruiter-accent-light transition-colors">Tecnologías</a>
             <a href="/#ambitions" class="hover:text-recruiter-accent-light transition-colors">Metas</a>
             <a href="/#contact" class="hover:text-recruiter-accent-light transition-colors">Contacto</a>
-            <a href="/bitacora" class="hover:text-recruiter-accent-light transition-colors">Bitácora</a>
             <span class="text-white/20">|</span>
             <div id="google_translate_element" class="google-translate-dropdown"></div>
             <div class="flex items-center gap-2 select-none shrink-0">
@@ -178,18 +152,9 @@ const showCommunityBadge = totalMerged > 0;
         <nav class="flex flex-col items-center gap-8 text-xl font-medium">
           <a href="/#about"    class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors">Sobre mí</a>
           <a href="/#projects" class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors inline-flex items-center gap-1.5">Proyectos</a>
-          <a href="/#comunidad" class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors inline-flex items-center gap-1.5">
-            Comunidad
-            {showCommunityBadge && (
-              <span class="inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1.5 text-[10px] font-bold tracking-wider text-recruiter-accent-light bg-recruiter-accent/15 border border-recruiter-accent/40 rounded-full">
-                • {totalMerged}
-              </span>
-            )}
-          </a>
           <a href="/#tech"     class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors">Tecnologías</a>
           <a href="/#ambitions" class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors">Metas</a>
           <a href="/#contact"  class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors">Contacto</a>
-          <a href="/bitacora"  class="mobile-link-r text-white/80 hover:text-recruiter-accent-light transition-colors">Bitácora</a>
           <a href="/dev" class="mt-4 text-sm text-white/30 hover:text-recruiter-accent-light transition-colors tracking-wider uppercase">Dev</a>
         </nav>
       </div>
@@ -206,34 +171,15 @@ const showCommunityBadge = totalMerged > 0;
           <div class="hidden md:flex items-center gap-5 text-xs text-text-muted tracking-widest uppercase">
             <a href={deploymentsHref} class="hover:text-cobalt transition-colors duration-100">Proyectos</a>
             <span class="text-white/20">|</span>
-            <a
-              href={communityHref}
-              class={`hover:text-cobalt transition-colors duration-100 inline-flex items-center gap-1.5 ${isDevComunidad ? 'text-cobalt' : ''}`}
-            >
-              Comunidad
-              {showCommunityBadge && (
-                <span class="inline-flex items-center justify-center min-w-[1.1rem] h-4 px-1 text-[9px] font-bold tracking-wider text-cobalt bg-cobalt/10 border border-cobalt/40">
-                  • {totalMerged}
-                </span>
-              )}
-            </a>
-            <span class="text-white/20">|</span>
             <a href={techHref} class="hover:text-cobalt transition-colors duration-100">Tecnologías</a>
             <span class="text-white/20">|</span>
             <a href={ambitionsHref} class="hover:text-cobalt transition-colors duration-100">Metas</a>
-            <span class="text-white/20">|</span>
-            <a href="/dev/bitacora" class="hover:text-cobalt transition-colors duration-100">Bitácora</a>
             <span class="text-white/20">|</span>
             <span class="text-text-faint/40 normal-case tracking-normal">Para técnicos</span>
             <a href="/" class="text-text-faint/40 hover:text-white transition-colors duration-100 normal-case tracking-normal">← Recruiter</a>
           </div>
 
           <div class="flex items-center gap-3">
-            <div class="hidden sm:flex items-center gap-1.5 text-xs text-text-faint tracking-widest">
-              <span class={`w-1.5 h-1.5 ${status === 'ONLINE' ? 'bg-cobalt' : status === 'BUSY' ? 'bg-warn' : 'bg-text-faint'} animate-pulse inline-block`} style="border-radius:50%"></span>
-              <span class={status === 'ONLINE' ? 'text-cobalt' : status === 'BUSY' ? 'text-warn' : 'text-text-faint'}>{status}</span>
-            </div>
-            <span class="hidden sm:inline text-white/20">|</span>
             <div id="google_translate_element" class="google-translate-dropdown"></div>
             <div class="flex items-center gap-2 select-none shrink-0">
               <button class="translate-btn text-base hover:scale-110 active:scale-95 transition-all cursor-pointer p-0.5" data-lang="es" title="Español">🇪🇸</button>
@@ -262,30 +208,13 @@ const showCommunityBadge = totalMerged > 0;
       >
         <button id="mobile-close" class="absolute top-4 right-4 text-text-faint hover:text-white text-3xl transition-colors" aria-label="Cerrar">&times;</button>
 
-        <!-- Status -->
-        <div class="flex items-center gap-1.5 text-xs tracking-widest mb-10">
-          <span class={`w-1.5 h-1.5 ${status === 'ONLINE' ? 'bg-cobalt' : status === 'BUSY' ? 'bg-warn' : 'bg-text-faint'} animate-pulse inline-block`} style="border-radius:50%"></span>
-          <span class={status === 'ONLINE' ? 'text-cobalt' : status === 'BUSY' ? 'text-warn' : 'text-text-faint'}>{status}</span>
-        </div>
-
         <!-- Nav links — mismo texto y estilo que desktop -->
         <nav class="flex flex-col items-center gap-8 text-xs text-text-muted tracking-widest uppercase">
           <a href={deploymentsHref} class="mobile-link hover:text-cobalt transition-colors duration-100">Proyectos</a>
           <span class="text-white/20">|</span>
-          <a href="/dev/comunidad" class="mobile-link hover:text-cobalt transition-colors duration-100 inline-flex items-center gap-1.5">
-            Comunidad
-            {showCommunityBadge && (
-              <span class="inline-flex items-center justify-center min-w-[1.1rem] h-4 px-1 text-[9px] font-bold tracking-wider text-cobalt bg-cobalt/10 border border-cobalt/40">
-                • {totalMerged}
-              </span>
-            )}
-          </a>
-          <span class="text-white/20">|</span>
           <a href={techHref}        class="mobile-link hover:text-cobalt transition-colors duration-100">Tecnologías</a>
           <span class="text-white/20">|</span>
           <a href={ambitionsHref}   class="mobile-link hover:text-cobalt transition-colors duration-100">Metas</a>
-          <span class="text-white/20">|</span>
-          <a href="/dev/bitacora"   class="mobile-link hover:text-cobalt transition-colors duration-100">Bitácora</a>
         </nav>
 
         <!-- Flags -->

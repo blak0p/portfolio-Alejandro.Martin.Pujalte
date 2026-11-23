@@ -77,7 +77,7 @@ export default function ProjectDetailModal({ project, face, onClose, onOpenPr }:
 
   const fmtDate = (iso: string) => {
     try {
-      return new Date(iso).toLocaleDateString('es-AR', { year: 'numeric', month: 'short', day: 'numeric' });
+      return new Date(iso).toLocaleDateString('es-ES', { year: 'numeric', month: 'short', day: 'numeric' });
     } catch { return iso; }
   };
 
@@ -170,7 +170,7 @@ export default function ProjectDetailModal({ project, face, onClose, onOpenPr }:
               <div className="flex items-center gap-4 text-xs">
                 <span className={`inline-flex items-center gap-1 ${palette.textSecondary}`}>
                   <span className="text-warn">★</span>
-                  <span className={`font-bold ${palette.textPrimary}`}>{project.stars.toLocaleString('es-AR')}</span>
+                  <span className={`font-bold ${palette.textPrimary}`}>{project.stars.toLocaleString('es-ES')}</span>
                 </span>
                 <span className={`inline-flex items-center gap-1 ${palette.textSecondary}`}>
                   <span className={palette.accent}>#</span>
@@ -217,7 +217,6 @@ export default function ProjectDetailModal({ project, face, onClose, onOpenPr }:
               ) : (
                 <div className="flex flex-col gap-3">
                   {project.prs.map((pr: CommunityPR) => {
-                    const summary = pr.summary;
                     return (
                       <button
                         key={pr.number}
@@ -241,20 +240,10 @@ export default function ProjectDetailModal({ project, face, onClose, onOpenPr }:
                               <span className={`text-[10px] ${palette.textMuted} tracking-widest uppercase`}>
                                 {fmtDate(pr.mergedAt)}
                               </span>
-                              {summary === null && (
-                                <span className={`text-[9px] text-err/80 tracking-widest uppercase italic`}>
-                                  · sin resumen
-                                </span>
-                              )}
                             </div>
                             <p className={`text-sm ${palette.textPrimary} mt-1 leading-snug`}>
                               {pr.title}
                             </p>
-                            {summary && (
-                              <p className={`text-xs ${palette.textMuted} mt-2 leading-relaxed line-clamp-2`}>
-                                {summary}
-                              </p>
-                            )}
                           </div>
                         </div>
                       </button>

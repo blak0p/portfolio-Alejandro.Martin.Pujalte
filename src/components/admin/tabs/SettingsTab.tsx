@@ -15,15 +15,11 @@ interface SettingsTabProps {
 
 export default function SettingsTab({ onLog }: SettingsTabProps) {
   const [settings, setSettings] = useState<SiteSettings>({ 
-    availabilityValue: 100, 
-    status: 'ONLINE', 
     logLimit: 10, 
     cvUrl: '',
     linkedinUrl: '',
     bio: '',
-    photoUrl: '/profile.jpg',
-    dustThresholdDays: 60,
-    starsForGold: 5
+    photoUrl: '/profile.jpg'
   });
   const [cvLoading, setCvLoading] = useState(false);
 
@@ -85,32 +81,6 @@ export default function SettingsTab({ onLog }: SettingsTabProps) {
         <div className={cardClass}>
           <SectionHeader title="MASTER_CONTROLS" />
           <div className="space-y-6">
-            <Field label={`AVAILABILITY: ${settings.availabilityValue}%`}>
-              <div className="flex items-center gap-4 py-2">
-                <input 
-                  type="range" 
-                  min={0} 
-                  max={100} 
-                  step={0.1} 
-                  value={settings.availabilityValue} 
-                  onChange={e => update({ availabilityValue: Number(e.target.value) })} 
-                  className="w-full h-1.5 bg-zinc-950 rounded-lg appearance-none cursor-pointer accent-sky-500 border border-zinc-800" 
-                />
-              </div>
-            </Field>
-            
-            <Field label="SYSTEM_STATUS">
-              <select 
-                value={settings.status} 
-                onChange={e => update({ status: e.target.value as any })} 
-                className={inputClass}
-              >
-                <option value="ONLINE">ONLINE</option>
-                <option value="BUSY">BUSY</option>
-                <option value="OFFLINE">OFFLINE</option>
-              </select>
-            </Field>
-
             <Field label="LOG_LIMIT">
               <input 
                 type="number" 
@@ -118,38 +88,6 @@ export default function SettingsTab({ onLog }: SettingsTabProps) {
                 onChange={e => update({ logLimit: Number(e.target.value) })} 
                 className={inputClass} 
               />
-            </Field>
-          </div>
-        </div>
-
-        {/* Engine Parameters */}
-        <div className={cardClass}>
-          <SectionHeader title="ENGINE_PARAMS" />
-          <div className="space-y-6">
-            <Field label={`DUST_THRESHOLD: ${settings.dustThresholdDays} DAYS`}>
-              <div className="flex items-center gap-4 py-2">
-                <input 
-                  type="range" 
-                  min={7} 
-                  max={365} 
-                  value={settings.dustThresholdDays} 
-                  onChange={e => update({ dustThresholdDays: Number(e.target.value) })} 
-                  className="w-full h-1.5 bg-zinc-950 rounded-lg appearance-none cursor-pointer accent-amber-500 border border-zinc-800" 
-                />
-              </div>
-            </Field>
-
-            <Field label={`GOLD_REQUIREMENT: ${settings.starsForGold} STARS`}>
-              <div className="flex items-center gap-4 py-2">
-                <input 
-                  type="range" 
-                  min={0} 
-                  max={50} 
-                  value={settings.starsForGold} 
-                  onChange={e => update({ starsForGold: Number(e.target.value) })} 
-                  className="w-full h-1.5 bg-zinc-950 rounded-lg appearance-none cursor-pointer accent-yellow-400 border border-zinc-800" 
-                />
-              </div>
             </Field>
           </div>
         </div>

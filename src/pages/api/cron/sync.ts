@@ -4,7 +4,6 @@ import projectsData from '../../../../public/data/projects.json';
 import { getAutoRefreshProjects } from '../../../lib/projectRanking';
 import { getCommunityRepos, getLastGoodCommunity, setLastGoodCommunity } from '../../../lib/community-kv';
 import { loadCommunity } from '../../../lib/community-data';
-import { summarizePr } from '../../../lib/gemini';
 import type { CommunityData, CommunityProject, CommunityPR, CommunityRepoState } from '../../../lib/community';
 
 export const prerender = false;
@@ -51,7 +50,6 @@ interface MergedPrApiItem {
   number: number;
   title: string;
   html_url: string;
-  body: string | null;
   merged_at: string | null;
   pull_request?: { html_url?: string; merged_at?: string | null };
 }
@@ -99,24 +97,12 @@ async function fetchActiveRepoContribution(
   return { stars, prs: merged };
 }
 
-function diffNewPrs(existingPrs: CommunityPR[], fetched: MergedPrApiItem[]): MergedPrApiItem[] {
-  const seen = new Set(existingPrs.map((p) => p.number));
-  return fetched.filter((it) => !seen.has(it.number));
-}
-
-function toCommunityPr(it: MergedPrApiItem, summary: string | null, type?: string, summaryError?: string): CommunityPR {
-  const url = it.pull_request?.html_url || it.html_url;
-  const validTypes = ['feature', 'fix', 'refactor', 'docs', 'perf', 'other'] as const;
+function toCommunityPr(it: MergedPrApiItem): CommunityPR {
   return {
     number: it.number,
     title: it.title,
-    url,
+    url: it.pull_request?.html_url || it.html_url,
     mergedAt: it.merged_at ?? new Date().toISOString(),
-    summary,
-    type: type && validTypes.includes(type as typeof validTypes[number])
-      ? (type as CommunityPR['type'])
-      : undefined,
-    ...(summaryError ? { summaryError } : {}),
   };
 }
 
@@ -149,24 +135,10 @@ async function runCommunityStep(): Promise<void> {
     const prev = existingBySlug.get(slug);
     try {
       const { stars, prs: fetched } = await fetchActiveRepoContribution(repo, login);
-      const prevPrs = prev?.prs ?? [];
-      const newItems = diffNewPrs(prevPrs, fetched);
-
-      // Summarize only NEW prs via Gemini. Reuse previous summaries for known PRs.
-      const summarizedNew: CommunityPR[] = [];
-      for (const it of newItems) {
-        // linkedIssueTitle is not cheaply available here; Gemini prompt handles its absence.
-        const { summary, type, error } = await summarizePr({ title: it.title, body: it.body ?? '' });
-        summarizedNew.push(toCommunityPr(it, summary, type, error));
-      }
-
-      // Merge: keep prev summaries for already-known PRs, add new ones, sort oldest→newest.
-      const knownFetched = fetched
-        .filter((it) => prevPrs.some((pp) => pp.number === it.number))
-        .map((it) => toCommunityPr(it, prevPrs.find((pp) => pp.number === it.number)?.summary ?? null));
-      const all = [...knownFetched, ...summarizedNew].sort(
-        (a, b) => new Date(a.mergedAt).getTime() - new Date(b.mergedAt).getTime(),
-      );
+      // PRs keep title, number, url and merged date only (no summaries).
+      const all = fetched
+        .map(toCommunityPr)
+        .sort((a, b) => new Date(a.mergedAt).getTime() - new Date(b.mergedAt).getTime());
 
       newProjects.push({
         slug,

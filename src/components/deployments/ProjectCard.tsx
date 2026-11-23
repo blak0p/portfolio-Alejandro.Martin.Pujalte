@@ -1,37 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import type { Project, SiteSettings } from '../../types';
+import type { Project } from '../../types';
 
 interface ProjectCardProps {
   project: Project;
   onClick: (project: Project) => void;
-}
-
-const DEFAULT_SETTINGS: SiteSettings = { availabilityValue: 99.9, dustThresholdDays: 60, starsForGold: 5 };
-
-function loadSettings(): SiteSettings {
-  try {
-    const s = localStorage.getItem('portfolioSettings');
-    if (s) return { ...DEFAULT_SETTINGS, ...JSON.parse(s) };
-  } catch {}
-  return DEFAULT_SETTINGS;
-}
-
-function getDustLabel(pushedAt: string | undefined, thresholdDays: number): string | null {
-  if (!pushedAt) return null;
-  const days = (Date.now() - new Date(pushedAt).getTime()) / 86_400_000;
-  if (days < thresholdDays) return null;
-  if (days < thresholdDays * 2) return 'ESTABLE';
-  if (days < thresholdDays * 3) return 'LEGACY';
-  return 'ARCHIVADO';
-}
-
-function getEntropyStyle(pushedAt: string | undefined, thresholdDays: number): React.CSSProperties {
-  if (!pushedAt) return {};
-  const days = (Date.now() - new Date(pushedAt).getTime()) / 86_400_000;
-  if (days < thresholdDays) return {};
-  if (days < thresholdDays * 2) return { filter: 'brightness(0.82) saturate(0.45)' };
-  if (days < thresholdDays * 3) return { filter: 'brightness(0.65) saturate(0.15) blur(0.5px)' };
-  return { filter: 'brightness(0.5) saturate(0) blur(1px)' };
 }
 
 const statusStyle: Record<string, string> = {
@@ -44,19 +16,7 @@ const statusStyle: Record<string, string> = {
 };
 
 export default function ProjectCard({ project, onClick }: ProjectCardProps) {
-  const [settings, setSettings] = useState<SiteSettings>(DEFAULT_SETTINGS);
   const [imageError, setImageError] = useState(false);
-
-  useEffect(() => {
-    setSettings(loadSettings());
-    const onStorage = () => setSettings(loadSettings());
-    window.addEventListener('storage', onStorage);
-    window.addEventListener('portfolioSettingsChanged', onStorage);
-    return () => {
-      window.removeEventListener('storage', onStorage);
-      window.removeEventListener('portfolioSettingsChanged', onStorage);
-    };
-  }, []);
 
   useEffect(() => {
     setImageError(false);
@@ -64,35 +24,16 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
 
   const stars     = Number(project.specs?.stars ?? 0);
   const status    = project.specs?.status as string | undefined;
-  const isGold    = !!(project.isHighlighted || stars >= settings.starsForGold);
-  const dustLabel = isGold ? null : getDustLabel(project.pushedAt, settings.dustThresholdDays);
-  const entropyStyle = isGold ? {} : getEntropyStyle(project.pushedAt, settings.dustThresholdDays);
 
   return (
     <div data-project-id={project.id} className="@container">
       <div
         className={`relative aspect-square cursor-pointer group overflow-hidden border transition-all duration-150
-          ${isGold
-            ? 'border-bronze crt-flicker'
-            : 'border-white/15 hover:border-white/40'
-          }`}
-        style={{
-          boxShadow: isGold ? '0 0 24px rgba(184,115,51,0.2)' : undefined,
-          ...entropyStyle,
-        }}
+          border-white/15 hover:border-white/40`}
         onClick={() => {
           onClick(project);
-          const dustThresholdDays = settings.dustThresholdDays || 60;
-          const daysSinceUpdate = project.pushedAt ? (Date.now() - new Date(project.pushedAt).getTime()) / 86_400_000 : 0;
-          const isDusty = daysSinceUpdate > dustThresholdDays;
-
           window.dispatchEvent(new CustomEvent('portfolioTerminalEvent', {
-            detail: { 
-              type: 'MODULE_ACCESS', 
-              projectName: project.name, 
-              isGold,
-              isDusty
-            }
+            detail: { type: 'MODULE_ACCESS', projectName: project.name }
           }));
         }}
       >
@@ -109,12 +50,6 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
           <div className="absolute inset-0 bg-carbono-mid flex items-center justify-center">
             <span className="text-xs text-text-faint tracking-widest">SIN_PREVIEW</span>
           </div>
-        )}
-
-        {isGold && (
-          <div className="absolute inset-0 pointer-events-none" style={{
-            background: 'linear-gradient(135deg, rgba(184,115,51,0.12) 0%, transparent 60%, rgba(184,115,51,0.06) 100%)',
-          }} />
         )}
 
         {project.isPrivate && (
@@ -137,11 +72,6 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
           {project.isFavorite && (
             <span className={`text-xs font-bold tracking-widest uppercase border px-2 py-1 leading-none text-bronze border-bronze/50 bg-bronze/20 backdrop-blur-sm`}>
               DESTACADO
-            </span>
-          )}
-          {dustLabel && (
-            <span className="text-xs font-bold tracking-widest uppercase border px-2 py-1 leading-none text-white/70 border-white/15 bg-black/50 backdrop-blur-sm">
-              {dustLabel}
             </span>
           )}
         </div>

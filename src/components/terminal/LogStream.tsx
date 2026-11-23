@@ -263,21 +263,13 @@ export default function LogStream({ logs, logLimit = 10, hideHeader = false }: L
 
     const onActivity = () => setActivityEntries(getActivityLog());
     const onTerminalEvent = (e: any) => {
-      const { type, projectName, isGold, isDusty } = e.detail;
+      const { type, projectName } = e.detail;
       const ts = new Date().toISOString().slice(0, 19).replace('T', ' ');
       
       let level: LogEntry['level'] = 'INFO';
       let message = '';
 
-      if (isGold) {
-        level = 'MILESTONE';
-        message = `[ALERT] GOLD_TARGET_DETECTED: ${projectName} — (Infraestructura de Alto Valor)`;
-      } else if (isDusty) {
-        level = 'WARN';
-        message = `[INFO] RECOVERING_LEGACY_MODULE: ${projectName} — (Limpiando polvo...)`;
-      } else {
-        message = `[GUEST] ACCESSING_MODULE: ${projectName} — (Protocolo: SOLO_LECTURA)`;
-      }
+      message = `[GUEST] ACCESSING_MODULE: ${projectName} — (Protocolo: SOLO_LECTURA)`;
 
       const newEntry: LogEntry = {
         id: `event-${Date.now()}`,
@@ -391,7 +383,7 @@ export default function LogStream({ logs, logLimit = 10, hideHeader = false }: L
       {/* FIXED FOOTER PART */}
       <div className="p-3 border-t border-white/5 bg-carbono-low flex flex-col gap-2 shrink-0 relative z-20">
         <div className="flex gap-3 text-xs">
-          <span className="text-cobalt">admin @src/data/portfolio.ts ~/ </span>
+          <span className="text-cobalt">admin @portfolio ~/ </span>
           <span className="text-white/40 animate-pulse">█</span>
         </div>
         <div className="opacity-40">

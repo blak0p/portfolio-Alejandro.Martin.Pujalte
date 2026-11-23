@@ -4,11 +4,12 @@
   "bio": "Construyo sistemas que aguantan bajo presión — no solo en demos. Enfocado en infraestructura de IA local y arquitectura de software. Pregunto por qué antes de preguntar cómo. Ahí empieza el verdadero trabajo.",
   "contactEmail": "martinpujaltea@gmail.com",
   "birthDate": "2007-12-17",
-  "status": "ONLINE",
-  "availabilityValue": 100,
   "cvUrl": "/cv.pdf",
   "linkedinUrl": "https://www.linkedin.com/in/alejandro-martin-9a337237b",
   "links": [
-    { "label": "GITHUB →", "href": "https://github.com/blak0p" }
+    {
+      "label": "GITHUB →",
+      "href": "https://github.com/blak0p"
+    }
   ]
 }

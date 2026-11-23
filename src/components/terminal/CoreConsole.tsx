@@ -182,7 +182,7 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
   switch (cmd) {
     case 'help': {
       const isFull = args.includes('-a');
-      const publicCmds = ['ls', 'cd', 'cat', 'pwd', 'tree', 'wget', 'scan', 'status', 'whoami', 'neofetch', 'clear', 'exit'];
+      const publicCmds = ['ls', 'cd', 'cat', 'pwd', 'tree', 'wget', 'scan', 'whoami', 'neofetch', 'clear', 'exit'];
       const secretCmds = ['sudo', 'approve', 'hire-me', 'matrix', 'glitch', 'rm', 'rm -rf', 'regen module', 'top', 'coffee', 'ssh', 'stars'];
       
       if (isFull) {
@@ -211,7 +211,6 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
         `${g('tree'.padEnd(12))} ${o('— mostrar estructura del sistema')}`,
         `${g('wget cv'.padEnd(12))} ${o('— descargar mi currículum')}`,
         `${g('scan'.padEnd(12))} ${o('— escanear integridad y módulos')}`,
-        `${g('status'.padEnd(12))} ${o('— verificar estado del sistema')}`,
         `${g('whoami'.padEnd(12))} ${o('— información de sesión')}`,
         `${g('neofetch'.padEnd(12))} ${o('— mostrar información del sistema')}`,
         `${g('clear'.padEnd(12))} ${o('— limpiar terminal')}`,
@@ -381,13 +380,6 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
       ];
     }
 
-    case 'status': return [
-      b(`[VERIFICACIÓN] Comprobando salud del sistema...`),
-      g(`✓ ACTIVO: ${settings.availabilityValue || 100}%`),
-      g(`✓ DATOS: ${projects.length} PROYECTOS SINCRONIZADOS`),
-      o(`Estado: Sistema nominal esperando tu revisión.`)
-    ];
-
     case 'whoami': {
       const name = identity?.name?.replace('\n', ' ') || 'AlejandroMP';
       dispatchSystemEvent('whoami');
@@ -484,8 +476,8 @@ function execute(raw: string, ctx: ExecuteContext): string[] | '__PURGE__' {
   }
 }
 
-const COMMAND_LIST = ['help', 'ls', 'cd', 'pwd', 'tree', 'cat', 'wget', 'scan', 'status', 'whoami', 'matrix', 'clear', 'exit', 'glitch', 'rm', 'regen', 'neofetch', 'top', 'coffee', 'ssh', 'stars', 'hire-me', 'sudo', 'approve'];
-const DEFAULT_SETTINGS: SiteSettings = { availabilityValue: 100, dustThresholdDays: 60, starsForGold: 5 };
+const COMMAND_LIST = ['help', 'ls', 'cd', 'pwd', 'tree', 'cat', 'wget', 'scan', 'whoami', 'matrix', 'clear', 'exit', 'glitch', 'rm', 'regen', 'neofetch', 'top', 'coffee', 'ssh', 'stars', 'hire-me', 'sudo', 'approve'];
+const DEFAULT_SETTINGS: SiteSettings = {};
 
 interface CoreConsoleProps {
   logs: LogEntry[];

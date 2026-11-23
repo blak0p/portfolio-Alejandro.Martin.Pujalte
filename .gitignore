@@ -33,9 +33,6 @@ pnpm-debug.log*
 .vercel/
 .tokensave
 
-# GitBook generated files
-/src/data/gitbook/
-/public/gitbook-assets/
 
 # Temporary and backups
 .git-corrupt-bak/

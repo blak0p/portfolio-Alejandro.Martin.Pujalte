@@ -268,16 +268,6 @@ body {
   animation: glitch-text 0.3s ease-out;
 }
 
-/* Status indicator pulse */
-@keyframes status-pulse {
-  0%, 100%  { transform: scale(1); opacity: 1; }
-  50%  { transform: scale(1.2); opacity: 0.7; }
-}
-
-.status-pulse {
-  animation: status-pulse 2s ease-in-out infinite;
-}
-
 /* Reveal on load - staggered */
 @keyframes reveal-up {
   from { opacity: 0; transform: translateY(10px); }

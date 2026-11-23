@@ -59,10 +59,6 @@ export interface Experience {
 }
 
 export interface SiteSettings {
-  availabilityValue: number;
-  dustThresholdDays: number;
-  starsForGold: number;
-  status?: 'ONLINE' | 'OFFLINE' | 'BUSY';
   logLimit?: number;
   cvUrl?: string;
   linkedinUrl?: string;

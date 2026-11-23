@@ -2,7 +2,6 @@
 interface HeroProps {
   name: string;
   handle: string;
-  status?: string;
   photo?: string;
   email?: string;
   linkedin?: string;
@@ -11,7 +10,6 @@ interface HeroProps {
   // Merged About props
   bio: string;
   birthDate?: string;
-  availabilityValue?: number;
   cvUrl?: string;
 }
 
@@ -24,7 +22,6 @@ const {
   github,
   bio,
   birthDate,
-  availabilityValue = 0,
   cvUrl
 } = Astro.props;
 
@@ -41,7 +38,6 @@ if (birthDate) {
   }
 }
 
-const availability = Math.max(0, Math.min(100, availabilityValue));
 ---
 
 <section class="relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden recruiter-hero px-4 py-16">
@@ -158,16 +154,8 @@ const availability = Math.max(0, Math.min(100, availabilityValue));
         )}
 
         <div class="bg-white/[0.02] border border-white/10 rounded-2xl px-5 py-4 backdrop-blur-md flex-1 hover:border-recruiter-accent/30 hover:shadow-[0_0_20px_rgba(0,102,255,0.05)] transition-all duration-300 flex flex-col justify-center min-w-[200px]">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-xs uppercase tracking-wider text-white/40">Disponibilidad</span>
-            <span class="text-sm font-bold text-recruiter-accent-light">{availability}%</span>
-          </div>
-          <div class="h-2 bg-white/10 rounded-full overflow-hidden p-[1px]">
-            <div
-              class="h-full bg-gradient-to-r from-recruiter-accent to-recruiter-accent-light rounded-full transition-all duration-[1.2s] cubic-bezier(0.16, 1, 0.3, 1) progress-bar"
-              style={`--target-width: ${availability}%; width: 0%;`}
-            ></div>
-          </div>
+          <span class="block text-xs uppercase tracking-wider text-white/40 mb-1">Estado</span>
+          <span class="text-lg font-bold text-recruiter-accent-light">Disponible para trabajar</span>
         </div>
       </div>
     </div>

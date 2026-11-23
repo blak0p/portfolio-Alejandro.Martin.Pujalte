@@ -3,14 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/recruiter/Hero.astro';
 import Projects from '../components/recruiter/Projects';
 import Tech from '../components/recruiter/Tech.astro';
-import Contact from '../components/recruiter/Contact.astro';
 import CommunitySection from '../components/community/recruiter/CommunitySection.astro';
-import type { Ambition, SiteSettings, LogEntry } from '../types';
-import type identityRaw from '../../public/data/identity.json';
-import type settingsRaw from '../../public/data/settings.json';
-import type projectsRaw from '../../public/data/projects.json';
-import type ambitionsRaw from '../../public/data/ambitions.json';
-import type techstackRaw from '../../public/data/techstack.json';
+import type { Ambition, SiteSettings } from '../types';
 import identity from '../../public/data/identity.json';
 import settings from '../../public/data/settings.json';
 import projects from '../../public/data/projects.json';
@@ -24,8 +18,6 @@ const i = identity as any;
 // Merge identity with settings (settings override identity for dynamic values)
 const identityData = {
   ...i,
-  status: s.status ?? i.status,
-  availabilityValue: s.availabilityValue ?? i.availabilityValue,
   cvUrl: s.cvUrl ?? i.cvUrl,
   linkedinUrl: s.linkedinUrl ?? i.linkedinUrl,
   birthDate: s.birthDate ?? i.birthDate,
@@ -56,7 +48,6 @@ const recruiterTech = techStack.map((t: any) => ({
   title={`${identityData.name.replace('\n', ' ')} — Backend Developer`}
   description={recruiterBio}
   handle={identityData.handle}
-  status={identityData.status}
   navStyle="recruiter"
 >
   <div class="warm-bg relative overflow-hidden">
@@ -68,14 +59,12 @@ const recruiterTech = techStack.map((t: any) => ({
     <Hero
       name={identityData.name}
       handle={identityData.handle}
-      status={identityData.status}
       photo={heroPhotoUrl}
       email={identityData.contactEmail}
       linkedin={recruiterLinkedinUrl}
       github={identityData.links.find((l: any) => l.label.includes('GITHUB'))?.href || 'https://github.com/blak0p'}
       bio={recruiterBio}
       birthDate={identityData.birthDate}
-      availabilityValue={identityData.availabilityValue}
       cvUrl={recruiterCvUrl}
     />
 

@@ -14,14 +14,17 @@ The entire UI is built around a terminal/industrial theme — scanlines, CRT boo
 ### Real-time terminal console
 An embedded xterm console with live logs. It's not a gif. It's not a screenshot. It actually runs. This is where I stream project milestones, system events, and activity. It shows the portfolio is alive.
 
-### Smart project ranking
-Projects auto-rank by stars + manual boosts. Stale repos get flagged with "dust" indicators. Recruiters see what matters most first, not a flat list. Private repos show as CLASSIFIED with NDA notice — transparent about what I can't show.
+### Projects
+Projects keep a manual order. Private repos show as CLASSIFIED with an NDA notice — transparent about what I can't show.
+
+### Open source
+Merged pull requests to other projects are listed with title, repository, date and a link to GitHub. Synced from GitHub by a cron job.
 
 ### Admin panel (invisible to you)
 There's a full admin backend with GitHub OAuth. I manage projects, tech stack, roadmap, and settings from there. Changes deploy to production from the panel itself. You won't see it, but the fact that it exists means the content stays fresh without touching code.
 
 ### Everything is data-driven
-Projects, tech stack, ambitions, settings — all JSON. The UI is a rendering layer. I can update everything from the admin panel or directly in the data files. No hardcoded HTML pages.
+Projects, tech stack, ambitions, community, settings — all JSON. The UI is a rendering layer. I can update everything from the admin panel or directly in the data files. No hardcoded HTML pages.
 
 ---
 
@@ -31,9 +34,8 @@ Projects, tech stack, ambitions, settings — all JSON. The UI is a rendering la
 |---|---|
 | Age | 18 |
 | Focus | Backend, infrastructure, dev tooling |
-| Main project | [git-courer](https://github.com/blak0p/git-courer) — MCP server for Git (29 ★) |
 | Philosophy | Solve real problems. Ask why before how. |
-| Looking for | Junior/entry backend role — remote or Madrid |
+| Looking for | Junior/entry backend role — remote or Valencia |
 
 ## Live
 

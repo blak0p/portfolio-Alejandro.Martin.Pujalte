@@ -1,17 +1,14 @@
 // PR detail modal (per-PR).
 //
 // Shared by both faces (recruiter and dev). Opens when both `project` and
-// `pr` are non-null. Shows the PR title, summary (or the literal "no se pudo
-// hacer el resumen" when Gemini failed), merged date, and a link to the PR.
-// Markdown in the summary is rendered with `marked`. Esc and backdrop close
-// the modal; focus is trapped while open.
+// `pr` are non-null. Shows the PR title, number, repo, merged date and a link
+// to the PR. Esc and backdrop close the modal; focus is trapped while open.
 //
 // Mirrors deployments/ProjectModal.tsx for the dev face palette. The
 // recruiter face uses the warmer glassmorphic palette.
 
 import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { marked } from 'marked';
 import type { CommunityProject, CommunityPR } from '../../../lib/community';
 
 interface PrDetailModalProps {
@@ -20,10 +17,6 @@ interface PrDetailModalProps {
   face: 'recruiter' | 'dev';
   onClose: () => void;
 }
-
-marked.use({ gfm: true, breaks: true });
-
-const NO_SUMMARY = 'no se pudo hacer el resumen';
 
 export default function PrDetailModal({ project, pr, face, onClose }: PrDetailModalProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -68,10 +61,6 @@ export default function PrDetailModal({ project, pr, face, onClose }: PrDetailMo
   }, [pr]);
 
   if (!pr || !project) return null;
-
-  const summaryHtml = pr.summary
-    ? (marked.parse(pr.summary) as string)
-    : null;
 
   const isRecruiter = face === 'recruiter';
   const palette = isRecruiter
@@ -150,26 +139,10 @@ export default function PrDetailModal({ project, pr, face, onClose }: PrDetailMo
 
             <div>
               <p className={`text-xs ${palette.sectionLabel} ${isRecruiter ? '' : 'tracking-widest uppercase'} mb-2`}>
-                // RESUMEN
-              </p>
-              {summaryHtml ? (
-                <div
-                  className={`readme-content text-xs ${palette.textSecondary} leading-relaxed prose prose-invert max-w-none`}
-                  dangerouslySetInnerHTML={{ __html: summaryHtml }}
-                />
-              ) : (
-                <p className={`text-xs text-err/80 ${isRecruiter ? 'italic' : 'tracking-widest uppercase italic'}`}>
-                  {NO_SUMMARY}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <p className={`text-xs ${palette.sectionLabel} ${isRecruiter ? '' : 'tracking-widest uppercase'} mb-2`}>
                 // FECHA
               </p>
               <p className={`text-xs ${palette.textMuted} ${isRecruiter ? '' : 'tracking-widest'}`}>
-                {new Date(pr.mergedAt).toLocaleDateString('es-AR', { year: 'numeric', month: 'long', day: 'numeric' })}
+                {new Date(pr.mergedAt).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
               </p>
             </div>
           </div>

@@ -4,7 +4,7 @@
 // (before the user adds any repo via the admin panel). Every accessor here
 // treats a missing/invalid file as the empty state and never throws.
 
-import type { CommunityData, CommunityProject } from './community';
+import type { CommunityData } from './community';
 import { EMPTY_COMMUNITY_DATA } from './community';
 
 let cachedData: CommunityData | null = null;
@@ -35,19 +35,4 @@ async function fetchCommunityJson(): Promise<CommunityData> {
  */
 export async function loadCommunity(): Promise<CommunityData> {
   return fetchCommunityJson();
-}
-
-/**
- * Total merged PR count across all projects. 0 when the file is absent.
- */
-export async function getTotalMerged(): Promise<number> {
-  const data = await loadCommunity();
-  return data.totalMerged ?? data.projects.reduce((sum, p) => sum + p.prs.length, 0);
-}
-
-/**
- * Find a single project by its slug (`owner-name`). Undefined when absent.
- */
-export async function getProjectBySlug(slug: string): Promise<CommunityProject | undefined> {
-  return (await loadCommunity()).projects.find((p) => p.slug === slug);
 }

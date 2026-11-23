@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import AvailabilityBar from './AvailabilityBar';
 import ContactButton from './ContactButton';
 import Pill from '../ui/Pill';
 
@@ -8,8 +7,6 @@ interface IdentityProps {
   handle: string;
   bio: string;
   quote?: string;
-  status: 'ONLINE' | 'OFFLINE' | 'BUSY';
-  availabilityValue?: number;
   cvUrl?: string;
   linkedinUrl?: string;
   contactEmail?: string;
@@ -17,7 +14,7 @@ interface IdentityProps {
   links?: { label: string; href: string }[];
 }
 
-export default function IdentitySection({ name, handle, bio, quote, status, availabilityValue, cvUrl, linkedinUrl, contactEmail, birthDate, links = [] }: IdentityProps) {
+export default function IdentitySection({ name, handle, bio, quote, cvUrl, linkedinUrl, contactEmail, birthDate, links = [] }: IdentityProps) {
   const [imgError, setImgError] = React.useState(false);
   const [age, setAge] = useState<number | null>(null);
   const [isMounted, setIsMounted] = useState(false);
@@ -74,7 +71,7 @@ export default function IdentitySection({ name, handle, bio, quote, status, avai
         <div className="absolute inset-0 bg-linear-to-t from-[#0a0c10] via-transparent to-transparent pointer-events-none" />
         
         <div className="absolute bottom-0 left-0 w-full p-5 flex flex-col">
-          <Pill variant="cobalt" className="text-xs font-black mb-2 bg-cobalt text-white w-fit">{status}</Pill>
+          <Pill variant="cobalt" className="text-xs font-black mb-2 bg-cobalt text-white w-fit">Disponible para trabajar</Pill>
           <h1 className="text-lg sm:text-xl font-black tracking-tight text-white leading-none">
             {name.replace('\n', ' ')}
           </h1>
@@ -92,7 +89,6 @@ export default function IdentitySection({ name, handle, bio, quote, status, avai
         </p>
 
         <div className="space-y-6">
-          <AvailabilityBar value={availabilityValue} />
           
           <div className="flex flex-col gap-2">
             <ContactButton href={contactEmail ? `mailto:${contactEmail}` : undefined} />
