@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alejandro Martín — Backend developer</title>
+<style>
+  :root {
+    --bg:#080c14; --surface:#121212; --mid:#181818; --text:#ffffff; --muted:#e2e4f0; --faint:#9ea4c0;
+    --accent:#0066FF; --accent-light:#38BDF8; --accent-dark:#0033AA; --bronze:#b87333; --bronze-light:#d4944a; --err:#ff4444;
+    --mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --line: rgba(255,255,255,.09); --tile: rgba(255,255,255,.035);
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--muted); font-family:var(--sans); font-size:16px; line-height:1.55; }
+  a { color:var(--accent-light); text-underline-offset:3px; }
+  a:focus-visible, button:focus-visible { outline:2px solid var(--accent-light); outline-offset:3px; border-radius:6px; }
+  .wrap { max-width:1200px; margin:0 auto; padding:0 32px; }
+  header { display:flex; align-items:center; justify-content:space-between; height:64px; }
+  .brand { display:flex; align-items:center; gap:10px; color:var(--text); text-decoration:none; font-weight:600; }
+  .mono-badge { width:32px; height:32px; border-radius:10px; background:var(--accent); color:#fff; display:grid; place-items:center; font-family:var(--mono); font-size:13px; }
+  nav ul { list-style:none; display:flex; gap:8px; margin:0; padding:0; }
+  nav a { display:block; padding:8px 14px; border-radius:999px; color:var(--faint); text-decoration:none; font-size:14px; }
+  nav a:hover { background:var(--tile); color:var(--text); }
+  nav a.dev { font-family:var(--mono); color:var(--accent-light); border:1px solid rgba(56,189,248,.35); }
+  .hero { display:grid; grid-template-columns:1.4fr 1fr; gap:24px; padding:48px 0 24px; }
+  .hero-main { padding:40px; border-radius:24px; background:linear-gradient(160deg, rgba(0,102,255,.16), rgba(255,255,255,.02) 60%); border:1px solid var(--line); box-shadow:0 20px 50px rgba(0,0,0,.4); }
+  .status { display:inline-flex; gap:8px; align-items:center; font-family:var(--mono); font-size:13px; color:var(--text); padding:6px 12px; border-radius:999px; border:1px solid rgba(56,189,248,.35); }
+  .status i { width:8px; height:8px; border-radius:50%; background:var(--accent-light); }
+  h1 { color:var(--text); font-size:46px; line-height:1.08; letter-spacing:-.02em; margin:24px 0 16px; }
+  .hero-main p { font-size:18px; max-width:46ch; margin:0 0 28px; }
+  .ctas { display:flex; gap:10px; flex-wrap:wrap; }
+  .btn { display:inline-flex; align-items:center; padding:11px 18px; border-radius:999px; font-weight:600; font-size:15px; text-decoration:none; }
+  .btn-primary { background:var(--accent); color:#fff; } .btn-primary:hover { background:var(--accent-dark); }
+  .btn-ghost { color:var(--text); border:1px solid rgba(255,255,255,.2); } .btn-ghost:hover { border-color:var(--accent-light); }
+  .id-card { border-radius:24px; border:1px solid var(--line); background:var(--tile); padding:28px; display:flex; flex-direction:column; gap:20px; }
+  .avatar { width:88px; height:88px; border-radius:22px; background:var(--mid); border:1px solid var(--line); display:grid; place-items:center; font-size:30px; font-weight:700; color:var(--text); }
+  .id-card h2 { margin:0; color:var(--text); font-size:20px; }
+  .id-card .handle { font-family:var(--mono); color:var(--faint); font-size:14px; }
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:auto; }
+  .stats div { border-radius:14px; background:rgba(255,255,255,.03); border:1px solid var(--line); padding:12px; }
+  .stats b { display:block; color:var(--text); font-size:22px; }
+  .stats span { font-size:12px; color:var(--faint); }
+  .sec-title { display:flex; justify-content:space-between; align-items:baseline; margin:48px 0 16px; }
+  .sec-title h2 { margin:0; color:var(--text); font-size:22px; }
+  .sec-title a { font-size:14px; }
+  .bento { display:grid; grid-template-columns:repeat(6,1fr); grid-auto-rows:minmax(150px,auto); gap:16px; }
+  .tile { border-radius:20px; border:1px solid var(--line); background:var(--tile); padding:24px; display:flex; flex-direction:column; gap:10px; }
+  .tile:hover { border-color:rgba(56,189,248,.35); }
+  .tile h3 { margin:0; color:var(--text); font-size:20px; }
+  .tile p { margin:0; font-size:15px; }
+  .tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:auto; }
+  .tags span { font-family:var(--mono); font-size:12px; padding:3px 9px; border-radius:999px; border:1px solid var(--line); color:var(--faint); }
+  .row { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  .stars { font-family:var(--mono); font-size:13px; color:var(--bronze-light); border:1px solid var(--bronze); padding:2px 9px; border-radius:999px; }
+  .state { font-family:var(--mono); font-size:12px; color:var(--faint); }
+  .t-feature { grid-column:span 4; grid-row:span 2; background:linear-gradient(180deg, rgba(0,102,255,.10), rgba(255,255,255,.02)); }
+  .install { font-family:var(--mono); font-size:13px; background:#0d0d0d; border:1px solid var(--line); border-radius:12px; padding:14px 16px; color:var(--muted); overflow-x:auto; white-space:nowrap; }
+  .install span { color:var(--accent-light); }
+  .t-side { grid-column:span 2; grid-row:span 2; }
+  .t-third { grid-column:span 2; }
+  .private { font-family:var(--mono); font-size:12px; color:var(--err); border:1px solid rgba(255,68,68,.4); padding:2px 8px; border-radius:999px; }
+  .bar { height:6px; border-radius:999px; background:rgba(255,255,255,.08); overflow:hidden; }
+  .bar i { display:block; height:100%; background:var(--accent-light); border-radius:999px; }
+  .skill { display:grid; grid-template-columns:90px 1fr 70px; gap:10px; align-items:center; font-size:14px; }
+  .skill em { font-style:normal; color:var(--faint); font-size:12px; text-align:right; }
+  .goal { font-size:14px; padding:8px 0; border-bottom:1px solid var(--line); }
+  .goal b { font-family:var(--mono); font-size:12px; color:var(--accent-light); font-weight:500; display:block; }
+  .t-contact { grid-column:span 6; flex-direction:row; align-items:center; justify-content:space-between; flex-wrap:wrap; background:linear-gradient(90deg, rgba(0,102,255,.22), rgba(0,102,255,.04)); }
+  .t-contact h3 { font-size:26px; }
+  footer { padding:40px 0 56px; font-size:14px; color:var(--faint); display:flex; justify-content:space-between; }
+  @media (max-width:960px) {
+    nav ul li:not(:last-child) { display:none; }
+    .hero { grid-template-columns:1fr; }
+    .bento { grid-template-columns:1fr; }
+    .t-feature, .t-side, .t-third, .t-contact { grid-column:auto; grid-row:auto; }
+    h1 { font-size:36px; } .hero-main { padding:28px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="#"><span class="mono-badge" aria-hidden="true">AM</span>Alejandro Martín</a>
+    <nav aria-label="Principal"><ul>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+      <li><a class="dev" href="#">/dev</a></li>
+    </ul></nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Presentación">
+      <div class="hero-main">
+        <span class="status"><i aria-hidden="true"></i>Disponible para trabajar</span>
+        <h1>Backend developer que construye herramientas que la gente usa.</h1>
+        <p>Tengo 18 años, programo en Go y me enfoco en infraestructura de IA local y arquitectura de software. Busco mi primer puesto junior, en remoto o en Madrid.</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="#">Descargar CV</a>
+          <a class="btn btn-ghost" href="#">GitHub</a>
+          <a class="btn btn-ghost" href="#">LinkedIn</a>
+        </div>
+      </div>
+      <aside class="id-card" aria-label="Resumen">
+        <div class="row" style="justify-content:flex-start;gap:16px">
+          <div class="avatar" aria-hidden="true">AM</div>
+          <div><h2>Alejandro Martín Pujalte</h2><span class="handle">@blak0p</span></div>
+        </div>
+        <p style="margin:0">“Pregunto por qué antes de preguntar cómo. Ahí empieza el verdadero trabajo.”</p>
+        <div class="stats">
+          <div><b>43 ★</b><span>git-courer</span></div>
+          <div><b>1</b><span>PR en engram</span></div>
+          <div><b>3</b><span>proyectos</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <div class="sec-title" id="proyectos"><h2>Proyectos y open source</h2><a href="#">Ver todo en GitHub →</a></div>
+    <div class="bento">
+      <article class="tile t-feature">
+        <div class="row"><span class="state">Completado · MIT</span><span class="stars">43 ★</span></div>
+        <h3 style="font-size:30px">git-courer</h3>
+        <p style="font-size:17px;max-width:52ch">Servidor MCP para Git con Ollama en local. El agente de IA hace commits, ramas y releases sin gastar tokens remotos, siempre con confirmación antes de aplicar.</p>
+        <div class="install" aria-label="Comando de instalación"><span>$</span> curl -fsSL https://…/git-courer/install.sh | sh</div>
+        <div class="tags"><span>Go</span><span>C</span><span>Python</span><span>Shell</span></div>
+        <a href="#">Ver repositorio →</a>
+      </article>
+      <article class="tile t-side">
+        <div class="row"><span class="state">Open source · mergeado</span></div>
+        <h3>PR #586 en engram</h3>
+        <p class="state">Gentleman-Programming/engram · 7.081 ★</p>
+        <p>Arreglé un crash de FTS5 escapando comillas dobles internas en <code>sanitizeFTS</code>.</p>
+        <a href="#" style="margin-top:auto">Ver PR →</a>
+      </article>
+      <article class="tile t-third">
+        <div class="row"><span class="state">En progreso</span><span class="stars">9 ★</span></div>
+        <h3>Attack Shark X6 Linux</h3>
+        <p>Configurador para un mouse sin soporte en Linux, a partir de ingeniería inversa del protocolo HID.</p>
+        <div class="tags"><span>Go</span><span>Wails</span><span>React</span></div>
+      </article>
+      <article class="tile t-third">
+        <div class="row"><span class="state">Pausado</span><span class="private">Privado</span></div>
+        <h3>hitro.es</h3>
+        <p>Plataforma de formación con pagos Stripe/SumUp y vídeos con enlaces que caducan.</p>
+        <div class="tags"><span>Astro</span><span>TypeScript</span><span>Go</span></div>
+      </article>
+      <article class="tile t-third" id="stack">
+        <h3>Stack</h3>
+        <div class="skill"><span>Go 1.24</span><div class="bar"><i style="width:95%"></i></div><em>Diario</em></div>
+        <div class="skill"><span>Git</span><div class="bar"><i style="width:90%"></i></div><em>Diario</em></div>
+        <div class="skill"><span>Shell</span><div class="bar"><i style="width:75%"></i></div><em>Frecuente</em></div>
+        <div class="skill"><span>React 19</span><div class="bar"><i style="width:65%"></i></div><em>Frecuente</em></div>
+        <div class="skill"><span>Java 21</span><div class="bar"><i style="width:15%"></i></div><em>Básico</em></div>
+      </article>
+      <article class="tile t-third">
+        <h3>Próximos pasos</h3>
+        <div class="goal"><b>6–12 meses</b>Primer puesto backend resolviendo problemas reales</div>
+        <div class="goal"><b>1–3 años</b>Diseñar un sistema complejo desde cero</div>
+        <div class="goal" style="border:0"><b>3–5 años</b>Trabajar en el extranjero como ingeniero backend</div>
+      </article>
+      <article class="tile t-third">
+        <h3>Para devs</h3>
+        <p>Hay una vista técnica con terminal, logs del proyecto y detalle de cada repo.</p>
+        <a href="#" style="margin-top:auto;font-family:var(--mono)">Abrir /dev →</a>
+      </article>
+      <section class="tile t-contact" id="contacto" aria-labelledby="h-c">
+        <div><h3 id="h-c">¿Hablamos?</h3><p>Busco puesto junior backend · remoto o Madrid.</p></div>
+        <div class="ctas"><a class="btn btn-primary" href="#">martinpujaltea@gmail.com</a><a class="btn btn-ghost" href="#">Descargar CV</a></div>
+      </section>
+    </div>
+  </main>
+  <footer><span>© 2026 Alejandro Martín Pujalte</span><span>alejandro-m-p.com</span></footer>
+</div>
+</body>
+</html>

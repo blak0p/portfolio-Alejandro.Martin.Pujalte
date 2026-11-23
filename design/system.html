@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design system — portfolio</title>
+<style>
+  :root {
+    --carbono:#0d0d0d; --carbono-low:#080808; --carbono-surface:#121212; --carbono-mid:#181818; --carbono-high:#222222; --carbono-highest:#2a2a2a;
+    --cobalt:#0055ff; --cobalt-dark:#0039b3; --cobalt-light:#3377ff;
+    --r-accent:#0066FF; --r-accent-light:#38BDF8; --r-accent-dark:#0033AA;
+    --text:#ffffff; --muted:#e2e4f0; --faint:#9ea4c0;
+    --warn:#ffcc00; --err:#ff4444; --bronze:#b87333; --bronze-light:#d4944a; --bronze-dark:#8a5520;
+    --bg-recruiter:#080c14;
+    --mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg-recruiter); color:var(--muted); font-family:var(--sans); }
+  main { width:1440px; max-width:100%; margin:0 auto; padding:48px 64px 80px; }
+  h1 { color:var(--text); font-size:32px; margin:0 0 4px; }
+  h2 { font-family:var(--mono); font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); margin:48px 0 16px; padding-bottom:8px; border-bottom:1px solid rgba(255,255,255,.1); }
+  p.lead { color:var(--faint); margin:0; }
+  .swatches { display:grid; grid-template-columns:repeat(6, 1fr); gap:16px; }
+  .sw { border:1px solid rgba(255,255,255,.12); border-radius:8px; overflow:hidden; background:var(--carbono-surface); }
+  .sw .chip { height:72px; }
+  .sw .meta { padding:10px 12px; font-family:var(--mono); font-size:12px; }
+  .sw .meta b { display:block; color:var(--text); font-weight:600; margin-bottom:2px; }
+  .sw .meta span { color:var(--faint); }
+  .type-row { display:flex; align-items:baseline; gap:24px; padding:12px 0; border-bottom:1px solid rgba(255,255,255,.06); }
+  .type-row code { font-family:var(--mono); font-size:12px; color:var(--faint); width:220px; flex:none; }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+  .panel-dev { background:var(--carbono-surface); border:1px solid rgba(255,255,255,.15); padding:20px; font-family:var(--mono);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.05), inset 0 -1px 0 rgba(0,0,0,.5), 0 4px 12px rgba(0,0,0,.5); }
+  .panel-dev .title { color:var(--text); font-size:13px; letter-spacing:.08em; display:inline-block; padding-bottom:6px; border-bottom:2px solid var(--cobalt); box-shadow:0 6px 10px -6px rgba(0,85,255,.3); }
+  .panel-dev p { font-size:13px; color:var(--muted); }
+  .card-rec { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:24px; padding:28px; box-shadow:0 20px 50px rgba(0,0,0,.4); }
+  .card-rec h3 { color:var(--text); margin:0 0 8px; font-size:20px; }
+  .btn { display:inline-flex; align-items:center; gap:8px; padding:10px 18px; border-radius:999px; font-weight:600; font-size:14px; text-decoration:none; border:1px solid transparent; }
+  .btn-primary { background:var(--r-accent); color:#fff; }
+  .btn-primary:hover { background:var(--r-accent-dark); }
+  .btn-ghost { color:var(--r-accent-light); border-color:rgba(56,189,248,.4); }
+  .btn-dev { border-radius:0; font-family:var(--mono); background:transparent; color:var(--text); border-color:rgba(255,255,255,.25); font-weight:500; }
+  .btn-dev:hover { border-color:var(--cobalt-light); }
+  a:focus-visible, button:focus-visible { outline:2px solid var(--r-accent-light); outline-offset:3px; }
+  .pill { display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:12px; padding:4px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.14); color:var(--muted); }
+  .dot { width:8px; height:8px; border-radius:50%; }
+  .row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:16px; }
+  .radius { display:flex; gap:24px; }
+  .radius div { width:120px; height:80px; border:1px solid rgba(255,255,255,.2); background:var(--carbono-mid); display:grid; place-items:center; font-family:var(--mono); font-size:12px; color:var(--faint); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Design system</h1>
+  <p class="lead">Synced from <code>src/styles/global.css</code>, <code>BaseLayout.astro</code>, <code>index.astro</code>. IBM Plex Mono shown with the system monospace stand-in.</p>
+
+  <h2>Surfaces</h2>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#080c14"></div><div class="meta"><b>bgPage recruiter</b><span>#080c14</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--carbono)"></div><div class="meta"><b>carbono</b><span>#0d0d0d</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--carbono-low)"></div><div class="meta"><b>carbono-low</b><span>#080808</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--carbono-surface)"></div><div class="meta"><b>carbono-surface</b><span>#121212</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--carbono-mid)"></div><div class="meta"><b>carbono-mid</b><span>#181818</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--carbono-highest)"></div><div class="meta"><b>carbono-highest</b><span>#2a2a2a</span></div></div>
+  </div>
+
+  <h2>Accent</h2>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:var(--cobalt)"></div><div class="meta"><b>cobalt</b><span>#0055ff</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--cobalt-dark)"></div><div class="meta"><b>cobalt-dark</b><span>#0039b3</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--cobalt-light)"></div><div class="meta"><b>cobalt-light</b><span>#3377ff</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--r-accent)"></div><div class="meta"><b>recruiter-accent</b><span>#0066FF</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--r-accent-light)"></div><div class="meta"><b>recruiter-accent-light</b><span>#38BDF8</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--r-accent-dark)"></div><div class="meta"><b>recruiter-accent-dark</b><span>#0033AA</span></div></div>
+  </div>
+
+  <h2>Text and state</h2>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:var(--text)"></div><div class="meta"><b>text-primary</b><span>#ffffff</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--muted)"></div><div class="meta"><b>text-muted</b><span>#e2e4f0</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--faint)"></div><div class="meta"><b>text-faint</b><span>#9ea4c0</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--warn)"></div><div class="meta"><b>warn</b><span>#ffcc00</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--err)"></div><div class="meta"><b>err</b><span>#ff4444</span></div></div>
+    <div class="sw"><div class="chip" style="background:var(--bronze)"></div><div class="meta"><b>bronze</b><span>#b87333</span></div></div>
+  </div>
+
+  <h2>Typography</h2>
+  <div class="type-row"><code>sans / 32 / 700</code><span style="font-size:32px;font-weight:700;color:#fff">Backend developer</span></div>
+  <div class="type-row"><code>font-size-xl / 20px</code><span style="font-family:var(--mono);font-size:20px;color:#fff">// PROYECTOS</span></div>
+  <div class="type-row"><code>font-size-lg / 16px</code><span style="font-size:16px">Construyo sistemas que aguantan bajo presión.</span></div>
+  <div class="type-row"><code>font-size-base / 13px</code><span style="font-family:var(--mono);font-size:13px">git-courer — MCP server for Git with local Ollama</span></div>
+  <div class="type-row"><code>font-size-sm / 12px</code><span style="font-family:var(--mono);font-size:12px;color:var(--faint)">GO · C · PYTHON · SHELL</span></div>
+  <div class="type-row"><code>font-size-xs / 10px</code><span style="font-family:var(--mono);font-size:10px;color:var(--faint)">STATUS: ONLINE</span></div>
+
+  <h2>Radius</h2>
+  <div class="radius">
+    <div style="border-radius:0">dev · 0</div>
+    <div style="border-radius:24px">rec · 3xl 24px</div>
+    <div style="border-radius:999px">rec · full</div>
+  </div>
+
+  <h2>Components</h2>
+  <div class="two">
+    <div class="panel-dev">
+      <span class="title">// PROYECTOS</span>
+      <p>Dev panel: <code>.industrial-panel</code> shadow, sharp corners, cobalt underline.</p>
+      <div class="row">
+        <a class="btn btn-dev" href="#">git clone →</a>
+        <span class="pill" style="border-radius:0"><span class="dot" style="background:#3ccf6e"></span>ONLINE</span>
+      </div>
+    </div>
+    <div class="card-rec">
+      <h3>Recruiter card</h3>
+      <p>Rounded 3xl, hero shadow, accent fill buttons and light-accent links.</p>
+      <div class="row">
+        <a class="btn btn-primary" href="#">Descargar CV</a>
+        <a class="btn btn-ghost" href="#">GitHub →</a>
+        <span class="pill"><span class="dot" style="background:var(--bronze-light)"></span>43 ★</span>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alejandro Martín — Backend developer</title>
+<style>
+  :root {
+    --bg:#080c14; --surface:#121212; --text:#ffffff; --muted:#e2e4f0; --faint:#9ea4c0;
+    --accent:#0066FF; --accent-light:#38BDF8; --accent-dark:#0033AA; --bronze-light:#d4944a; --err:#ff4444;
+    --mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --line: rgba(255,255,255,.09);
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+  body { margin:0; background:var(--bg); color:var(--muted); font-family:var(--sans); font-size:17px; line-height:1.65; }
+  a { color:var(--accent-light); text-underline-offset:3px; }
+  a:focus-visible, button:focus-visible { outline:2px solid var(--accent-light); outline-offset:3px; border-radius:4px; }
+  .skip { position:absolute; left:-999px; } .skip:focus { left:16px; top:16px; background:var(--accent); color:#fff; padding:8px 12px; }
+  .wrap { max-width:720px; margin:0 auto; padding:0 24px; }
+  header.top { position:sticky; top:0; background:rgba(8,12,20,.85); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); z-index:10; }
+  header.top .wrap { max-width:960px; display:flex; align-items:center; justify-content:space-between; height:56px; }
+  .brand { font-family:var(--mono); font-size:14px; color:var(--text); text-decoration:none; }
+  nav ul { list-style:none; display:flex; gap:24px; margin:0; padding:0; font-size:14px; }
+  nav a { color:var(--faint); text-decoration:none; }
+  nav a:hover { color:var(--text); }
+  nav a.dev { font-family:var(--mono); color:var(--accent-light); }
+  .hero { padding:96px 0 72px; }
+  .eyebrow { font-family:var(--mono); font-size:13px; color:var(--faint); display:flex; gap:10px; align-items:center; }
+  .eyebrow .dot { width:8px; height:8px; border-radius:50%; background:var(--accent-light); }
+  h1 { color:var(--text); font-size:52px; line-height:1.1; letter-spacing:-.02em; margin:20px 0 24px; font-weight:700; }
+  h1 em { font-style:normal; color:var(--accent-light); }
+  .lede { font-size:20px; color:var(--muted); max-width:36ch; margin:0 0 32px; }
+  .ctas { display:flex; gap:12px; flex-wrap:wrap; }
+  .btn { display:inline-flex; align-items:center; padding:12px 20px; border-radius:999px; font-weight:600; font-size:15px; text-decoration:none; }
+  .btn-primary { background:var(--accent); color:#fff; } .btn-primary:hover { background:var(--accent-dark); }
+  .btn-ghost { color:var(--text); border:1px solid rgba(255,255,255,.2); } .btn-ghost:hover { border-color:var(--accent-light); }
+  .facts { display:flex; gap:32px; flex-wrap:wrap; margin-top:48px; padding-top:24px; border-top:1px solid var(--line); font-size:14px; color:var(--faint); }
+  .facts b { display:block; color:var(--text); font-size:15px; font-weight:600; }
+  section { padding:64px 0; border-top:1px solid var(--line); }
+  h2 { font-family:var(--mono); font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); margin:0 0 32px; font-weight:500; }
+  article.case { display:grid; grid-template-columns:48px 1fr; gap:0 16px; padding:0 0 48px; }
+  article.case + article.case { padding-top:48px; border-top:1px dashed var(--line); }
+  .num { font-family:var(--mono); font-size:14px; color:var(--faint); padding-top:6px; }
+  .case h3 { color:var(--text); font-size:26px; margin:0 0 4px; letter-spacing:-.01em; }
+  .meta { font-family:var(--mono); font-size:13px; color:var(--faint); display:flex; gap:16px; flex-wrap:wrap; margin-bottom:16px; }
+  .meta .stars { color:var(--bronze-light); }
+  .case p { margin:0 0 12px; }
+  .case dl { display:grid; grid-template-columns:110px 1fr; gap:6px 16px; margin:16px 0; font-size:15px; }
+  .case dt { color:var(--faint); }
+  .case dd { margin:0; }
+  .links { display:flex; gap:20px; font-size:15px; }
+  .private { font-family:var(--mono); font-size:12px; color:var(--err); border:1px solid rgba(255,68,68,.4); padding:2px 8px; border-radius:999px; }
+  .oss { background:rgba(255,255,255,.03); border:1px solid var(--line); border-radius:16px; padding:24px; }
+  .oss .repo { font-family:var(--mono); font-size:14px; color:var(--faint); }
+  .oss h3 { color:var(--text); font-size:19px; margin:8px 0; font-family:var(--mono); font-weight:500; }
+  .stack { display:grid; grid-template-columns:1fr 1fr; gap:12px 40px; }
+  .stack div { display:flex; justify-content:space-between; border-bottom:1px solid var(--line); padding:8px 0; }
+  .stack span:last-child { color:var(--faint); font-size:15px; }
+  .goals { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .goals h3 { font-family:var(--mono); font-size:13px; color:var(--accent-light); margin:0 0 8px; font-weight:500; }
+  .goals ul { margin:0; padding-left:18px; font-size:15px; }
+  .goals li { margin-bottom:8px; }
+  .contact h2 + p { font-size:28px; color:var(--text); line-height:1.3; margin:0 0 24px; }
+  footer { padding:32px 0 64px; font-size:14px; color:var(--faint); border-top:1px solid var(--line); }
+  footer .wrap { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+  @media (max-width:720px) {
+    nav ul li:not(:last-child) { display:none; }
+    h1 { font-size:38px; } .lede { font-size:18px; }
+    article.case { grid-template-columns:1fr; } .num { padding:0 0 4px; }
+    .case dl { grid-template-columns:1fr; } .case dt { margin-top:8px; }
+    .stack, .goals { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">alejandro-m-p.com</a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#open-source">Open source</a></li>
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li><a class="dev" href="#">/dev →</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap hero">
+    <p class="eyebrow"><span class="dot" aria-hidden="true"></span>Disponible · Junior backend · remoto o Madrid</p>
+    <h1>Alejandro Martín.<br>Construyo sistemas que <em>aguantan bajo presión</em>.</h1>
+    <p class="lede">Desarrollador backend de 18 años, centrado en Go, infraestructura de IA local y herramientas para desarrolladores.</p>
+    <div class="ctas">
+      <a class="btn btn-primary" href="#">Descargar CV (PDF)</a>
+      <a class="btn btn-ghost" href="#contacto">Escribirme</a>
+    </div>
+    <div class="facts">
+      <div><b>43 ★</b>git-courer en GitHub</div>
+      <div><b>PR mergeado</b>en engram (7k ★)</div>
+      <div><b>Go</b>lenguaje principal</div>
+    </div>
+  </div>
+
+  <section id="proyectos" aria-labelledby="h-proj">
+    <div class="wrap">
+      <h2 id="h-proj">Proyectos</h2>
+
+      <article class="case">
+        <span class="num">01</span>
+        <div>
+          <h3>git-courer</h3>
+          <div class="meta"><span class="stars">43 ★</span><span>Completado</span><span>Go · C · Python · Shell</span></div>
+          <p>Servidor MCP para Git que usa Ollama en local: el agente de IA opera Git sin gastar tokens de un modelo remoto.</p>
+          <dl>
+            <dt>Problema</dt><dd>Los agentes gastan contexto y tokens en tareas de Git repetitivas.</dd>
+            <dt>Solución</dt><dd>Un LLM local redacta commits, ramas y releases con confirmación antes de aplicar.</dd>
+          </dl>
+          <div class="links"><a href="#">Repositorio →</a><a href="#">Cómo se instala</a></div>
+        </div>
+      </article>
+
+      <article class="case">
+        <span class="num">02</span>
+        <div>
+          <h3>Attack Shark X6 para Linux</h3>
+          <div class="meta"><span class="stars">9 ★</span><span>En progreso</span><span>Go · Wails · React</span></div>
+          <p>Configurador de escritorio para un mouse que solo tenía software de Windows. Hice ingeniería inversa del protocolo HID para reproducirlo.</p>
+          <div class="links"><a href="#">Repositorio →</a></div>
+        </div>
+      </article>
+
+      <article class="case">
+        <span class="num">03</span>
+        <div>
+          <h3>hitro.es <span class="private">Privado</span></h3>
+          <div class="meta"><span>Pausado</span><span>Astro · TypeScript · Go</span></div>
+          <p>Plataforma full-stack para un negocio de formación: pagos con Stripe y SumUp y enlaces de vídeo que caducan. Código bajo NDA.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="open-source" aria-labelledby="h-oss">
+    <div class="wrap">
+      <h2 id="h-oss">Open source</h2>
+      <div class="oss">
+        <span class="repo">Gentleman-Programming/engram · 7.081 ★ · mergeado 08/10/2026</span>
+        <h3>fix(store): escape interior double-quotes in sanitizeFTS</h3>
+        <p>Corregí <code>sanitizeFTS</code> para escapar comillas dobles internas, que provocaban un crash de FTS5 en las búsquedas.</p>
+        <a href="#">Ver PR #586 →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack" aria-labelledby="h-stack">
+    <div class="wrap">
+      <h2 id="h-stack">Stack</h2>
+      <div class="stack">
+        <div><span>Go 1.24</span><span>Uso diario</span></div>
+        <div><span>Git</span><span>Uso diario</span></div>
+        <div><span>Shell</span><span>Frecuente</span></div>
+        <div><span>React 19</span><span>Frecuente</span></div>
+        <div><span>Java 21</span><span>Básico</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-goals">
+    <div class="wrap">
+      <h2 id="h-goals">Hacia dónde voy</h2>
+      <div class="goals">
+        <div><h3>6–12 meses</h3><ul><li>Primer puesto como backend resolviendo problemas reales</li><li>Desplegar hitro.es</li></ul></div>
+        <div><h3>1–3 años</h3><ul><li>Diseñar un sistema complejo desde cero</li><li>Resolver problemas de arquitectura que importan</li></ul></div>
+        <div><h3>3–5 años</h3><ul><li>Contribuir a open source relevante</li><li>Trabajar en el extranjero</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto" class="contact" aria-labelledby="h-contact">
+    <div class="wrap">
+      <h2 id="h-contact">Contacto</h2>
+      <p>¿Buscas un junior backend que pregunte por qué antes de preguntar cómo?</p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="#">martinpujaltea@gmail.com</a>
+        <a class="btn btn-ghost" href="#">LinkedIn</a>
+        <a class="btn btn-ghost" href="#">GitHub</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 Alejandro Martín Pujalte</span><a href="#">¿Eres dev? Mira la vista técnica →</a></div>
+</footer>
+</body>
+</html>

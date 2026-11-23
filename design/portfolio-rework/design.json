@@ -1,0 +1,42 @@
+{
+  "title": "Portfolio rework — recruiter home",
+  "brief": "Recruiter home (/) for Alejandro Martín, 18-year-old junior backend developer. Clean modern base (terminal style reserved for /dev), real content from public/data, goal: a recruiter understands who he is in 30s and contacts him.",
+  "feature": "odd/tasks/portfolio-rework.md",
+  "artboards": [
+    {
+      "file": "01-editorial.html",
+      "title": "Editorial",
+      "tradeoff": "Calm, credible, reads like a well-typeset CV with project case studies; least visual impact and needs scrolling to reach everything",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "02-bento.html",
+      "title": "Bento",
+      "tradeoff": "Most visual and scannable, git-courer and the engram PR shine at a glance; risks looking like a template and gets busy with more content",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "03-split-sidebar.html",
+      "title": "Split sidebar",
+      "tradeoff": "Identity, CV and contact always visible while scrolling; stacks on mobile and loses that advantage, quieter hero",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "04-editorial-sidebar.html",
+      "title": "Editorial + sidebar (mix 01/03)",
+      "tradeoff": "Sticky identity/CV/contact from 03 with the editorial hero and problem/solution case studies from 01; no featured main project. Longest page; sidebar advantage lost on mobile",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "file": "05-dev-terminal.html",
+      "title": "/dev — terminal interactiva + paneles",
+      "tradeoff": "Interactive terminal (help, ls, cd, cat, neofetch, log, hire-me…) as the hero of /dev, plus terminal-skinned panels; scrollable page instead of the fixed 100vh dashboard. Lightweight DOM terminal instead of xterm: less authentic, much lighter",
+      "width": 1440,
+      "height": 900
+    }
+  ]
+}
