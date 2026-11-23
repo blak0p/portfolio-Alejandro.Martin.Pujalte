@@ -1,0 +1,110 @@
+.term {
+  --t-low: #080808;
+  --t-line: rgba(255, 255, 255, 0.15);
+  --t-accent: #38bdf8;
+  --t-cobalt-light: #3377ff;
+  --t-text: #ffffff;
+  --t-muted: #e2e4f0;
+  --t-faint: #9ea4c0;
+  --t-warn: #ffcc00;
+  --t-err: #ff4444;
+  --t-bronze: #d4944a;
+  font-family: ui-monospace, 'SFMono-Regular', 'JetBrains Mono', Menlo, Consolas, monospace;
+}
+
+.screen {
+  background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 3px), var(--t-low);
+  height: 340px;
+  overflow-y: auto;
+  padding: 14px 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--t-muted);
+  cursor: text;
+  position: relative;
+}
+.screen:focus-within {
+  outline: 1px solid var(--t-cobalt-light);
+  outline-offset: -1px;
+}
+
+.out > div {
+  white-space: pre-wrap;
+  word-break: break-word;
+  min-height: 1.6em;
+}
+.c { color: var(--t-text); }
+.ok { color: var(--t-accent); }
+.w { color: var(--t-warn); }
+.e { color: var(--t-err); }
+.f { color: var(--t-faint); }
+.b { color: var(--t-bronze); }
+.bl { color: var(--t-cobalt-light); }
+.bd { font-weight: 700; }
+
+.line {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.ps {
+  color: var(--t-accent);
+  white-space: nowrap;
+}
+.input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  color: var(--t-text);
+  font: inherit;
+  caret-color: var(--t-accent);
+  padding: 2px 0;
+}
+.input:focus {
+  outline: none;
+}
+.line:focus-within {
+  box-shadow: inset 0 -1px 0 var(--t-cobalt-light);
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 10px 16px;
+  border-top: 1px solid var(--t-line);
+}
+.chips button,
+.reopen button {
+  font: inherit;
+  font-size: 12px;
+  background: transparent;
+  color: var(--t-muted);
+  border: 1px solid var(--t-line);
+  padding: 4px 10px;
+  cursor: pointer;
+}
+.chips button:hover,
+.reopen button:hover {
+  border-color: var(--t-cobalt-light);
+  color: var(--t-text);
+}
+.chips button:focus-visible,
+.reopen button:focus-visible {
+  outline: 2px solid var(--t-accent);
+  outline-offset: 2px;
+}
+
+.reopen {
+  padding: 16px;
+}
+.reopen button {
+  font-size: 13px;
+  color: var(--t-accent);
+  padding: 6px 14px;
+}
+
+@media (max-width: 1000px) {
+  .screen { height: 300px; }
+}
