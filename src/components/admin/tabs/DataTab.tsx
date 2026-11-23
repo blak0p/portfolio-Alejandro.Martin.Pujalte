@@ -9,7 +9,6 @@ const DATA_FILES = [
   { key: 'techstack', label: 'TECHSTACK', path: '/data/techstack.json' },
   { key: 'identity', label: 'IDENTITY', path: '/data/identity.json' },
   { key: 'settings', label: 'SETTINGS', path: '/data/settings.json' },
-  { key: 'ambitions', label: 'AMBITIONS', path: '/data/ambitions.json' },
 ] as const;
 
 interface DataTabProps {

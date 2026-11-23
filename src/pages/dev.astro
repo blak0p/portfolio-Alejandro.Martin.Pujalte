@@ -2,9 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import DevTerminal from '../components/terminal/DevTerminal';
 import type { TermData } from '../components/terminal/engine';
-import type { Ambition, LogEntry, Project, SiteSettings, TechTool } from '../types';
+import type { LogEntry, Project, SiteSettings, TechTool } from '../types';
 import { sortProjects } from '../lib/projectRanking';
-import ambitions from '../../public/data/ambitions.json';
 import identity from '../../public/data/identity.json';
 import logs from '../../public/data/logs.json';
 import settings from '../../public/data/settings.json';
@@ -14,7 +13,6 @@ import community from '../../public/data/community.json';
 
 const s = settings as unknown as SiteSettings;
 const i = identity as any;
-const amb = ambitions as unknown as Ambition[];
 const logList = logs as unknown as LogEntry[];
 const tools = techStack as unknown as TechTool[];
 const projects = sortProjects(projectsData as unknown as Project[]);
@@ -72,21 +70,9 @@ for (const t of tools) {
   const g = t.group || 'Otros';
   let entry = groups.find((x) => x.group === g);
   if (!entry) groups.push((entry = { group: g, items: [] }));
-  entry.items.push(t.version ? `${t.name} ${t.version}` : t.name);
+  entry.items.push(t.name);
 }
 const langs = tools.slice(0, 3).map((t) => t.name.toLowerCase()).join(', ');
-
-// ── Roadmap ─────────────────────────────────────────────────────────────────
-const labels = s.roadmapLabels ?? {
-  short: { label: 'CORTO PLAZO', timeframe: '6-12 meses' },
-  mid: { label: 'MEDIO PLAZO', timeframe: '1-3 años' },
-  long: { label: 'LARGO PLAZO', timeframe: '3-5 años' },
-};
-const horizons = (['short', 'mid', 'long'] as const).map((k) => ({
-  title: `${labels[k].label} · ${labels[k].timeframe}`.toUpperCase(),
-  items: amb.filter((a) => a.section === k),
-})).filter((h) => h.items.length);
-const done = amb.filter((a) => a.completed).length;
 
 // ── Datos de la terminal ────────────────────────────────────────────────────
 const termData: TermData = {
@@ -114,7 +100,7 @@ const termData: TermData = {
         <ul>
           <li><a href="#proyectos">proyectos</a></li>
           <li><a href="#open-source">open-source</a></li>
-          <li><a href="#stack">stack</a></li>
+          <li><a href="#stack" class="notranslate" translate="no">stack</a></li>
           <li><a class="rec" href="/">← vista recruiter</a></li>
         </ul>
         <div class="lang" role="group" aria-label="Idioma">
@@ -135,7 +121,7 @@ const termData: TermData = {
               <dt>handle</dt><dd>{i.handle}</dd>
               <dt>rol</dt><dd>junior backend</dd>
               <dt>base</dt><dd>{i.location} · remoto</dd>
-              {langs && (<><dt>lang</dt><dd>{langs}</dd></>)}
+              {langs && (<><dt>lang</dt><dd class="notranslate" translate="no">{langs}</dd></>)}
             </dl>
             <div class="cmds">
               <a class="cmd" id="mailcmd" href={`mailto:${email}`}>$ mail {email} <span aria-hidden="true">↵</span></a>
@@ -157,7 +143,7 @@ const termData: TermData = {
           {repos.map((r) => (
             <article class="repo" id={`repo-${r.slug}`}>
               <div>
-                <h3>{r.name}</h3>
+                <h3 translate="no" class="notranslate">{r.name}</h3>
                 <div class="meta">
                   {r.priv && <span class="tag st-priv">PRIVADO</span>}
                   {r.status.label && <span class={`tag ${r.status.cls}`}>{r.status.label}</span>}
@@ -168,10 +154,10 @@ const termData: TermData = {
                 {r.priv ? (
                   <div class="redacted">█ código bajo NDA</div>
                 ) : r.repo ? (
-                  <div class="shell"><b>$</b> git clone {r.repo}</div>
+                  <div class="shell notranslate" translate="no"><b>$</b> git clone {r.repo}</div>
                 ) : null}
               </div>
-              <ul class="techs" aria-label="Tecnologías">
+              <ul class="techs notranslate" translate="no" aria-label="Tecnologías">
                 {r.stack.map((t) => <li>{t}</li>)}
               </ul>
             </article>
@@ -184,8 +170,8 @@ const termData: TermData = {
             {prs.length === 0 && <p class="empty">Todavía no hay PRs mergeados que mostrar.</p>}
             {prs.map((pr: any) => (
               <div class="pr">
-                <p class="pr-head">{pr.repo} <span class="stars"><span aria-hidden="true">★</span> {fmtNum(pr.stars)}</span> · PR #{pr.number} · mergeado {fmtDate(pr.mergedAt)}</p>
-                <p class="pr-title">{pr.title}</p>
+                <p class="pr-head notranslate" translate="no">{pr.repo} <span class="stars"><span aria-hidden="true">★</span> {fmtNum(pr.stars)}</span> · PR #{pr.number} · mergeado {fmtDate(pr.mergedAt)}</p>
+                <p class="pr-title notranslate" translate="no">{pr.title}</p>
                 <p class="pr-links">
                   <a href={pr.url} target="_blank" rel="noopener noreferrer">Ver PR #{pr.number} ↗</a> ·
                   <a href={pr.repoUrl} target="_blank" rel="noopener noreferrer">Ver repositorio ↗</a>
@@ -195,31 +181,14 @@ const termData: TermData = {
           </div>
         </section>
 
-        <div class="grid2">
-          <section class="panel stack" id="stack" data-module="stack" aria-labelledby="h-stack">
-            <h2 id="h-stack"><span class="t">// STACK</span><small>lo que uso</small></h2>
-            <div class="body">
-              <dl class="kv groups">
-                {groups.map((g) => (<><dt>{g.group.toLowerCase()}</dt><dd>{g.items.join(' · ')}</dd></>))}
-              </dl>
-            </div>
-          </section>
-          <section class="panel road" data-module="roadmap" aria-labelledby="h-road">
-            <h2 id="h-road"><span class="t">// ROADMAP</span><small>{done}/{amb.length}</small></h2>
-            <div class="body">
-              {horizons.map((h) => (
-                <>
-                  <h3>{h.title}</h3>
-                  <ul>
-                    {h.items.map((a) => (
-                      <li><span aria-hidden="true">{a.completed ? '[x] ' : '[ ] '}</span><span class="sr">{a.completed ? 'Hecho: ' : 'Pendiente: '}</span>{a.text}</li>
-                    ))}
-                  </ul>
-                </>
-              ))}
-            </div>
-          </section>
-        </div>
+        <section class="panel stack" id="stack" data-module="stack" aria-labelledby="h-stack">
+          <h2 id="h-stack"><span class="t notranslate" translate="no">// STACK</span><small>lo que uso</small></h2>
+          <div class="body">
+            <dl class="kv groups">
+              {groups.map((g) => (<><dt>{g.group.toLowerCase()}</dt><dd class="notranslate" translate="no">{g.items.join(' · ')}</dd></>))}
+            </dl>
+          </div>
+        </section>
       </div>
     </div>
   </div>
@@ -298,12 +267,7 @@ const termData: TermData = {
   .devpage .pr-title { margin-bottom: 12px !important; }
   .devpage .empty { margin: 0; color: var(--d-faint); }
 
-  .devpage .grid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
   .devpage .groups { grid-template-columns: 90px 1fr; gap: 10px 12px; }
-  .devpage .road h3 { margin: 12px 0 6px; font-size: 12px; color: var(--d-accent); font-weight: 500; letter-spacing: .08em; }
-  .devpage .road h3:first-child { margin-top: 0; }
-  .devpage .road ul { list-style: none; margin: 0; padding: 0; font-size: 13px; }
-  .devpage .road li span[aria-hidden] { color: var(--d-faint); white-space: pre; }
 
   .devpage .panel > h2 span.t { white-space: nowrap; }
   .devpage .panel > h2 { flex-wrap: wrap; }
@@ -312,7 +276,7 @@ const termData: TermData = {
     .devpage .layout { grid-template-columns: minmax(0, 1fr); padding: 16px; }
     .devpage aside { position: static; }
     .devpage .whoami img { aspect-ratio: auto; height: 220px; }
-    .devpage .repo, .devpage .grid2 { grid-template-columns: minmax(0, 1fr); }
+    .devpage .repo { grid-template-columns: minmax(0, 1fr); }
     .devpage header.bar { padding: 8px 16px; flex-wrap: wrap; }
     .devpage header nav ul li:not(:last-child) { display: none; }
   }

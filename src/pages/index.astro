@@ -5,7 +5,6 @@ import type { SiteSettings } from '../types';
 import identity from '../../public/data/identity.json';
 import settings from '../../public/data/settings.json';
 import projects from '../../public/data/projects.json';
-import ambitions from '../../public/data/ambitions.json';
 import techStack from '../../public/data/techstack.json';
 import community from '../../public/data/community.json';
 
@@ -64,17 +63,11 @@ const prs = (community.projects as any[])
 const groups = new Map<string, string[]>();
 for (const t of techStack as any[]) {
   const g = t.group || 'Otros';
-  groups.set(g, [...(groups.get(g) ?? []), t.version ? `${t.name} ${t.version}` : t.name]);
+  groups.set(g, [...(groups.get(g) ?? []), t.name]);
 }
 
-const horizons = (['short', 'mid', 'long'] as const).map((k) => ({
-  key: k,
-  label: (s.roadmapLabels?.[k]?.timeframe ?? k).replace(/(\d)-(\d)/, '$1–$2'),
-  items: (ambitions as any[]).filter((a) => a.section === k),
-})).filter((h) => h.items.length);
-
 const toc = [
-  ['contacto', 'Contacto'], ['proyectos', 'Proyectos'], ['open-source', 'Open source'], ['stack', 'Stack'], ['metas', 'Metas'],
+  ['contacto', 'Contacto'], ['proyectos', 'Proyectos'], ['open-source', 'Open source'], ['stack', 'Stack'],
 ];
 ---
 
@@ -95,7 +88,7 @@ const toc = [
         <nav class="toc" aria-label="Secciones">
           <ul>
             {toc.map(([id, label], k) => (
-              <li><a href={`#${id}`} aria-current={k === 0 ? 'true' : undefined}>{label}</a></li>
+              <li><a href={`#${id}`} aria-current={k === 0 ? 'true' : undefined} translate={id === 'stack' ? 'no' : undefined} class={id === 'stack' ? 'notranslate' : undefined}>{label}</a></li>
             ))}
           </ul>
         </nav>
@@ -139,11 +132,11 @@ const toc = [
             <article class="case">
               <span class="num">{c.n}</span>
               <div>
-                <h3>{c.title}{c.isPrivate && <> <span class="private">Privado</span></>}</h3>
+                <h3><span translate="no" class="notranslate">{c.title}</span>{c.isPrivate && <> <span class="private">Privado</span></>}</h3>
                 <div class="meta">
                   {c.stars && <span class="stars">{c.stars} ★</span>}
                   {c.status && <span>{c.status}</span>}
-                  {c.stack && <span>{c.stack}</span>}
+                  {c.stack && <span translate="no" class="notranslate">{c.stack}</span>}
                 </div>
                 {c.description && <p>{c.description}</p>}
                 {(c.problem || c.solution) && (
@@ -163,8 +156,8 @@ const toc = [
           {prs.length === 0 && <p>Sin contribuciones para mostrar todavía.</p>}
           {prs.map((pr) => (
             <div class="oss">
-              <span class="repo">{pr.repo}{pr.stars ? ` · ${num(pr.stars)} ★` : ''} · mergeado {fmtDate(pr.mergedAt)}</span>
-              <h3>{pr.title}</h3>
+              <span class="repo"><span translate="no" class="notranslate">{pr.repo}</span>{pr.stars ? ` · ${num(pr.stars)} ★` : ''} · mergeado {fmtDate(pr.mergedAt)}</span>
+              <h3 translate="no" class="notranslate">{pr.title}</h3>
               <div class="links">
                 <a href={pr.url} target="_blank" rel="noopener noreferrer">Ver PR #{pr.number} →</a>
                 <a href={pr.repoUrl} target="_blank" rel="noopener noreferrer">Ver repositorio →</a>
@@ -174,22 +167,10 @@ const toc = [
         </section>
 
         <section id="stack" aria-labelledby="h-stack">
-          <h2 id="h-stack">Stack</h2>
+          <h2 id="h-stack"><span translate="no" class="notranslate">Stack</span></h2>
           <dl class="stack">
-            {[...groups].map(([g, items]) => <div><dt>{g}</dt><dd>{items.join(' · ')}</dd></div>)}
+            {[...groups].map(([g, items]) => <div><dt>{g}</dt><dd translate="no" class="notranslate">{items.join(' · ')}</dd></div>)}
           </dl>
-        </section>
-
-        <section id="metas" aria-labelledby="h-goals">
-          <h2 id="h-goals">Hacia dónde voy</h2>
-          <div class="goals">
-            {horizons.map((h) => (
-              <div>
-                <h3>{h.label}</h3>
-                <ul>{h.items.map((a: any) => <li class={a.completed ? 'done' : undefined}>{a.text}</li>)}</ul>
-              </div>
-            ))}
-          </div>
         </section>
       </main>
     </div>

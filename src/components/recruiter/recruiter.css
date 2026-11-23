@@ -64,10 +64,6 @@ html { scroll-behavior:smooth; }
 .rc .stack { margin:0; }
 .rc .stack div { display:flex; justify-content:space-between; gap:24px; border-bottom:1px solid var(--line); padding:8px 0; }
 .rc .stack dt { color:var(--faint); font-size:15px; } .rc .stack dd { margin:0; color:var(--text); text-align:right; }
-.rc .goals { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
-.rc .goals h3 { font-family:var(--mono); font-size:13px; color:var(--accent-light); margin:0 0 8px; font-weight:500; }
-.rc .goals ul { margin:0; padding-left:18px; font-size:15px; list-style:disc; } .rc .goals li { margin-bottom:8px; }
-.rc .goals li.done { text-decoration:line-through; color:var(--faint); }
 .rc section.contact-top { display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; padding:24px 28px; margin-bottom:48px; border-radius:20px; border:1px solid rgba(56,189,248,.35); background:linear-gradient(90deg, rgba(0,102,255,.22), rgba(0,102,255,.05)); scroll-margin-top:24px; }
 .rc .contact-top h2 { margin:0 0 4px; color:var(--accent-light); }
 .rc .contact-top p { margin:0; color:var(--text); font-size:20px; font-weight:600; line-height:1.3; max-width:28ch; }
@@ -80,5 +76,4 @@ html { scroll-behavior:smooth; }
   .rc h1 { font-size:38px; } .rc .lede { font-size:18px; }
   .rc article.case { grid-template-columns:1fr; } .rc .num { padding:0 0 4px; }
   .rc .case dl { grid-template-columns:1fr; } .rc .case dt { margin-top:8px; }
-  .rc .goals { grid-template-columns:1fr; }
-}
+  }

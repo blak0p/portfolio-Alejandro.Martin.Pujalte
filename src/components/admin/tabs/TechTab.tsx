@@ -16,7 +16,7 @@ interface TechTabProps {
 export default function TechTab({ onLog }: TechTabProps) {
   const [tools, setTools] = useState<TechTool[]>([]);
   const [editing, setEditing] = useState<number | null>(null);
-  const [form, setForm] = useState({ name: '', version: '', group: '' });
+  const [form, setForm] = useState({ name: '', group: '' });
 
   const load = useCallback(async () => {
     const stored = localStorage.getItem('portfolioTechstack');
@@ -41,16 +41,14 @@ export default function TechTab({ onLog }: TechTabProps) {
 
   function save() {
     if (!form.name) return;
-    const version = form.version.trim();
     const tool: TechTool = { 
       name: form.name.trim(), 
-      ...(version ? { version } : {}),
       group: form.group.trim() || 'Otros'
     };
     const next = editing !== null ? tools.map((t, i) => i === editing ? tool : t) : [...tools, tool];
     setTools(next);
     localStorage.setItem('portfolioTechstack', JSON.stringify(next));
-    setForm({ name: '', version: '', group: '' });
+    setForm({ name: '', group: '' });
     setEditing(null);
     onLog(`TECH_SAVED: ${tool.name}`);
   }
@@ -67,7 +65,7 @@ export default function TechTab({ onLog }: TechTabProps) {
             key={i} 
             onClick={() => { 
               setEditing(i); 
-              setForm({ name: t.name, version: t.version || '', group: t.group || '' }); 
+              setForm({ name: t.name, group: t.group || '' }); 
             }} 
             className={`p-6 border text-left transition-all duration-300 rounded-2xl group relative overflow-hidden ${
               editing === i 
@@ -76,7 +74,7 @@ export default function TechTab({ onLog }: TechTabProps) {
             }`}
           >
             <div className="flex justify-between items-center">
-              <p className="text-sm font-bold tracking-wider">{t.name}{t.version ? ` ${t.version}` : ''}</p>
+              <p className="text-sm font-bold tracking-wider">{t.name}</p>
               <span className={`text-xs font-bold font-mono ${editing === i ? 'text-white' : 'text-sky-400'}`}>{t.group}</span>
             </div>
           </button>
@@ -86,12 +84,9 @@ export default function TechTab({ onLog }: TechTabProps) {
       <div className={cardClass}>
         <SectionHeader title={editing !== null ? 'UPDATE_TOOL' : 'ADD_NEW_TOOL'} />
         
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <Field label="NAME">
             <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className={inputClass} placeholder="React, Go, etc." />
-          </Field>
-          <Field label="VERSION">
-            <input value={form.version} onChange={e => setForm(f => ({ ...f, version: e.target.value }))} className={inputClass} placeholder="v18.2.0, etc." />
           </Field>
           <Field label="GROUP">
             <input list="tech-groups" value={form.group} onChange={e => setForm(f => ({ ...f, group: e.target.value }))} className={inputClass} placeholder="Backend, Frontend, Herramientas..." />
@@ -112,7 +107,7 @@ export default function TechTab({ onLog }: TechTabProps) {
                 setTools(updated); 
                 localStorage.setItem('portfolioTechstack', JSON.stringify(updated)); 
                 setEditing(null); 
-                setForm({ name: '', version: '', group: '' }); 
+                setForm({ name: '', group: '' }); 
                 onLog('TECH_DELETED'); 
               }} 
               className="text-xs text-red-500 hover:text-red-400 font-bold uppercase transition-colors ml-auto self-center"

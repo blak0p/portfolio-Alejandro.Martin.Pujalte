@@ -1,1 +1,1 @@
-[{"name": "Go", "version": "1.24", "group": "Backend"}, {"name": "Shell", "version": "", "group": "Backend"}, {"name": "Java", "version": "21", "group": "Backend"}, {"name": "React", "version": "19", "group": "Frontend"}, {"name": "Git", "version": "", "group": "Herramientas"}]
+[{"name": "Go", "group": "Backend"}, {"name": "Shell", "group": "Backend"}, {"name": "Java", "group": "Backend"}, {"name": "React", "group": "Frontend"}, {"name": "Git", "group": "Herramientas"}]

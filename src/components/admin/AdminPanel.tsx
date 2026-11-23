@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ProjectsTab from './tabs/ProjectsTab';
 import TechTab from './tabs/TechTab';
-import AmbitionsTab from './tabs/AmbitionsTab';
 import SettingsTab from './tabs/SettingsTab';
 import DataTab from './tabs/DataTab';
 import PublishTab from './tabs/PublishTab';
@@ -129,7 +128,6 @@ export default function AdminPanel() {
   const tabs = [
     { id: 'projects', label: 'Projects', icon: '◈' },
     { id: 'tech', label: 'Tech Stack', icon: '◰' },
-    { id: 'ambitions', label: 'Roadmap', icon: '▲' },
     { id: 'settings', label: 'Settings', icon: '⚙' },
     { id: 'data', label: 'Raw Editor', icon: '◉' },
     { id: 'community', label: 'Contribuciones', icon: '◆' },
@@ -208,7 +206,6 @@ export default function AdminPanel() {
           <div className="max-w-5xl mx-auto">
             {tab === 'projects'   && <ProjectsTab onLog={addLog} />}
             {tab === 'tech'       && <TechTab onLog={addLog} />}
-            {tab === 'ambitions'  && <AmbitionsTab onLog={addLog} />}
             {tab === 'settings'   && <SettingsTab onLog={addLog} />}
             {tab === 'data'       && <DataTab onLog={addLog} />}
             {tab === 'community'  && <CommunityTab onLog={addLog} />}

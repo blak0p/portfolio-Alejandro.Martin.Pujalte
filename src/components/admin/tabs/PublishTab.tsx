@@ -29,8 +29,11 @@ export default function PublishTab({ onLog }: PublishTabProps) {
           return { ...rest, order: i };
         }));
       }
+      if (key === 'portfolioTechstack' && Array.isArray(data)) {
+        return JSON.stringify(data.map(({ version: _v, ...rest }: any) => rest));
+      }
       if (key === 'portfolioSettings' && data && typeof data === 'object') {
-        const { logLimit, ...rest } = data;
+        const { logLimit, roadmapLabels, ...rest } = data;
         return JSON.stringify(rest);
       }
     } catch {}
@@ -42,7 +45,7 @@ export default function PublishTab({ onLog }: PublishTabProps) {
     onLog('INIT_GLOBAL_SYNC...');
     try {
       // Identity data is included in keys to sync from local data editor if changed
-      const keys = ['portfolioProjects', 'portfolioSettings', 'portfolioAmbitions', 'portfolioTechstack', 'portfolioIdentity', 'portfolioCommunity'];
+      const keys = ['portfolioProjects', 'portfolioSettings', 'portfolioTechstack', 'portfolioIdentity', 'portfolioCommunity'];
       const files = keys
         .filter(k => !!localStorage.getItem(k))
         .map(k => ({ 
@@ -60,7 +63,6 @@ export default function PublishTab({ onLog }: PublishTabProps) {
         const name = f.path.split('/').pop()?.replace('.json', '') || '';
         if (name === 'projects') return 'projects';
         if (name === 'settings') return 'settings';
-        if (name === 'ambitions') return 'roadmap';
         if (name === 'techstack') return 'techstack';
         if (name === 'identity') return 'identity';
         if (name === 'community') return 'community';

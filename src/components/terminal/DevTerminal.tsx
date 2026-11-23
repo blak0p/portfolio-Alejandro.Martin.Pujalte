@@ -16,7 +16,7 @@ interface OutLine {
 const CHIPS = ['help', 'whoami', 'ls projects', 'neofetch', 'log', 'hire-me'];
 const MAX_LINES = 500;
 // Orden en el que "rm -rf /" hace desaparecer los módulos de la página.
-const COLLAPSE: Record<number, string> = { 0: 'proyectos', 2: 'open-source', 3: 'whoami', 6: 'stack', 9: 'roadmap' };
+const COLLAPSE: Record<number, string> = { 0: 'proyectos', 2: 'open-source', 3: 'whoami', 6: 'stack' };
 
 const reduced = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, reduced() ? Math.min(ms, 30) : ms));
@@ -168,7 +168,7 @@ export default function DevTerminal({ data }: Props) {
   const cls = (c: string) => c.split(' ').filter(Boolean).map((x) => styles[x] || '').join(' ');
 
   return (
-    <div className={styles.term}>
+    <div className={`${styles.term} notranslate`} translate="no">
       {closed ? (
         <div className={styles.reopen}>
           <button type="button" ref={reopenRef} onClick={reopen}>

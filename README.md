@@ -24,7 +24,7 @@ Pull requests mergeadas en otros proyectos, con título y enlaces a GitHub. Se s
 Panel con acceso por GitHub OAuth para gestionar proyectos, stack (lista agrupada manual), hoja de ruta y ajustes sin tocar el código.
 
 ### Todo basado en datos
-Proyectos, stack, ambiciones, ajustes e identidad viven en JSON dentro de `public/data`. La interfaz solo los muestra.
+Proyectos, stack, ajustes e identidad viven en JSON dentro de `public/data`. La interfaz solo los muestra.
 
 ---
 

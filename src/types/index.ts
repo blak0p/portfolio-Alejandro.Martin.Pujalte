@@ -20,7 +20,6 @@ export interface Project {
 
 export interface TechTool {
   name: string;
-  version?: string;
   group: string; // free text: "Backend", "Frontend", "Herramientas"...
 }
 
@@ -29,13 +28,6 @@ export interface LogEntry {
   timestamp: string;
   level: 'INFO' | 'WARN' | 'ERR' | 'MILESTONE';
   message: string;
-}
-
-export interface Ambition {
-  id: string;
-  section: 'short' | 'mid' | 'long';
-  text: string;
-  completed: boolean;
 }
 
 export interface Experience {
@@ -56,12 +48,6 @@ export interface SiteSettings {
   linkedinUrl?: string;
   contactEmail?: string;
   birthDate?: string;
-  versionMap?: Record<string, string>;
-  roadmapLabels?: {
-    short: { label: string; timeframe: string };
-    mid: { label: string; timeframe: string };
-    long: { label: string; timeframe: string };
-  };
   bio?: string;
   photoUrl?: string;
 }

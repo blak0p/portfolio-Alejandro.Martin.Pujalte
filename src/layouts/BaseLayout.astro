@@ -24,7 +24,6 @@ const pathname = Astro.url.pathname.replace(/\/$/, '');
 const isDevPage = pathname === '/dev';
 const deploymentsHref = isDevPage ? '#deployments' : '/dev#deployments';
 const techHref = isDevPage ? '#tech' : '/dev#tech';
-const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
 
 ---
 
@@ -117,8 +116,6 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
             <span class="text-white/20">|</span>
             <a href={techHref} class="hover:text-cobalt transition-colors duration-100">Tecnologías</a>
             <span class="text-white/20">|</span>
-            <a href={ambitionsHref} class="hover:text-cobalt transition-colors duration-100">Metas</a>
-            <span class="text-white/20">|</span>
             <span class="text-text-faint/40 normal-case tracking-normal">Para técnicos</span>
             <a href="/" class="text-text-faint/40 hover:text-white transition-colors duration-100 normal-case tracking-normal">← Recruiter</a>
           </div>
@@ -156,8 +153,6 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
           <a href={deploymentsHref} class="mobile-link hover:text-cobalt transition-colors duration-100">Proyectos</a>
           <span class="text-white/20">|</span>
           <a href={techHref}        class="mobile-link hover:text-cobalt transition-colors duration-100">Tecnologías</a>
-          <span class="text-white/20">|</span>
-          <a href={ambitionsHref}   class="mobile-link hover:text-cobalt transition-colors duration-100">Metas</a>
         </nav>
 
         <!-- Flags -->
@@ -214,8 +209,18 @@ const ambitionsHref = isDevPage ? '#ambitions' : '/dev#ambitions';
 
       // Google Translate click triggers
       function triggerTranslation(lang: string) {
-        document.cookie = "googtrans=/auto/" + lang + "; path=/;";
-        document.cookie = "googtrans=/auto/" + lang + "; path=/; domain=" + window.location.hostname;
+        // Spanish is the original language: clear the cookie instead of
+        // asking Google to "translate" es -> es (it mangles tech names).
+        if (lang === 'es') {
+          const expired = '; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;';
+          document.cookie = 'googtrans=' + expired;
+          document.cookie = 'googtrans=' + expired + ' domain=' + window.location.hostname;
+          document.cookie = 'googtrans=' + expired + ' domain=.' + window.location.hostname;
+          window.location.reload();
+          return;
+        }
+        document.cookie = "googtrans=/es/" + lang + "; path=/;";
+        document.cookie = "googtrans=/es/" + lang + "; path=/; domain=" + window.location.hostname;
         const combo = document.querySelector('.goog-te-combo') as HTMLSelectElement | null;
         if (combo) {
           combo.value = lang;
