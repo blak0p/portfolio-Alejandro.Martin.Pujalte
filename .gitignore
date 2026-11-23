@@ -42,3 +42,6 @@ pnpm-debug.log*
 dev-output.html
 .vercel
 .env*
+
+# Local agent tooling (symlinks outside the repo)
+.antigravitycli/
