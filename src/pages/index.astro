@@ -1,238 +1,218 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/recruiter/Hero.astro';
-import Projects from '../components/recruiter/Projects';
-import Tech from '../components/recruiter/Tech.astro';
-import CommunitySection from '../components/community/recruiter/CommunitySection.astro';
-import type { Ambition, SiteSettings } from '../types';
+import '../components/recruiter/recruiter.css';
+import type { SiteSettings } from '../types';
 import identity from '../../public/data/identity.json';
 import settings from '../../public/data/settings.json';
 import projects from '../../public/data/projects.json';
 import ambitions from '../../public/data/ambitions.json';
 import techStack from '../../public/data/techstack.json';
-import Roadmap from '../components/recruiter/Roadmap.astro';
+import community from '../../public/data/community.json';
 
 const s = settings as unknown as SiteSettings;
 const i = identity as any;
 
-// Merge identity with settings (settings override identity for dynamic values)
-const identityData = {
-  ...i,
-  cvUrl: s.cvUrl ?? i.cvUrl,
-  linkedinUrl: s.linkedinUrl ?? i.linkedinUrl,
-  birthDate: s.birthDate ?? i.birthDate,
-  bio: s.bio ? s.bio : i.bio,
-  photoUrl: s.photoUrl ? s.photoUrl : (i.photoUrl || '/profile.jpg'),
+const name: string = i.name.replace('\n', ' ');
+const photo: string = s.photoUrl || i.photoUrl || '/profile.jpg';
+const cvUrl: string = s.cvUrl ?? i.cvUrl;
+const linkedinUrl: string = s.linkedinUrl ?? i.linkedinUrl;
+const githubUrl: string = i.links?.find((l: any) => /github/i.test(l.label))?.href ?? 'https://github.com/blak0p';
+const email: string = i.contactEmail;
+const location: string = i.location || 'Valencia';
+
+const birth = new Date(s.birthDate ?? i.birthDate);
+const now = new Date();
+let age = now.getFullYear() - birth.getFullYear();
+if (now < new Date(now.getFullYear(), birth.getMonth(), birth.getDate())) age--;
+
+const STACK_LABELS: Record<string, string> = {
+  GO: 'Go', C: 'C', PYTHON: 'Python', SHELL: 'Shell', MAKEFILE: 'Makefile', WAILS: 'Wails', REACT: 'React',
+  VITE: 'Vite', ASTRO: 'Astro', TYPESCRIPT: 'TypeScript', JAVASCRIPT: 'JavaScript', CSS: 'CSS', JAVA: 'Java',
+};
+const pretty = (t: string) => STACK_LABELS[t.toUpperCase()] ?? (t === t.toUpperCase() ? t.charAt(0) + t.slice(1).toLowerCase() : t);
+const prettyName = (n: string) =>
+  n !== n.toUpperCase() ? n : n.split(' ').map((w) => (/\d/.test(w) ? w : w.toLowerCase())).join(' ').replace(/^./, (c) => c.toUpperCase());
+const STATUS: Record<string, string> = { COMPLETED: 'Completado', IN_PROGRESS: 'En progreso', PAUSED: 'Pausado' };
+const num = (n: number) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+const fmtDate = (d: string) => {
+  const t = new Date(d);
+  return `${String(t.getUTCDate()).padStart(2, '0')}/${String(t.getUTCMonth() + 1).padStart(2, '0')}/${t.getUTCFullYear()}`;
 };
 
-const heroPhotoUrl: string = identityData.photoUrl;
-const recruiterBio: string = identityData.bio;
-const recruiterCvUrl: string = identityData.cvUrl;
-const recruiterLinkedinUrl: string = identityData.linkedinUrl;
+const cases = (projects as any[]).map((p, idx) => {
+  const sp = p.specs ?? {};
+  const isPrivate = !!p.isPrivate;
+  return {
+    n: String(idx + 1).padStart(2, '0'),
+    title: prettyName(p.name),
+    isPrivate,
+    stars: !isPrivate && Number(sp.stars) > 0 ? sp.stars : '',
+    status: STATUS[sp.status] ?? '',
+    stack: (p.stack ?? []).slice(0, 4).map(pretty).join(' · '),
+    description: p.description || sp.description || '',
+    problem: p.problem as string | undefined,
+    solution: p.solution as string | undefined,
+    repo: !isPrivate ? (sp.repo as string | undefined) : undefined,
+  };
+});
 
-// Load and map all projects (both public and private) with description fallback
-const recruiterProjects = projects.map((p: any) => ({
-  ...p,
-  description: p.description || p.specs?.description || '',
-}));
+const prs = (community.projects as any[])
+  .filter((c) => c.active !== false)
+  .flatMap((c) => (c.prs ?? []).map((pr: any) => ({ ...pr, repo: `${c.owner}/${c.name}`, repoUrl: c.url, stars: c.stars })))
+  .sort((a, b) => String(b.mergedAt).localeCompare(String(a.mergedAt)));
 
-// Load and map all technical tools grouped
-const recruiterTech = techStack.map((t: any) => ({
-  name: t.name,
-  version: t.version || undefined,
-  group: t.group || 'Otros',
-}));
+const groups = new Map<string, string[]>();
+for (const t of techStack as any[]) {
+  const g = t.group || 'Otros';
+  groups.set(g, [...(groups.get(g) ?? []), t.version ? `${t.name} ${t.version}` : t.name]);
+}
+
+const horizons = (['short', 'mid', 'long'] as const).map((k) => ({
+  key: k,
+  label: (s.roadmapLabels?.[k]?.timeframe ?? k).replace(/(\d)-(\d)/, '$1–$2'),
+  items: (ambitions as any[]).filter((a) => a.section === k),
+})).filter((h) => h.items.length);
+
+const toc = [
+  ['contacto', 'Contacto'], ['proyectos', 'Proyectos'], ['open-source', 'Open source'], ['stack', 'Stack'], ['metas', 'Metas'],
+];
 ---
 
 <BaseLayout
-  title={`${identityData.name.replace('\n', ' ')} — Desarrollador backend junior`}
-  description={recruiterBio}
-  handle={identityData.handle}
+  title={`${name} — Desarrollador backend junior`}
+  description={`Desarrollador backend junior en ${location}. Go, infraestructura de IA local y herramientas para desarrolladores. Busco mi primer puesto, en remoto o en ${location}.`}
+  handle={i.handle}
   navStyle="recruiter"
 >
-  <div class="warm-bg relative overflow-hidden">
-    <!-- Ambient floating colored blur blobs -->
-    <div class="absolute top-[10%] left-[-15%] w-[35rem] h-[35rem] rounded-full bg-recruiter-accent-dark/15 blur-[120px] pointer-events-none animate-blob"></div>
-    <div class="absolute top-[45%] right-[-15%] w-[40rem] h-[40rem] rounded-full bg-recruiter-accent/10 blur-[130px] pointer-events-none animate-blob-delayed"></div>
-    <div class="absolute bottom-[5%] left-[10%] w-[30rem] h-[30rem] rounded-full bg-recruiter-accent-light/10 blur-[110px] pointer-events-none animate-blob-slow"></div>
+  <div class="rc">
+    <a class="skip" href="#main">Saltar al contenido</a>
+    <div class="layout">
+      <aside class="side" aria-label="Perfil">
+        <img class="avatar" src={photo} width="96" height="96" alt={`Foto de ${name}`} />
+        <p class="name">{name}</p>
+        <p class="role">Junior backend developer</p>
+        <span class="status"><i aria-hidden="true"></i>Disponible · {location} o remoto</span>
+        <nav class="toc" aria-label="Secciones">
+          <ul>
+            {toc.map(([id, label], k) => (
+              <li><a href={`#${id}`} aria-current={k === 0 ? 'true' : undefined}>{label}</a></li>
+            ))}
+          </ul>
+        </nav>
+        <div class="socials">
+          <div class="lang" role="group" aria-label="Idioma">
+            <button type="button" data-translate="es" aria-label="Español" aria-pressed="true">ES</button>
+            <button type="button" data-translate="en" aria-label="English" aria-pressed="false">EN</button>
+          </div>
+          <a class="devlink" href="/dev">¿Eres dev? /dev →</a>
+        </div>
+      </aside>
 
-    <Hero
-      name={identityData.name}
-      handle={identityData.handle}
-      photo={heroPhotoUrl}
-      email={identityData.contactEmail}
-      linkedin={recruiterLinkedinUrl}
-      github={identityData.links.find((l: any) => l.label.includes('GITHUB'))?.href || 'https://github.com/blak0p'}
-      bio={recruiterBio}
-      birthDate={identityData.birthDate}
-      cvUrl={recruiterCvUrl}
-    />
+      <main id="main">
+        <section id="contacto" class="contact-top" aria-labelledby="h-contact">
+          <div>
+            <h2 id="h-contact">Contacto</h2>
+            <p>¿Buscas un junior backend? Hablemos.</p>
+          </div>
+          <div class="ctas">
+            <a class="btn btn-primary" href={`mailto:${email}`}>{email}</a>
+            <a class="btn btn-ghost" href={linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a class="btn btn-ghost" href={githubUrl} target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a class="btn btn-ghost" href={cvUrl} download>Descargar CV</a>
+          </div>
+        </section>
 
-    <main class="flex flex-col gap-16 pb-20 recruiter-reveal-root relative z-10">
-      <Projects projects={recruiterProjects} syncWithStorage={true} client:load />
+        <div class="hero">
+          <h1>Construyo sistemas que <em>aguantan bajo presión</em>.</h1>
+          <p class="lede">Desarrollador backend de {age} años, centrado en Go, infraestructura de IA local y herramientas para desarrolladores.</p>
+          <p>Pregunto por qué antes de preguntar cómo. Ahí empieza el verdadero trabajo.</p>
+          <div class="facts">
+            <div><b>Go</b>lenguaje principal</div>
+            {prs.length > 0 && <div><b>{prs.length === 1 ? 'PR mergeado' : `${prs.length} PR mergeados`}</b>en {prs[0].repo.split('/')[1]}</div>}
+            <div><b>Junior backend</b>{location} o remoto</div>
+          </div>
+        </div>
 
-      <CommunitySection />
+        <section id="proyectos" aria-labelledby="h-proj">
+          <h2 id="h-proj">Proyectos</h2>
+          {cases.map((c) => (
+            <article class="case">
+              <span class="num">{c.n}</span>
+              <div>
+                <h3>{c.title}{c.isPrivate && <> <span class="private">Privado</span></>}</h3>
+                <div class="meta">
+                  {c.stars && <span class="stars">{c.stars} ★</span>}
+                  {c.status && <span>{c.status}</span>}
+                  {c.stack && <span>{c.stack}</span>}
+                </div>
+                {c.description && <p>{c.description}</p>}
+                {(c.problem || c.solution) && (
+                  <dl>
+                    {c.problem && <><dt>Problema</dt><dd>{c.problem}</dd></>}
+                    {c.solution && <><dt>Solución</dt><dd>{c.solution}</dd></>}
+                  </dl>
+                )}
+                {c.repo && <div class="links"><a href={c.repo} target="_blank" rel="noopener noreferrer">Repositorio →</a></div>}
+              </div>
+            </article>
+          ))}
+        </section>
 
-      <Tech tools={recruiterTech} />
+        <section id="open-source" aria-labelledby="h-oss">
+          <h2 id="h-oss">Open source</h2>
+          {prs.length === 0 && <p>Sin contribuciones para mostrar todavía.</p>}
+          {prs.map((pr) => (
+            <div class="oss">
+              <span class="repo">{pr.repo}{pr.stars ? ` · ${num(pr.stars)} ★` : ''} · mergeado {fmtDate(pr.mergedAt)}</span>
+              <h3>{pr.title}</h3>
+              <div class="links">
+                <a href={pr.url} target="_blank" rel="noopener noreferrer">Ver PR #{pr.number} →</a>
+                <a href={pr.repoUrl} target="_blank" rel="noopener noreferrer">Ver repositorio →</a>
+              </div>
+            </div>
+          ))}
+        </section>
 
-      <Roadmap ambitions={ambitions as unknown as Ambition[]} roadmapLabels={(settings as unknown as SiteSettings).roadmapLabels} />
-    </main>
+        <section id="stack" aria-labelledby="h-stack">
+          <h2 id="h-stack">Stack</h2>
+          <dl class="stack">
+            {[...groups].map(([g, items]) => <div><dt>{g}</dt><dd>{items.join(' · ')}</dd></div>)}
+          </dl>
+        </section>
+
+        <section id="metas" aria-labelledby="h-goals">
+          <h2 id="h-goals">Hacia dónde voy</h2>
+          <div class="goals">
+            {horizons.map((h) => (
+              <div>
+                <h3>{h.label}</h3>
+                <ul>{h.items.map((a: any) => <li class={a.completed ? 'done' : undefined}>{a.text}</li>)}</ul>
+              </div>
+            ))}
+          </div>
+        </section>
+      </main>
+    </div>
   </div>
 </BaseLayout>
 
-<style is:global>
-  /* Smooth scroll for anchor nav */
-  html {
-    scroll-behavior: smooth;
-  }
-
-  /* Warm page background fallback (sits under the hero gradient) */
-  .warm-bg {
-    background-color: #080c14;
-  }
-
-  /* Section layout shared by all recruiter sections */
-  .recruiter-section {
-    padding-top: 1rem;
-    scroll-margin-top: 4rem; /* clear the fixed nav */
-  }
-
-  .recruiter-container {
-    max-width: 56rem; /* ~896px — readable single column */
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
-
-  .recruiter-section-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 1.5rem;
-  }
-
-  /* Fade-in reveal on scroll (Intersection Observer adds .visible) */
-  .recruiter-section {
-    opacity: 0;
-    transform: translateY(24px) scale(0.99);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: transform, opacity;
-  }
-  .recruiter-section.visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-
-  /* Ambient Blur Blobs Keyframe Animations */
-  @keyframes blob-drift {
-    0% {
-      transform: translate(0px, 0px) scale(1);
-    }
-    33% {
-      transform: translate(40px, -60px) scale(1.1);
-    }
-    66% {
-      transform: translate(-30px, 30px) scale(0.95);
-    }
-    100% {
-      transform: translate(0px, 0px) scale(1);
-    }
-  }
-  @keyframes blob-drift-delayed {
-    0% {
-      transform: translate(0px, 0px) scale(1);
-    }
-    33% {
-      transform: translate(-50px, 40px) scale(0.9);
-    }
-    66% {
-      transform: translate(50px, -30px) scale(1.15);
-    }
-    100% {
-      transform: translate(0px, 0px) scale(1);
-    }
-  }
-  @keyframes blob-drift-slow {
-    0% {
-      transform: translate(0px, 0px) scale(1);
-    }
-    50% {
-      transform: translate(30px, 30px) scale(1.08);
-    }
-    100% {
-      transform: translate(0px, 0px) scale(1);
-    }
-  }
-
-  .animate-blob {
-    animation: blob-drift 22s infinite ease-in-out;
-  }
-  .animate-blob-delayed {
-    animation: blob-drift-delayed 28s infinite ease-in-out;
-  }
-  .animate-blob-slow {
-    animation: blob-drift-slow 35s infinite ease-in-out;
-  }
-
-  /* Respect reduced motion */
-  @media (prefers-reduced-motion: reduce) {
-    .recruiter-section {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
-    html {
-      scroll-behavior: auto;
-    }
-    .recruiter-gradient-bg {
-      animation: none;
-    }
-    .animate-blob, .animate-blob-delayed, .animate-blob-slow {
-      animation: none;
-    }
-  }
-</style>
-
 <script>
-  // Fade-in section reveal + hero parallax — vanilla JS, no libraries.
-  // Runs once on page load and on Astro view transitions.
-  function initRecruiterAnimations() {
-    const sections = document.querySelectorAll('.recruiter-section');
-    if ('IntersectionObserver' in window) {
-      const reveal = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
-              reveal.unobserve(entry.target);
-            }
-          }
-        },
-        { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
-      );
-      sections.forEach((s) => reveal.observe(s));
-    } else {
-      sections.forEach((s) => s.classList.add('visible'));
-    }
-
-    // Hero parallax — translate the photo layer based on scroll position.
-    const parallax = document.querySelector('.recruiter-parallax');
-    if (parallax && 'IntersectionObserver' in window) {
-      let ticking = false;
-      const onScroll = () => {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(() => {
-          const y = window.scrollY;
-          if (y < 600) {
-            (parallax as HTMLElement).style.transform = `translateY(${y * 0.25}px)`;
-          }
-          ticking = false;
-        });
-      };
-      window.addEventListener('scroll', onScroll, { passive: true });
-    }
+  // Highlight the index entry of the section currently in view.
+  function initToc() {
+    const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('nav.toc a'));
+    if (!links.length || !('IntersectionObserver' in window)) return;
+    const byId = new Map(links.map((a) => [a.getAttribute('href')!.slice(1), a]));
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          links.forEach((a) => a.removeAttribute('aria-current'));
+          byId.get(e.target.id)?.setAttribute('aria-current', 'true');
+        }
+      },
+      { rootMargin: '-20% 0px -70% 0px' }
+    );
+    byId.forEach((_, id) => { const el = document.getElementById(id); if (el) io.observe(el); });
   }
-
-  initRecruiterAnimations();
-  document.addEventListener('astro:page-load', initRecruiterAnimations);
+  document.addEventListener('astro:page-load', initToc);
 </script>

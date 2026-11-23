@@ -2,29 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="404 — SIGNAL LOST">
-  <div class="h-[calc(100vh-3rem)] flex items-center justify-center px-6">
-    <div class="flex flex-col items-center gap-6 text-center max-w-md">
-
-      <div class="border border-err/30 bg-err/5 px-6 py-3">
-        <span class="text-err text-xs font-bold tracking-[0.3em] uppercase">SIGNAL_LOST</span>
-      </div>
-
-      <div class="flex flex-col gap-2">
-        <h1 class="text-6xl font-bold text-white tracking-tight font-mono">404</h1>
-        <p class="text-xs text-text-faint tracking-widest uppercase">The requested resource does not exist in this core.</p>
-      </div>
-
-      <pre class="text-left text-sm text-text-faint leading-relaxed border border-white/10 bg-carbono-surface px-5 py-4 w-full"><span class="text-err">ERR</span>  {new URL(Astro.request.url).pathname}
-<span class="text-warn">→</span>   File not found or not yet deployed.
-<span class="text-cobalt">hint:</span> If you uploaded a CV, wait ~30s for Vercel to redeploy.</pre>
-
-      <a
-        href="/"
-        class="border border-white/20 text-white/60 text-xs font-bold tracking-widest uppercase px-6 py-3 hover:border-cobalt hover:text-cobalt transition-colors duration-150"
-      >
-        ← BACK TO CORE
-      </a>
+<BaseLayout title="404 — Página no encontrada" navStyle="none">
+  <main id="main" class="min-h-screen bg-[#080c14] text-[#e2e4f0] font-sans flex items-center justify-center px-6">
+    <div class="flex flex-col items-start gap-4 max-w-md">
+      <p class="text-sm tracking-widest uppercase text-[#9ea4c0] font-mono">Error 404</p>
+      <h1 class="text-3xl font-bold text-white">Esta página no existe.</h1>
+      <p class="text-[#9ea4c0]">Puede que el enlace esté mal o que ya no esté disponible.</p>
+      <a href="/" class="mt-2 inline-flex rounded-full bg-[#0066FF] px-5 py-2.5 font-semibold text-white hover:bg-[#0033AA] focus-visible:outline-2 focus-visible:outline-[#38BDF8]">Volver al inicio</a>
     </div>
-  </div>
+  </main>
 </BaseLayout>
