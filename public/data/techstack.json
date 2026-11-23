@@ -1,1 +1,1 @@
-[{"name":"GO","version":"1.24","usageLevel":95},{"name":"GIT","version":"","usageLevel":90},{"name":"SHELL","version":"","usageLevel":75},{"name":"REACT","version":"19","usageLevel":65},{"name":"JAVA","version":"21","usageLevel":15}]
+[{"name": "Go", "version": "1.24", "group": "Backend"}, {"name": "Shell", "version": "", "group": "Backend"}, {"name": "Java", "version": "21", "group": "Backend"}, {"name": "React", "version": "19", "group": "Frontend"}, {"name": "Git", "version": "", "group": "Herramientas"}]

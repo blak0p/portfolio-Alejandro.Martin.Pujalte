@@ -36,16 +36,16 @@ const recruiterProjects = projects.map((p: any) => ({
   description: p.description || p.specs?.description || '',
 }));
 
-// Load and map all technical tools with their usage levels
+// Load and map all technical tools grouped
 const recruiterTech = techStack.map((t: any) => ({
   name: t.name,
   version: t.version || undefined,
-  usageLevel: typeof t.usageLevel === 'number' ? t.usageLevel : 0,
+  group: t.group || 'Otros',
 }));
 ---
 
 <BaseLayout
-  title={`${identityData.name.replace('\n', ' ')} — Backend Developer`}
+  title={`${identityData.name.replace('\n', ' ')} — Desarrollador backend junior`}
   description={recruiterBio}
   handle={identityData.handle}
   navStyle="recruiter"

@@ -36,7 +36,7 @@ export default function CoreHome(props: CoreHomeProps) {
       ),
     },
     { id: 'projects', component: <ProjectGrid projects={projects} /> },
-    { id: 'tech', component: <TechMatrix tools={techStack} projects={projects} /> },
+    { id: 'tech', component: <TechMatrix tools={techStack} /> },
     { id: 'roadmap', component: <Roadmap ambitions={ambitions} /> }
   ];
 

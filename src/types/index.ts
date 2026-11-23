@@ -14,6 +14,8 @@ export interface Project {
   initSequence: string;
   description?: string;
   businessImpact?: string;
+  problem?: string;
+  solution?: string;
   specs: Record<string, string | string[] | ProjectSpecStackUsage[]>;
   isHighlighted?: boolean;
   isPrivate?: boolean;
@@ -27,8 +29,8 @@ export interface Project {
 
 export interface TechTool {
   name: string;
-  version: string;
-  usageLevel: number; // 0-100
+  version?: string;
+  group: string; // free text: "Backend", "Frontend", "Herramientas"...
 }
 
 export interface LogEntry {

@@ -61,7 +61,10 @@ function updateVFS(projects: Project[], identity: any, techStack: TechTool[], lo
   if (VFS.root.children.about) {
     VFS.root.children.about.children['identity.json'].content = JSON.stringify(identity, null, 2);
     VFS.root.children.about.children['stack.json'].content = JSON.stringify(
-      techStack.map(t => ({ tool: t.name, proficiency: `${t.usageLevel}%`, version: t.version })), 
+      Object.entries(techStack.reduce((acc: Record<string, string[]>, t) => {
+        (acc[t.group || 'Otros'] ||= []).push(t.version ? `${t.name} ${t.version}` : t.name);
+        return acc;
+      }, {})).map(([group, items]) => ({ group, items })),
       null, 2
     );
   }

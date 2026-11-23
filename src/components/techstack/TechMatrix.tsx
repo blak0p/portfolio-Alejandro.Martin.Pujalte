@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import type { TechTool } from '../../types';
-import ProgressBar from '../ui/ProgressBar';
 
 interface TechMatrixProps {
   tools?: TechTool[];
+  projects?: unknown;
 }
 
 export default function TechMatrix({ tools: initialTools = [] }: TechMatrixProps) {
@@ -90,22 +90,18 @@ export default function TechMatrix({ tools: initialTools = [] }: TechMatrixProps
       <div className="flex items-center justify-between text-xs text-text-faint tracking-widest uppercase opacity-60 mb-1">
         <span className="text-cobalt font-bold">● curado</span>
       </div>
-      <div className="grid grid-cols-1 @[500px]:grid-cols-2 gap-3">
-        {tools.map((tool) => (
-          <div key={tool.name} className="border border-white/15 bg-carbono p-3 flex flex-col gap-2 hover:border-cobalt/40 transition-colors">
-            <div className="flex justify-between items-center">
-              <span className="text-base font-bold text-white tracking-widest uppercase">{tool.name}</span>
-              <span className="text-xs text-cobalt tracking-widest font-mono">[ {tool.usageLevel}% ]</span>
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <ProgressBar value={tool.usageLevel} segments={12} />
-              <div className="flex justify-between items-center">
-                <span className="text-xs text-text-faint tracking-widest italic">{tool.version || '—'}</span>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      {Array.from(new Set(tools.map((t) => t.group || 'Otros'))).map((group) => (
+        <div key={group} className="border border-white/15 bg-carbono p-3 flex flex-col gap-2">
+          <span className="text-xs text-text-faint tracking-widest uppercase">{group}</span>
+          <ul className="flex flex-wrap gap-x-4 gap-y-1">
+            {tools.filter((t) => (t.group || 'Otros') === group).map((tool) => (
+              <li key={tool.name} className="text-base font-bold text-white tracking-wide">
+                {tool.name}{tool.version ? <span className="text-xs text-text-faint font-mono ml-1">{tool.version}</span> : null}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
 }
