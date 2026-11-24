@@ -74,8 +74,8 @@ const toc = [
 ---
 
 <BaseLayout
-  title={`${name} — Desarrollador backend junior`}
-  description={`Desarrollador backend junior en ${location}. Go, infraestructura de IA local y herramientas para desarrolladores. Busco mi primer puesto, en remoto o en ${location}.`}
+  title={`${name} — Desarrollador backend`}
+  description={`Desarrollador backend en ${location}. Go, infraestructura de IA local y herramientas para desarrolladores. Disponible en remoto o en ${location}.`}
   handle={i.handle}
   navStyle="recruiter"
 >
@@ -85,7 +85,7 @@ const toc = [
       <aside class="side" aria-label="Perfil">
         <img class="avatar" src={photo} width="96" height="96" alt={`Foto de ${name}`} />
         <p class="name">{name}</p>
-        <p class="role">Junior backend developer</p>
+        <p class="role">Backend developer</p>
         <span class="status"><i aria-hidden="true"></i>Disponible · {location} o remoto</span>
         <nav class="toc" aria-label="Secciones">
           <ul>
@@ -107,7 +107,7 @@ const toc = [
         <section id="contacto" class="contact-top" aria-labelledby="h-contact">
           <div>
             <h2 id="h-contact">Contacto</h2>
-            <p>¿Buscas un junior backend? Hablemos.</p>
+            <p>¿Buscas un desarrollador backend? Hablemos.</p>
           </div>
           <div class="ctas">
             <a class="btn btn-primary" href={`mailto:${email}`}>{email}</a>
@@ -126,7 +126,7 @@ const toc = [
           <div class="facts">
             <div><b>Go</b>lenguaje principal</div>
             {prs.length > 0 && <div><b>{prs.length === 1 ? 'PR mergeado' : `${prs.length} PR mergeados`}</b>en {prs[0].repo.split('/')[1]}</div>}
-            <div><b>Junior backend</b>{location} o remoto</div>
+            <div><b>Backend</b>{location} o remoto</div>
           </div>
         </div>
 
