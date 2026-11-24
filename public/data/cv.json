@@ -6,15 +6,7 @@
   "skills": [
     {
       "label": "Lenguajes",
-      "value": "Go, Shell, SQL, React; Java a nivel formativo (DAM)"
-    },
-    {
-      "label": "Backend",
-      "value": "APIs REST, Gin, GORM"
-    },
-    {
-      "label": "Datos",
-      "value": "PostgreSQL"
+      "value": "Go (principal), Shell, SQL, React; Java a nivel formativo (DAM)"
     },
     {
       "label": "Entorno",
