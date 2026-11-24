@@ -13,7 +13,8 @@ const i = identity as any;
 
 const name: string = i.name.replace('\n', ' ');
 const photo: string = s.photoUrl || i.photoUrl || '/profile.jpg';
-const cvUrl: string = s.cvUrl ?? i.cvUrl;
+const cvUrl: string = s.cvUrl ?? i.cvUrl ?? '/cv';
+const cvIsPdf = /\.pdf$/i.test(cvUrl);
 const linkedinUrl: string = s.linkedinUrl ?? i.linkedinUrl;
 const githubUrl: string = i.links?.find((l: any) => /github/i.test(l.label))?.href ?? 'https://github.com/blak0p';
 const email: string = i.contactEmail;
@@ -112,7 +113,9 @@ const toc = [
             <a class="btn btn-primary" href={`mailto:${email}`}>{email}</a>
             <a class="btn btn-ghost" href={linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a class="btn btn-ghost" href={githubUrl} target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a class="btn btn-ghost" href={cvUrl} download>Descargar CV</a>
+            {cvIsPdf
+              ? <a class="btn btn-ghost" href={cvUrl} download>Descargar CV</a>
+              : <a class="btn btn-ghost" href={cvUrl} target="_blank" rel="noopener">Ver CV</a>}
           </div>
         </section>
 

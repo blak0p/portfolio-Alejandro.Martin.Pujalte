@@ -56,7 +56,12 @@ export default function DevTerminal({ data }: Props) {
         flash(el, 'hl', 1500);
       },
       downloadCv: () => {
-        const url = data.cvUrl || '/cv.pdf';
+        const url = data.cvUrl || '/cv';
+        // The HTML CV opens in a tab and the browser saves it as PDF.
+        if (!/\.pdf$/i.test(url)) {
+          window.open(url, '_blank');
+          return;
+        }
         fetch(url)
           .then((r) => {
             if (!r.ok) throw new Error('cv');

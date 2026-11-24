@@ -17,7 +17,8 @@ const logList = logs as unknown as LogEntry[];
 const tools = techStack as unknown as TechTool[];
 const projects = sortProjects(projectsData as unknown as Project[]);
 
-const cvUrl = s.cvUrl ?? i.cvUrl ?? '/cv.pdf';
+const cvUrl = s.cvUrl ?? i.cvUrl ?? '/cv';
+const cvIsPdf = /\.pdf$/i.test(cvUrl);
 const email: string = s.contactEmail ?? i.contactEmail ?? '';
 const photo = s.photoUrl || '/profile.jpg';
 const fullName = String(i.name).replace('\n', ' ');
@@ -127,7 +128,9 @@ const termData: TermData = {
             <div class="cmds">
               <a class="cmd" id="mailcmd" href={`mailto:${email}`}>$ mail {email} <span aria-hidden="true">↵</span></a>
               <a class="cmd" href={github} target="_blank" rel="noopener noreferrer">$ open {githubShort} <span aria-hidden="true">↗</span></a>
-              <a class="cmd" href={cvUrl} download>$ curl -O {cvUrl} <span aria-hidden="true">↓</span></a>
+              {cvIsPdf
+                ? <a class="cmd" href={cvUrl} download>$ curl -O {cvUrl} <span aria-hidden="true">↓</span></a>
+                : <a class="cmd" href={cvUrl} target="_blank" rel="noopener">$ open {cvUrl} <span aria-hidden="true">↗</span></a>}
             </div>
           </div>
         </section>

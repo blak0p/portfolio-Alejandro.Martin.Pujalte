@@ -253,7 +253,7 @@ export function createEngine(data: TermData, fx: Effects) {
       case 'wget': {
         if (args[0] && args[0].includes('cv')) {
           fx.downloadCv();
-          return [o('Conectando al almacenamiento core...'), b(`[STREAM] ${BAR}`), g('✓ Descarga iniciada. Revisa tu navegador.')];
+          return [o('Conectando al almacenamiento core...'), b(`[STREAM] ${BAR}`), g('✓ CV listo. Revisa tu navegador.')];
         }
         return [e('wget: No encontrado.')];
       }

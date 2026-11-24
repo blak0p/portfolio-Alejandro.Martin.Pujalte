@@ -1,0 +1,50 @@
+{
+  "headline": "Desarrollador backend · Go",
+  "location": "La Pobla de Farnals, Valencia",
+  "summary": "Desarrollador backend centrado en Go. Construyo y publico herramientas propias de código abierto. Trabajo diario en Linux. Estudiando DAM.",
+  "maxProjects": 4,
+  "skills": [
+    {
+      "label": "Lenguajes",
+      "value": "Go, Shell, SQL, React; Java a nivel formativo (DAM)"
+    },
+    {
+      "label": "Backend",
+      "value": "APIs REST, Gin, GORM"
+    },
+    {
+      "label": "Datos",
+      "value": "PostgreSQL"
+    },
+    {
+      "label": "Entorno",
+      "value": "Linux, Git, LLM locales, MCP"
+    }
+  ],
+  "education": [
+    {
+      "title": "CFGS Desarrollo de Aplicaciones Multiplataforma (DAM)",
+      "period": "2026 — en curso",
+      "place": "Digitech FP, Valencia"
+    },
+    {
+      "title": "CFGM Sistemas Microinformáticos y Redes (SMR)",
+      "period": "2024 — 2026",
+      "place": "IES El Grao, Valencia"
+    }
+  ],
+  "other": [
+    {
+      "label": "Idiomas",
+      "value": "Castellano y valenciano nativos · inglés básico"
+    },
+    {
+      "label": "Experiencia",
+      "value": "Árbitro oficial, Federación de Baloncesto de la Comunitat Valenciana (2022 — 2024)"
+    },
+    {
+      "label": "Disponibilidad",
+      "value": "Inmediata · jornada completa · preferencia remoto"
+    }
+  ]
+}

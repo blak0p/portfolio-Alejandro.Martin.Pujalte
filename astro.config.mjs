@@ -13,7 +13,7 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap({
-      filter: (page) => !page.includes('/admin'),
+      filter: (page) => !page.includes('/admin') && !/\/cv\/?$/.test(page),
     }),
   ],
   vite: {

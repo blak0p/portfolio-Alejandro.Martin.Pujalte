@@ -14,9 +14,11 @@
     "initSequence": "curl -fsSL https://raw.githubusercontent.com/blak0p/git-courer/main/scripts/install.sh | sh",
     "description": "Servidor MCP para Git que usa Ollama en local.",
     "businessImpact": "",
-    "recruiterDescription": "Servidor MCP para Git que usa Ollama en local.",
+    "recruiterDescription": "Servidor MCP que delega las operaciones de Git de agentes de IA a un LLM local, con confirmación antes de escribir.",
     "recruiterStack": [
-      "mcp"
+      "Go",
+      "MCP",
+      "Ollama"
     ],
     "readmeContent": "",
     "specs": {
@@ -53,12 +55,11 @@
     "initSequence": "",
     "description": "Configurador de escritorio para un ratón gaming que solo tenía software de Windows.",
     "businessImpact": "",
-    "recruiterDescription": "Ingeniería inversa del protocolo HID desde la app oficial de Windows, validación en el dongle del ratón y un configurador completo para Linux con Go y Wails v3.",
+    "recruiterDescription": "Ingeniería inversa del protocolo USB HID de un ratón y configurador nativo para Linux.",
     "recruiterStack": [
-      "reverse-engineering",
-      "linux",
-      "go",
-      "fullstack"
+      "Go",
+      "Wails",
+      "React"
     ],
     "readmeContent": "",
     "specs": {
