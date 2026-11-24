@@ -1,1 +1,87 @@
-[{"id":"1776894498166","name":"GIT-COURER","photo":"https://github.com/user-attachments/assets/2e9c0e64-b0de-4b83-9159-3a5906f9f3f4","stack":["GO","C","PYTHON","SHELL","MAKEFILE"],"architecture":"","initSequence":"curl -fsSL https://raw.githubusercontent.com/blak0p/git-courer/main/scripts/install.sh | sh","description":"Servidor MCP para Git que usa Ollama en local.","businessImpact":"","recruiterDescription":"Servidor MCP para Git que usa Ollama en local.","recruiterStack":["mcp"],"readmeContent":"","specs":{"status":"COMPLETED","stars":"46","language":"GO","license":"MIT","description":"Servidor MCP para Git que usa Ollama en local.","repo":"https://github.com/blak0p/git-courer","repoSlug":"blak0p/git-courer","demo":"","tags":["mcp"],"video":""},"isPrivate":false,"pushedAt":"2026-11-13T19:24:08Z","order":0,"problem":"Los agentes de IA gastan contexto y tokens en tareas de Git repetitivas.","solution":"Un LLM local redacta commits, ramas y releases, con confirmación antes de aplicar."},{"id":"1776951821294","name":"ATTACK SHARK X6","photo":"https://raw.githubusercontent.com/blak0p/assets/main/attack-shark-x6.png","stack":["GO","WAILS","REACT","VITE"],"architecture":"","initSequence":"","description":"Configurador de escritorio para un ratón gaming que solo tenía software de Windows.","businessImpact":"","recruiterDescription":"Ingeniería inversa del protocolo HID desde la app oficial de Windows, validación en el dongle del ratón y un configurador completo para Linux con Go y Wails v3.","recruiterStack":["reverse-engineering","linux","go","fullstack"],"readmeContent":"","specs":{"status":"IN_PROGRESS","stars":"16","language":"Go","license":"MIT","description":"Configurador de escritorio para un ratón gaming que solo tenía software de Windows.","repo":"https://github.com/blak0p/attack-shark-linux","repoSlug":"blak0p/attack-shark-linux","demo":"","tags":["reverse-engineering","linux","hid","gaming"],"video":""},"isPrivate":false,"pushedAt":"2026-11-22T21:43:26Z","order":1,"problem":"Sin soporte en Linux ni documentación del protocolo.","solution":"Ingeniería inversa del protocolo HID desde la app de Windows y una app nativa con Wails."}]
+[
+  {
+    "id": "1776894498166",
+    "name": "GIT-COURER",
+    "photo": "https://github.com/user-attachments/assets/2e9c0e64-b0de-4b83-9159-3a5906f9f3f4",
+    "stack": [
+      "GO",
+      "C",
+      "PYTHON",
+      "SHELL",
+      "MAKEFILE"
+    ],
+    "architecture": "",
+    "initSequence": "curl -fsSL https://raw.githubusercontent.com/blak0p/git-courer/main/scripts/install.sh | sh",
+    "description": "Servidor MCP para Git que usa Ollama en local.",
+    "businessImpact": "",
+    "recruiterDescription": "Servidor MCP para Git que usa Ollama en local.",
+    "recruiterStack": [
+      "mcp"
+    ],
+    "readmeContent": "",
+    "specs": {
+      "status": "COMPLETED",
+      "stars": "46",
+      "language": "GO",
+      "license": "MIT",
+      "description": "Servidor MCP para Git que usa Ollama en local.",
+      "repo": "https://github.com/blak0p/git-courer",
+      "repoSlug": "blak0p/git-courer",
+      "demo": "",
+      "tags": [
+        "mcp"
+      ],
+      "video": ""
+    },
+    "isPrivate": false,
+    "pushedAt": "2026-11-23T09:20:24Z",
+    "order": 0,
+    "problem": "Los agentes de IA gastan contexto y tokens en tareas de Git repetitivas.",
+    "solution": "Un LLM local redacta commits, ramas y releases, con confirmación antes de aplicar."
+  },
+  {
+    "id": "1776951821294",
+    "name": "ATTACK SHARK X6",
+    "photo": "https://raw.githubusercontent.com/blak0p/assets/main/attack-shark-x6.png",
+    "stack": [
+      "GO",
+      "WAILS",
+      "REACT",
+      "VITE"
+    ],
+    "architecture": "",
+    "initSequence": "",
+    "description": "Configurador de escritorio para un ratón gaming que solo tenía software de Windows.",
+    "businessImpact": "",
+    "recruiterDescription": "Ingeniería inversa del protocolo HID desde la app oficial de Windows, validación en el dongle del ratón y un configurador completo para Linux con Go y Wails v3.",
+    "recruiterStack": [
+      "reverse-engineering",
+      "linux",
+      "go",
+      "fullstack"
+    ],
+    "readmeContent": "",
+    "specs": {
+      "status": "IN_PROGRESS",
+      "stars": "16",
+      "language": "Go",
+      "license": "MIT",
+      "description": "Configurador de escritorio para un ratón gaming que solo tenía software de Windows.",
+      "repo": "https://github.com/blak0p/attack-shark-linux",
+      "repoSlug": "blak0p/attack-shark-linux",
+      "demo": "",
+      "tags": [
+        "reverse-engineering",
+        "linux",
+        "hid",
+        "gaming"
+      ],
+      "video": ""
+    },
+    "isPrivate": false,
+    "pushedAt": "2026-11-22T21:43:26Z",
+    "order": 1,
+    "problem": "Sin soporte en Linux ni documentación del protocolo.",
+    "solution": "Ingeniería inversa del protocolo HID desde la app de Windows y una app nativa con Wails."
+  }
+]
