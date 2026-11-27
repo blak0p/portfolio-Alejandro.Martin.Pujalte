@@ -80,7 +80,7 @@
       "video": ""
     },
     "isPrivate": false,
-    "pushedAt": "2026-11-22T21:43:26Z",
+    "pushedAt": "2026-11-26T16:39:35Z",
     "order": 1,
     "problem": "Sin soporte en Linux ni documentación del protocolo.",
     "solution": "Ingeniería inversa del protocolo HID desde la app de Windows y una app nativa con Wails."
