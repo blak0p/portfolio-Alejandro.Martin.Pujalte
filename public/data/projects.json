@@ -36,7 +36,7 @@
       "video": ""
     },
     "isPrivate": false,
-    "pushedAt": "2026-11-23T09:20:24Z",
+    "pushedAt": "2026-11-27T19:23:58Z",
     "order": 0,
     "problem": "Los agentes de IA gastan contexto y tokens en tareas de Git repetitivas.",
     "solution": "Un LLM local redacta commits, ramas y releases, con confirmación antes de aplicar."
